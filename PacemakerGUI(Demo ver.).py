@@ -213,6 +213,154 @@ class VOOParameterDatabase:
         result = self.Cursor.fetchall()
         return result
 
+class AOORParameterDatabase:
+    def __init__(self):
+        self.connection = sqlite3.connect("AOORparameter.db")
+        self.Cursor = self.connection.cursor()
+        self.Cursor.execute(
+            "CREATE TABLE IF NOT EXISTS AOORparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, AtrialAmplitude text, AtrialWidth text, MaxSensorRate text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
+
+    def __del__(self):
+        self.Cursor.close()
+        self.connection.close()
+        #insert into the database
+    def Insert(self, userID, LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
+        self.Cursor.execute("INSERT INTO AOORparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                              (userID, LRL, URL, Atrial_Amplitude,Atrial_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
+        self.connection.commit()
+    #display the parameters
+    def Display(self):
+        self.Cursor.execute("SELECT * FROM AOORparameter_table")
+        records = self.Cursor.fetchall()
+        return records
+    #search based on the userID
+    def Search(self, userID):
+        self.Cursor.execute("SELECT * FROM AOORparameter_table WHERE UserID = ?", (userID,))
+        searchResults = self.Cursor.fetchall()
+        return searchResults
+    #update the database
+    def Update(self, LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
+        self.Cursor.execute(
+            "UPDATE AOORparameter_table SET LRL = ?, URL = ?, AtrialAmplitude = ?, AtrialWidth = ?, MaxSensorRate = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
+            (LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
+        self.connection.commit()
+    #checking if there is anything using the userID in the database, returns boolean
+    def Empty(self, userID):
+        self.Cursor.execute("SELECT EXISTS(SELECT * from AOORparameter_table WHERE UserID = ?)", (userID,))
+        result = self.Cursor.fetchall()
+        return result
+
+class VOORParameterDatabase:
+    def __init__(self):
+        self.connection = sqlite3.connect("VOORparameter.db")
+        self.Cursor = self.connection.cursor()
+        self.Cursor.execute(
+            "CREATE TABLE IF NOT EXISTS VOORparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, AtrialAmplitude text, AtrialWidth text, MaxSensorRate text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
+
+    def __del__(self):
+        self.Cursor.close()
+        self.connection.close()
+        #insert into the database
+    def Insert(self, userID, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
+        self.Cursor.execute("INSERT INTO VOORparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                              (userID, LRL, URL, Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
+        self.connection.commit()
+    #display the parameters
+    def Display(self):
+        self.Cursor.execute("SELECT * FROM VOORparameter_table")
+        records = self.Cursor.fetchall()
+        return records
+    #search based on the userID
+    def Search(self, userID):
+        self.Cursor.execute("SELECT * FROM VOORparameter_table WHERE UserID = ?", (userID,))
+        searchResults = self.Cursor.fetchall()
+        return searchResults
+    #update the database
+    def Update(self, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
+        self.Cursor.execute(
+            "UPDATE AOORparameter_table SET LRL = ?, URL = ?, VentricularAmplitude = ?, VentricularWidth = ?, MaxSensorRate = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
+            (LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
+        self.connection.commit()
+    #checking if there is anything using the userID in the database, returns boolean
+    def Empty(self, userID):
+        self.Cursor.execute("SELECT EXISTS(SELECT * from VOORparameter_table WHERE UserID = ?)", (userID,))
+        result = self.Cursor.fetchall()
+        return result
+
+class AAIRParameterDatabase:
+    def __init__(self):
+        self.connection = sqlite3.connect("AAIRparameter.db")
+        self.Cursor = self.connection.cursor()
+        self.Cursor.execute(
+            "CREATE TABLE IF NOT EXISTS AAIRparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, AtrialAmplitude text, AtrialWidth text, MaxSensorRate text, AtrialSensitivity text, ARP text, PVARP text, Hysteresis text, RateSmoothing text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
+
+    def __del__(self):
+        self.Cursor.close()
+        self.connection.close()
+        #insert into the database
+    def Insert(self, userID, LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
+        self.Cursor.execute("INSERT INTO AAIRRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                              (userID, LRL, URL, Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
+        self.connection.commit()
+    #display the parameters
+    def Display(self):
+        self.Cursor.execute("SELECT * FROM AAIRparameter_table")
+        records = self.Cursor.fetchall()
+        return records
+    #search based on the userID
+    def Search(self, userID):
+        self.Cursor.execute("SELECT * FROM AAIRparameter_table WHERE UserID = ?", (userID,))
+        searchResults = self.Cursor.fetchall()
+        return searchResults
+    #update the database
+    def Update(self, LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
+        self.Cursor.execute(
+            "UPDATE AAIRparameter_table SET LRL = ?, URL = ?, AtrialAmplitude = ?, AtrialWidth = ?, MaxSensorRate = ?, AtrialSensitivity = ?, ARP = ?, PVARP = ?, Hysteresis = ?, RateSmoothing = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
+            (LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
+        self.connection.commit()
+    #checking if there is anything using the userID in the database, returns boolean
+    def Empty(self, userID):
+        self.Cursor.execute("SELECT EXISTS(SELECT * from AAIRparameter_table WHERE UserID = ?)", (userID,))
+        result = self.Cursor.fetchall()
+        return result
+
+class VVIRParameterDatabase:
+    def __init__(self):
+        self.connection = sqlite3.connect("VVIRparameter.db")
+        self.Cursor = self.connection.cursor()
+        self.Cursor.execute(
+            "CREATE TABLE IF NOT EXISTS VVIRparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, VentricularAmplitude text, VentricularWidth text, MaxSensorRate text, VentricularSensitivity text, VRP text, Hysteresis text, RateSmoothing text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
+
+    def __del__(self):
+        self.Cursor.close()
+        self.connection.close()
+        #insert into the database
+    def Insert(self, userID, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
+        self.Cursor.execute("INSERT INTO VVIRRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                              (userID, LRL, URL, Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
+        self.connection.commit()
+    #display the parameters
+    def Display(self):
+        self.Cursor.execute("SELECT * FROM VVIRparameter_table")
+        records = self.Cursor.fetchall()
+        return records
+    #search based on the userID
+    def Search(self, userID):
+        self.Cursor.execute("SELECT * FROM VVIRparameter_table WHERE UserID = ?", (userID,))
+        searchResults = self.Cursor.fetchall()
+        return searchResults
+    #update the database
+    def Update(self, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
+        self.Cursor.execute(
+            "UPDATE VVIRparameter_table SET LRL = ?, URL = ?, AtrialAmplitude = ?, AtrialWidth = ?, MaxSensorRate = ?, AtrialSensitivity = ?, ARP = ?, PVARP = ?, Hysteresis = ?, RateSmoothing = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
+            (LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
+        self.connection.commit()
+    #checking if there is anything using the userID in the database, returns boolean
+    def Empty(self, userID):
+        self.Cursor.execute("SELECT EXISTS(SELECT * from VVIRparameter_table WHERE UserID = ?)", (userID,))
+        result = self.Cursor.fetchall()
+        return result
+
 #checking mechanism for the inputs
 class Values:
     def __init__(self):
@@ -454,6 +602,183 @@ class VOOparametersDatabaseView:
         self.databaseView.column("URL", width=100)
         self.databaseView.column("VentricularAmplitude", width=100)
         self.databaseView.column("VentricularWidth", width=100)
+
+        for record in data:
+            self.databaseView.insert('', 'end', values=(record))
+
+        self.databaseViewWindow.mainloop()
+#AOOR parameters database
+class AOORparametersDatabaseView:
+    def __init__(self, data):
+        self.databaseViewWindow = tkinter.Tk()
+        self.databaseViewWindow.wm_title("AOOR Parameters Database View")
+
+        tkinter.Label(self.databaseViewWindow, text="Database View Window", width=25).grid(pady=5, column=1, row=1)
+
+        self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
+        self.databaseView.grid(pady=5, column=1, row=2)
+        self.databaseView["show"] = "headings"
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "AtrialAmplitude", "AtrialWidth", "MaxSensorRate", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+
+        # Treeview column headings
+        self.databaseView.heading("UserID", text="UserID")
+        self.databaseView.heading("LRL", text="LRL")
+        self.databaseView.heading("URL", text="URL")
+        self.databaseView.heading("AtrialAmplitude", text="AtrialAmplitude")
+        self.databaseView.heading("AtrialWidth", text="AtrialWidth")
+        self.databaseView.heading("MaxSensorRate", text="MaxSensorRate")
+        self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
+        self.databaseView.heading("ReactionTime", text="ReactionTime")
+        self.databaseView.heading("ResponseFactor", text="ResponseFactor")
+        self.databaseView.heading("RecoveryTime", text="RecoveryTime")
+
+        self.databaseView.column("UserID", width=100)
+        self.databaseView.column("LRL", width=100)
+        self.databaseView.column("URL", width=100)
+        self.databaseView.column("AtrialAmplitude", width=100)
+        self.databaseView.column("AtrialWidth", width=100)
+        self.databaseView.column("MaxSensorRate", width=100)
+        self.databaseView.column("ActivityThreshold", width=100)
+        self.databaseView.column("ReactionTime", width=100)
+        self.databaseView.column("ResponseFactor", width=100)
+        self.databaseView.column("RecoveryTime", width=100)
+
+        for record in data:
+            self.databaseView.insert('', 'end', values=(record))
+
+        self.databaseViewWindow.mainloop()
+
+class VOORparametersDatabaseView:
+    def __init__(self, data):
+        self.databaseViewWindow = tkinter.Tk()
+        self.databaseViewWindow.wm_title("VOOR Parameters Database View")
+
+        tkinter.Label(self.databaseViewWindow, text="Database View Window", width=25).grid(pady=5, column=1, row=1)
+
+        self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
+        self.databaseView.grid(pady=5, column=1, row=2)
+        self.databaseView["show"] = "headings"
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "VentricularAmplitude", "VentricularWidth", "MaxSensorRate", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+
+        # Treeview column headings
+        self.databaseView.heading("UserID", text="UserID")
+        self.databaseView.heading("LRL", text="LRL")
+        self.databaseView.heading("URL", text="URL")
+        self.databaseView.heading("VentricularAmplitude", text="VentricularAmplitude")
+        self.databaseView.heading("VentricularWidth", text="VentricularWidth")
+        self.databaseView.heading("MaxSensorRate", text="MaxSensorRate")
+        self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
+        self.databaseView.heading("ReactionTime", text="ReactionTime")
+        self.databaseView.heading("ResponseFactor", text="ResponseFactor")
+        self.databaseView.heading("RecoveryTime", text="RecoveryTime")
+
+        self.databaseView.column("UserID", width=100)
+        self.databaseView.column("LRL", width=100)
+        self.databaseView.column("URL", width=100)
+        self.databaseView.column("VentricularAmplitude", width=100)
+        self.databaseView.column("VentricularWidth", width=100)
+        self.databaseView.column("MaxSensorRate", width=100)
+        self.databaseView.column("ActivityThreshold", width=100)
+        self.databaseView.column("ReactionTime", width=100)
+        self.databaseView.column("ResponseFactor", width=100)
+        self.databaseView.column("RecoveryTime", width=100)
+
+        for record in data:
+            self.databaseView.insert('', 'end', values=(record))
+
+        self.databaseViewWindow.mainloop()
+
+class AAIRparametersDatabaseView:
+    def __init__(self, data):
+        self.databaseViewWindow = tkinter.Tk()
+        self.databaseViewWindow.wm_title("AAIR Parameters Database View")
+
+        tkinter.Label(self.databaseViewWindow, text="Database View Window", width=25).grid(pady=5, column=1, row=1)
+
+        self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
+        self.databaseView.grid(pady=5, column=1, row=2)
+        self.databaseView["show"] = "headings"
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "AtrialAmplitude", "AtrialWidth", "MaxSensorRate", "AtrialSensitivity", "ARP", "PVARP", "Hysteresis", "RateSmoothing", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+
+        # Treeview column headings
+        self.databaseView.heading("UserID", text="UserID")
+        self.databaseView.heading("LRL", text="LRL")
+        self.databaseView.heading("URL", text="URL")
+        self.databaseView.heading("AtrialAmplitude", text="AtrialAmplitude")
+        self.databaseView.heading("AtrialWidth", text="AtrialWidth")
+        self.databaseView.heading("MaxSensorRate", text="MaxSensorRate")
+        self.databaseView.heading("AtrialSensitivity", text="AtrialSensitivity")
+        self.databaseView.heading("ARP", text="ARP")
+        self.databaseView.heading("PVARP", text="PVARP")
+        self.databaseView.heading("Hysteresis", text="Hysteresis")
+        self.databaseView.heading("RateSmoothing", text="RateSmoothing")
+        self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
+        self.databaseView.heading("ReactionTime", text="ReactionTime")
+        self.databaseView.heading("ResponseFactor", text="ResponseFactor")
+        self.databaseView.heading("RecoveryTime", text="RecoveryTime")
+
+        self.databaseView.column("UserID", width=100)
+        self.databaseView.column("LRL", width=100)
+        self.databaseView.column("URL", width=100)
+        self.databaseView.column("AtrialAmplitude", width=100)
+        self.databaseView.column("AtrialWidth", width=100)
+        self.databaseView.column("MaxSensorRate", width=100)
+        self.databaseView.column("AtrialSensitivity", width=100)
+        self.databaseView.column("ARP", width=100)
+        self.databaseView.column("PVARP", width=100)
+        self.databaseView.column("Hysteresis", width=100)
+        self.databaseView.column("RateSmoothing", width=100)
+        self.databaseView.column("ActivityThreshold", width=100)
+        self.databaseView.column("ReactionTime", width=100)
+        self.databaseView.column("ResponseFactor", width=100)
+        self.databaseView.column("RecoveryTime", width=100)
+
+        for record in data:
+            self.databaseView.insert('', 'end', values=(record))
+
+        self.databaseViewWindow.mainloop()
+
+class VVIRparametersDatabaseView:
+    def __init__(self, data):
+        self.databaseViewWindow = tkinter.Tk()
+        self.databaseViewWindow.wm_title("VVIR Parameters Database View")
+
+        tkinter.Label(self.databaseViewWindow, text="Database View Window", width=25).grid(pady=5, column=1, row=1)
+
+        self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
+        self.databaseView.grid(pady=5, column=1, row=2)
+        self.databaseView["show"] = "headings"
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "VentricularAmplitude", "VentricularWidth", "MaxSensorRate", "VentricularSensitivity", "VRP", "Hysteresis", "RateSmoothing", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+        # Treeview column headings
+        self.databaseView.heading("UserID", text="UserID")
+        self.databaseView.heading("LRL", text="LRL")
+        self.databaseView.heading("URL", text="URL")
+        self.databaseView.heading("VentricularAmplitude", text="VentricularAmplitude")
+        self.databaseView.heading("VentricularWidth", text="VentricularWidth")
+        self.databaseView.heading("MaxSensorRate", text="MaxSensorRate")
+        self.databaseView.heading("VentricularSensitivity", text="VentricularSensitivity")
+        self.databaseView.heading("VRP", text="VRP")
+        self.databaseView.heading("Hysteresis", text="Hysteresis")
+        self.databaseView.heading("RateSmoothing", text="RateSmoothing")
+        self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
+        self.databaseView.heading("ReactionTime", text="ReactionTime")
+        self.databaseView.heading("ResponseFactor", text="ResponseFactor")
+        self.databaseView.heading("RecoveryTime", text="RecoveryTime")
+
+        self.databaseView.column("UserID", width=100)
+        self.databaseView.column("LRL", width=100)
+        self.databaseView.column("URL", width=100)
+        self.databaseView.column("VentricularAmplitude", width=100)
+        self.databaseView.column("VentricularWidth", width=100)
+        self.databaseView.column("MaxSensorRate", width=100)
+        self.databaseView.column("VentricularSensitivity", width=100)
+        self.databaseView.column("VRP", width=100)
+        self.databaseView.column("Hysteresis", width=100)
+        self.databaseView.column("RateSmoothing", width=100)
+        self.databaseView.column("ActivityThreshold", width=100)
+        self.databaseView.column("ReactionTime", width=100)
+        self.databaseView.column("ResponseFactor", width=100)
+        self.databaseView.column("RecoveryTime", width=100)
 
         for record in data:
             self.databaseView.insert('', 'end', values=(record))
