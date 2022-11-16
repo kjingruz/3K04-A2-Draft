@@ -607,7 +607,7 @@ class VOOparametersDatabaseView:
             self.databaseView.insert('', 'end', values=(record))
 
         self.databaseViewWindow.mainloop()
-
+#AOOR parameters database
 class AOORparametersDatabaseView:
     def __init__(self, data):
         self.databaseViewWindow = tkinter.Tk()
