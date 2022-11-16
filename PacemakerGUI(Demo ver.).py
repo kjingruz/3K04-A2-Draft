@@ -608,6 +608,183 @@ class VOOparametersDatabaseView:
 
         self.databaseViewWindow.mainloop()
 
+class AOORparametersDatabaseView:
+    def __init__(self, data):
+        self.databaseViewWindow = tkinter.Tk()
+        self.databaseViewWindow.wm_title("AOOR Parameters Database View")
+
+        tkinter.Label(self.databaseViewWindow, text="Database View Window", width=25).grid(pady=5, column=1, row=1)
+
+        self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
+        self.databaseView.grid(pady=5, column=1, row=2)
+        self.databaseView["show"] = "headings"
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "AtrialAmplitude", "AtrialWidth", "MaxSensorRate", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+
+        # Treeview column headings
+        self.databaseView.heading("UserID", text="UserID")
+        self.databaseView.heading("LRL", text="LRL")
+        self.databaseView.heading("URL", text="URL")
+        self.databaseView.heading("AtrialAmplitude", text="AtrialAmplitude")
+        self.databaseView.heading("AtrialWidth", text="AtrialWidth")
+        self.databaseView.heading("MaxSensorRate", text="MaxSensorRate")
+        self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
+        self.databaseView.heading("ReactionTime", text="ReactionTime")
+        self.databaseView.heading("ResponseFactor", text="ResponseFactor")
+        self.databaseView.heading("RecoveryTime", text="RecoveryTime")
+
+        self.databaseView.column("UserID", width=100)
+        self.databaseView.column("LRL", width=100)
+        self.databaseView.column("URL", width=100)
+        self.databaseView.column("AtrialAmplitude", width=100)
+        self.databaseView.column("AtrialWidth", width=100)
+        self.databaseView.column("MaxSensorRate", width=100)
+        self.databaseView.column("ActivityThreshold", width=100)
+        self.databaseView.column("ReactionTime", width=100)
+        self.databaseView.column("ResponseFactor", width=100)
+        self.databaseView.column("RecoveryTime", width=100)
+
+        for record in data:
+            self.databaseView.insert('', 'end', values=(record))
+
+        self.databaseViewWindow.mainloop()
+
+class VOORparametersDatabaseView:
+    def __init__(self, data):
+        self.databaseViewWindow = tkinter.Tk()
+        self.databaseViewWindow.wm_title("VOOR Parameters Database View")
+
+        tkinter.Label(self.databaseViewWindow, text="Database View Window", width=25).grid(pady=5, column=1, row=1)
+
+        self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
+        self.databaseView.grid(pady=5, column=1, row=2)
+        self.databaseView["show"] = "headings"
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "VentricularAmplitude", "VentricularWidth", "MaxSensorRate", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+
+        # Treeview column headings
+        self.databaseView.heading("UserID", text="UserID")
+        self.databaseView.heading("LRL", text="LRL")
+        self.databaseView.heading("URL", text="URL")
+        self.databaseView.heading("VentricularAmplitude", text="VentricularAmplitude")
+        self.databaseView.heading("VentricularWidth", text="VentricularWidth")
+        self.databaseView.heading("MaxSensorRate", text="MaxSensorRate")
+        self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
+        self.databaseView.heading("ReactionTime", text="ReactionTime")
+        self.databaseView.heading("ResponseFactor", text="ResponseFactor")
+        self.databaseView.heading("RecoveryTime", text="RecoveryTime")
+
+        self.databaseView.column("UserID", width=100)
+        self.databaseView.column("LRL", width=100)
+        self.databaseView.column("URL", width=100)
+        self.databaseView.column("VentricularAmplitude", width=100)
+        self.databaseView.column("VentricularWidth", width=100)
+        self.databaseView.column("MaxSensorRate", width=100)
+        self.databaseView.column("ActivityThreshold", width=100)
+        self.databaseView.column("ReactionTime", width=100)
+        self.databaseView.column("ResponseFactor", width=100)
+        self.databaseView.column("RecoveryTime", width=100)
+
+        for record in data:
+            self.databaseView.insert('', 'end', values=(record))
+
+        self.databaseViewWindow.mainloop()
+
+class AAIRparametersDatabaseView:
+    def __init__(self, data):
+        self.databaseViewWindow = tkinter.Tk()
+        self.databaseViewWindow.wm_title("AAIR Parameters Database View")
+
+        tkinter.Label(self.databaseViewWindow, text="Database View Window", width=25).grid(pady=5, column=1, row=1)
+
+        self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
+        self.databaseView.grid(pady=5, column=1, row=2)
+        self.databaseView["show"] = "headings"
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "AtrialAmplitude", "AtrialWidth", "MaxSensorRate", "AtrialSensitivity", "ARP", "PVARP", "Hysteresis", "RateSmoothing", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+
+        # Treeview column headings
+        self.databaseView.heading("UserID", text="UserID")
+        self.databaseView.heading("LRL", text="LRL")
+        self.databaseView.heading("URL", text="URL")
+        self.databaseView.heading("AtrialAmplitude", text="AtrialAmplitude")
+        self.databaseView.heading("AtrialWidth", text="AtrialWidth")
+        self.databaseView.heading("MaxSensorRate", text="MaxSensorRate")
+        self.databaseView.heading("AtrialSensitivity", text="AtrialSensitivity")
+        self.databaseView.heading("ARP", text="ARP")
+        self.databaseView.heading("PVARP", text="PVARP")
+        self.databaseView.heading("Hysteresis", text="Hysteresis")
+        self.databaseView.heading("RateSmoothing", text="RateSmoothing")
+        self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
+        self.databaseView.heading("ReactionTime", text="ReactionTime")
+        self.databaseView.heading("ResponseFactor", text="ResponseFactor")
+        self.databaseView.heading("RecoveryTime", text="RecoveryTime")
+
+        self.databaseView.column("UserID", width=100)
+        self.databaseView.column("LRL", width=100)
+        self.databaseView.column("URL", width=100)
+        self.databaseView.column("AtrialAmplitude", width=100)
+        self.databaseView.column("AtrialWidth", width=100)
+        self.databaseView.column("MaxSensorRate", width=100)
+        self.databaseView.column("AtrialSensitivity", width=100)
+        self.databaseView.column("ARP", width=100)
+        self.databaseView.column("PVARP", width=100)
+        self.databaseView.column("Hysteresis", width=100)
+        self.databaseView.column("RateSmoothing", width=100)
+        self.databaseView.column("ActivityThreshold", width=100)
+        self.databaseView.column("ReactionTime", width=100)
+        self.databaseView.column("ResponseFactor", width=100)
+        self.databaseView.column("RecoveryTime", width=100)
+
+        for record in data:
+            self.databaseView.insert('', 'end', values=(record))
+
+        self.databaseViewWindow.mainloop()
+
+class VVIRparametersDatabaseView:
+    def __init__(self, data):
+        self.databaseViewWindow = tkinter.Tk()
+        self.databaseViewWindow.wm_title("VVIR Parameters Database View")
+
+        tkinter.Label(self.databaseViewWindow, text="Database View Window", width=25).grid(pady=5, column=1, row=1)
+
+        self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
+        self.databaseView.grid(pady=5, column=1, row=2)
+        self.databaseView["show"] = "headings"
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "VentricularAmplitude", "VentricularWidth", "MaxSensorRate", "VentricularSensitivity", "VRP", "Hysteresis", "RateSmoothing", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+        # Treeview column headings
+        self.databaseView.heading("UserID", text="UserID")
+        self.databaseView.heading("LRL", text="LRL")
+        self.databaseView.heading("URL", text="URL")
+        self.databaseView.heading("VentricularAmplitude", text="VentricularAmplitude")
+        self.databaseView.heading("VentricularWidth", text="VentricularWidth")
+        self.databaseView.heading("MaxSensorRate", text="MaxSensorRate")
+        self.databaseView.heading("VentricularSensitivity", text="VentricularSensitivity")
+        self.databaseView.heading("VRP", text="VRP")
+        self.databaseView.heading("Hysteresis", text="Hysteresis")
+        self.databaseView.heading("RateSmoothing", text="RateSmoothing")
+        self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
+        self.databaseView.heading("ReactionTime", text="ReactionTime")
+        self.databaseView.heading("ResponseFactor", text="ResponseFactor")
+        self.databaseView.heading("RecoveryTime", text="RecoveryTime")
+
+        self.databaseView.column("UserID", width=100)
+        self.databaseView.column("LRL", width=100)
+        self.databaseView.column("URL", width=100)
+        self.databaseView.column("VentricularAmplitude", width=100)
+        self.databaseView.column("VentricularWidth", width=100)
+        self.databaseView.column("MaxSensorRate", width=100)
+        self.databaseView.column("VentricularSensitivity", width=100)
+        self.databaseView.column("VRP", width=100)
+        self.databaseView.column("Hysteresis", width=100)
+        self.databaseView.column("RateSmoothing", width=100)
+        self.databaseView.column("ActivityThreshold", width=100)
+        self.databaseView.column("ReactionTime", width=100)
+        self.databaseView.column("ResponseFactor", width=100)
+        self.databaseView.column("RecoveryTime", width=100)
+
+        for record in data:
+            self.databaseView.insert('', 'end', values=(record))
+
+        self.databaseViewWindow.mainloop()
+
 #the database that will load when displaying the table
 class LoginDatabaseView:
     def __init__(self, data):
