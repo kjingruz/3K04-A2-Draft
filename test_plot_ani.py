@@ -5,8 +5,23 @@ import time
 fig = plt.figure()
 ax1 = fig.add_subplot(1,1,1)
 
+inc = 1
+
+def addToFile():
+     f = open('sampleText.txt', 'a')
+     f.write('\n13,2\n14,7')
+     f.close()
+     inc+=1
+     print(inc)
+
 def animate(i):
-    pullData = open("sampleText.txt","r").read()
+
+    #addToFile()#update vals
+
+    pullData = open("sampleText.txt","r")
+    pullData.read()                                 # must use txt file for input, else graph wont update
+    #pullData.close()
+
     dataArray = pullData.split('\n')
     xar = []
     yar = []
