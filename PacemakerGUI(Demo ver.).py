@@ -982,11 +982,12 @@ class ModeWindow:
         fg_color = "white"
         cha_color = "black"
         #the buttons on the page for the modes
-        tkinter.Label(self.window, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color, text="Current Mode: ",
-                      font=("times new roman", 20, "bold"), width=30).grid(pady=20, column=1, row=1)
-        self.label1 = tkinter.Label(self.window, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color, text=self.cmode,
+        self.label1 = tkinter.Label(self.window, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color, text="Current Mode: " + self.cmode,
                       font=("times new roman", 20, "bold"), width=30)
-        self.label1.grid(pady=20, column=2, row=1)
+        self.label1.grid(pady=20, column=1, row=1)
+        # self.label1 = tkinter.Label(self.window, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color, text=self.cmode,
+        #               font=("times new roman", 20, "bold"), width=30)
+        # self.label1.grid(pady=20, column=2, row=1)
         self.AOObutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="AOO",
                        font=("times new roman", 15, "bold"), command=self.AOO)
         self.AOObutton.grid(pady=15, column=1, row=2)
@@ -999,46 +1000,130 @@ class ModeWindow:
         self.VVIbutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="VVI",
                        font=("times new roman", 15, "bold"), command=self.VVI)
         self.VVIbutton.grid(pady=15, column=1, row=5)
+        self.AOORbutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+                                        text="AOOR",font=("times new roman", 15, "bold"), command=self.AOOR)
+        self.AOORbutton.grid(pady=15, column=1, row=6)
+        self.VOORbutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+                                         text="VOOR", font=("times new roman", 15, "bold"), command=self.VOOR)
+        self.VOORbutton.grid(pady=15, column=1, row=7)
+        self.AAIRbutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+                                         text="AAIR", font=("times new roman", 15, "bold"), command=self.AAIR)
+        self.AAIRbutton.grid(pady=15, column=1, row=8)
+        self.VVIRbutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+                                         text="VVIR", font=("times new roman", 15, "bold"), command=self.VVIR)
+        self.VVIRbutton.grid(pady=15, column=1, row=9)
     #when mode is AOO
     def AOO(self):
         #updates the database for the new value of mode
         self.cmode = "AOO"
         self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
-        self.label1.config(text=self.cmode)
+        self.label1.config(text="Current Mode: " + self.cmode)
         self.AOObutton.config(state="disabled")
         self.VOObutton.config(state="active")
         self.AAIbutton.config(state="active")
         self.VVIbutton.config(state="active")
+        self.AOORbutton.config(state="active")
+        self.VOORbutton.config(state="active")
+        self.AAIRbutton.config(state="active")
+        self.VVIRbutton.config(state="active")
     #when mode is VOO
     def VOO(self):
         # updates the database for the new value of mode
         self.cmode = "VOO"
         self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
-        self.label1.config(text=self.cmode)
+        self.label1.config(text="Current Mode: " + self.cmode)
         self.AOObutton.config(state="active")
         self.VOObutton.config(state="disabled")
         self.AAIbutton.config(state="active")
         self.VVIbutton.config(state="active")
+        self.AOORbutton.config(state="active")
+        self.VOORbutton.config(state="active")
+        self.AAIRbutton.config(state="active")
+        self.VVIRbutton.config(state="active")
     #when mode is AAI
     def AAI(self):
         # updates the database for the new value of mode
         self.cmode = "AAI"
         self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
-        self.label1.config(text=self.cmode)
+        self.label1.config(text="Current Mode: " + self.cmode)
         self.AOObutton.config(state="active")
         self.VOObutton.config(state="active")
         self.AAIbutton.config(state="disabled")
         self.VVIbutton.config(state="active")
+        self.AOORbutton.config(state="active")
+        self.VOORbutton.config(state="active")
+        self.AAIRbutton.config(state="active")
+        self.VVIRbutton.config(state="active")
     #when mdoe is VVI
     def VVI(self):
         # updates the database for the new value of mode
         self.cmode = "VVI"
         self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
-        self.label1.config(text=self.cmode)
+        self.label1.config(text="Current Mode: " + self.cmode)
         self.AOObutton.config(state="active")
         self.VOObutton.config(state="active")
         self.AAIbutton.config(state="active")
         self.VVIbutton.config(state="disabled")
+        self.AOORbutton.config(state="active")
+        self.VOORbutton.config(state="active")
+        self.AAIRbutton.config(state="active")
+        self.VVIRbutton.config(state="active")
+
+    def AOOR(self):
+        # updates the database for the new value of mode
+        self.cmode = "AOOR"
+        self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
+        self.label1.config(text="Current Mode: " + self.cmode)
+        self.AOObutton.config(state="active")
+        self.VOObutton.config(state="active")
+        self.AAIbutton.config(state="active")
+        self.VVIbutton.config(state="active")
+        self.AOORbutton.config(state="disabled")
+        self.VOORbutton.config(state="active")
+        self.AAIRbutton.config(state="active")
+        self.VVIRbutton.config(state="active")
+
+    def VOOR(self):
+        # updates the database for the new value of mode
+        self.cmode = "VOOR"
+        self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
+        self.label1.config(text="Current Mode: " + self.cmode)
+        self.AOObutton.config(state="active")
+        self.VOObutton.config(state="active")
+        self.AAIbutton.config(state="active")
+        self.VVIbutton.config(state="active")
+        self.AOORbutton.config(state="active")
+        self.VOORbutton.config(state="disabled")
+        self.AAIRbutton.config(state="active")
+        self.VVIRbutton.config(state="active")
+
+    def AAIR(self):
+        # updates the database for the new value of mode
+        self.cmode = "AAIR"
+        self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
+        self.label1.config(text="Current Mode: " + self.cmode)
+        self.AOObutton.config(state="active")
+        self.VOObutton.config(state="active")
+        self.AAIbutton.config(state="active")
+        self.VVIbutton.config(state="active")
+        self.AOORbutton.config(state="active")
+        self.VOORbutton.config(state="active")
+        self.AAIRbutton.config(state="disabled")
+        self.VVIRbutton.config(state="active")
+
+    def VVIR(self):
+        # updates the database for the new value of mode
+        self.cmode = "VVIR"
+        self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
+        self.label1.config(text="Current Mode: " + self.cmode)
+        self.AOObutton.config(state="active")
+        self.VOObutton.config(state="active")
+        self.AAIbutton.config(state="active")
+        self.VVIbutton.config(state="active")
+        self.AOORbutton.config(state="active")
+        self.VOORbutton.config(state="active")
+        self.AAIRbutton.config(state="active")
+        self.VVIRbutton.config(state="disabled")
 
 #opens and initializes the home page
 class HomePage:
