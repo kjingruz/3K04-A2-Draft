@@ -2,6 +2,7 @@ import tkinter
 import tkinter.ttk
 import tkinter.messagebox
 import sqlite3
+import decimal
 
 #two variables that are subject to change based on the pacemaker.
 #warning is a boolean to show that there is another pacemaker nearby
@@ -972,13 +973,19 @@ class ParametersWindow:
         #restricts the input allowed in parameters page
         self.LRLtype = list(range(30,50,5))+list(range(50,90))+list(range(90,176,5))
         self.URLtype = list(range(50,176,5))
-        self.PulseAmplitudetype = ["Off", "1.25V", "2.5V", "3.75V", "5.0V"]
-        self.PulseWidthtype = [0.05]
-        self.Sensitivitytype = [0.25, 0.5, 0.75]
+        self.PulseAmplitudetype = ["Off"]+list(self.float_range(1, 5.1, '0.1'))
+        self.PulseWidthtype = list(range(1,31,1))
+        self.Sensitivitytype = list(self.float_range(0, 5.1, '0.1'))
         self.RPtype = list(range(150,501,10))
         self.PVARPtype = list(range(150,501,10))
         self.Hysteresistype = ["Off", "Same as LRL"]
         self.RateSmoothingtype = ["Off", "3%", "6%", "9%", "12%", "15%", "18%", "21%", "25%"]
+        self.MaxSensorRate = list(range(50,176,5))
+        self.ActivityThreshold = ["V-Low", 'Low', 'Med-Low', 'Med','Med-High', 'High', 'V-High']
+        self.ReactionTime = list(range(10,51,10))
+        self.ResponseFactor = list(range(1,17,1))
+        self.RecoveryTime = list(range(2,17,1))
+
 
         #operational buttons
         self.generalbuttonsetup(bg_color, fg_color, cha_color)
@@ -1155,6 +1162,11 @@ class ParametersWindow:
                 self.VOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(),self.UserID)
         tkinter.messagebox.showinfo("Saved", "Saved")
+
+    def float_range(self, start, stop, step):
+        while start < stop:
+            yield float(start)
+            start += decimal.Decimal(step)
     #make the comboxes editable again
     def Edit(self):
         self.LRLBox.config(state='readonly')
@@ -1196,7 +1208,7 @@ class ParametersWindow:
         self.LRLBox.set(60)
         self.URLBox.set(90)
         self.PulseAmplitudeBox.set("Off")
-        self.PulseWidthBox.set(0.05)
+        self.PulseWidthBox.set(1)
         self.SensitivityBox.set(0.25)
         self.ARPBox.set(200)
         self.PVARPBox.set(200)
@@ -1207,7 +1219,7 @@ class ParametersWindow:
         self.LRLBox.set(60)
         self.URLBox.set(90)
         self.PulseAmplitudeBox.set("Off")
-        self.PulseWidthBox.set(0.05)
+        self.PulseWidthBox.set(1)
         self.SensitivityBox.set(0.25)
         self.VRPBox.set(200)
         self.HysteresisBox.set("Same as LRL")
@@ -1234,7 +1246,7 @@ class ParametersWindow:
         self.LRLBox.set(60)
         self.URLBox.set(90)
         self.PulseAmplitudeBox.set("Off")
-        self.PulseWidthBox.set(0.05)
+        self.PulseWidthBox.set(1)
 
     def AAIsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
@@ -1362,13 +1374,67 @@ class ParametersWindow:
         self.PulseAmplitudeBox.grid(pady=5, column=3, row=3)
         self.PulseWidthBox.grid(pady=5, column=3, row=4)
     def AOORsetup(self, bg_color, fg_color):
-        pass
+        self.AOORVOORRepsetup(bg_color, fg_color)
+        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
+                      text="Atrial Amplitude: ",
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
+        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
+                      text="Atrial Pulse Width: ",
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=5)
     def VOORsetup(self, bg_color, fg_color):
-        pass
+        self.AOORVOORRepsetup(bg_color, fg_color)
+        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
+                      text="Ventricular Amplitude: ",
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
+        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
+                      text="Ventricular Pulse Width: ",
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=5)
     def AAIRsetup(self, bg_color, fg_color):
         pass
     def VVIRsetup(self, bg_color, fg_color):
         pass
+    def AOORVOORRepsetup(self, bg_color, fg_color):
+        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
+                      text="Maximum Sensor Rate: ",
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=3)
+        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
+                      text="Activity Threshold: ",
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=6)
+        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
+                      text="Reaction Time: ",
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=7)
+        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
+                      text="Response Factor: ",
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=8)
+        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
+                      text="Recovery Time: ",
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=9)
+
+        self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
+        self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
+        self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20,
+                                                     state='disabled')
+        self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
+                                                      state='disabled')
+        self.PulseWidthBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
+                                                  state='disabled')
+        self.ActivityThresholdBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
+                                                         state='disabled')
+        self.ReactionTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
+                                                    state='disabled')
+        self.ResponseFactorBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
+                                                      state='disabled')
+        self.RecoveryTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
+                                                    state='disabled')
+        self.LRLBox.grid(pady=5, column=3, row=1)
+        self.URLBox.grid(pady=5, column=3, row=2)
+        self.MaxSensorRateBox.grid(pady=5, column=3, row=3)
+        self.PulseAmplitudeBox.grid(pady=5, column=3, row=4)
+        self.PulseWidthBox.grid(pady=5, column=3, row=5)
+        self.ActivityThresholdBox.grid(pady=5, column=3, row=6)
+        self.ReactionTimeBox.grid(pady=5, column=3, row=7)
+        self.ResponseFactorBox.grid(pady=5, column=3, row=8)
+        self.RecoveryTimeBox.grid(pady=5, column=3, row=9)
 
 #opens and initializes the mode window
 class ModeWindow:
