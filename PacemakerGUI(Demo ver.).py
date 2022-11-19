@@ -921,7 +921,7 @@ class LoggedInWindow:
                       else "Status update: Connection with DCM is " + "OFF",font=("times new roman", 10, "bold"),
                       width=50).grid(pady=20, column=1, row=2)
     def Graph(self):
-        self.graph = GraphWindow()
+        self.graph = GraphWindow(self.UserID)
         self.window.destroy()
     def Signout(self):
         self.window.destroy()
@@ -1796,9 +1796,6 @@ class ModeWindow:
         self.label1 = tkinter.Label(self.window, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color, text="Current Mode: " + self.cmode,
                       font=("times new roman", 20, "bold"), width=30)
         self.label1.grid(pady=20, column=1, row=1)
-        # self.label1 = tkinter.Label(self.window, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color, text=self.cmode,
-        #               font=("times new roman", 20, "bold"), width=30)
-        # self.label1.grid(pady=20, column=2, row=1)
         self.AOObutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="AOO",
                        font=("times new roman", 15, "bold"), command=self.AOO)
         self.AOObutton.grid(pady=15, column=1, row=2)
@@ -1823,6 +1820,26 @@ class ModeWindow:
         self.VVIRbutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
                                          text="VVIR", font=("times new roman", 15, "bold"), command=self.VVIR)
         self.VVIRbutton.grid(pady=15, column=1, row=9)
+
+        self.CheckMode(self.cmode)
+
+    def CheckMode(self, currentmode):
+        if currentmode == 'AOO':
+            self.AOO()
+        elif currentmode == 'VOO':
+            self.VOO()
+        elif currentmode == "AAI":
+            self.AAI()
+        elif currentmode == "VVI":
+            self.VVI()
+        elif currentmode == 'AOOR':
+            self.AOO()
+        elif currentmode == 'VOOR':
+            self.VOO()
+        elif currentmode == "AAIR":
+            self.AAI()
+        elif currentmode == "VVIR":
+            self.VVI()
     #when mode is AOO
     def AOO(self):
         #updates the database for the new value of mode
@@ -1953,7 +1970,7 @@ class GraphWindow:
         self.BackButton.grid(pady=15, column=1, row=2)
 
     def Back(self):
-        self.loggedin = LoggedInWindow()
+        self.loggedin = LoggedInWindow(self.UserID)
         self.window.destroy()
 
 #opens and initializes the home page
