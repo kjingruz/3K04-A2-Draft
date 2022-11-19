@@ -921,7 +921,8 @@ class LoggedInWindow:
                       else "Status update: Connection with DCM is " + "OFF",font=("times new roman", 10, "bold"),
                       width=50).grid(pady=20, column=1, row=2)
     def Graph(self):
-        pass
+        self.graph = GraphWindow()
+        self.window.destroy()
     def Signout(self):
         self.window.destroy()
         self.homepage = HomePage()
@@ -1934,6 +1935,26 @@ class ModeWindow:
         self.VOORbutton.config(state="active")
         self.AAIRbutton.config(state="active")
         self.VVIRbutton.config(state="disabled")
+
+class GraphWindow:
+    def __init__(self, userID):
+        self.UserID = userID
+        self.login = LoginDatabase()
+        self.result = self.login.ReturnMode(self.UserID)
+        #the current mode
+        self.cmode = self.result[0][4]
+        self.window = tkinter.Tk()
+        self.window.wm_title("Egram Graphs")
+        bg_color = "blue"
+        fg_color = "white"
+        cha_color = "black"
+        self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+                                        text="Back",font=("times new roman", 15, "bold"), command=self.Back)
+        self.BackButton.grid(pady=15, column=1, row=2)
+
+    def Back(self):
+        self.loggedin = LoggedInWindow()
+        self.window.destroy()
 
 #opens and initializes the home page
 class HomePage:
