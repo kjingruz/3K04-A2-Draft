@@ -1202,11 +1202,11 @@ class ParametersWindow:
             self.ResponseFactorBox.config(state='disabled')
             self.MaxSensorRateBox.config(state='disabled')
             try:
-                self.AOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                self.VOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
             except sqlite3.IntegrityError:
-                self.AOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                self.VOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
         elif self.currentmode == "AAIR":
@@ -1312,6 +1312,8 @@ class ParametersWindow:
             self.RateSmoothingBox.config(state='readonly')
             if self.currentmode == "AAIR":
                 self.PVARPBox.config(state='readonly')
+
+
 
         #display the saved parameters in the database
     def Display(self):
