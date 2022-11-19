@@ -279,7 +279,7 @@ class VOORParameterDatabase:
     #update the database
     def Update(self, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
         self.Cursor.execute(
-            "UPDATE AOORparameter_table SET LRL = ?, URL = ?, VentricularAmplitude = ?, VentricularWidth = ?, MaxSensorRate = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
+            "UPDATE VOORparameter_table SET LRL = ?, URL = ?, VentricularAmplitude = ?, VentricularWidth = ?, MaxSensorRate = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
             (LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
         self.connection.commit()
     #checking if there is anything using the userID in the database, returns boolean
@@ -970,18 +970,18 @@ class ParametersWindow:
         cha_color = "black"
 
         #restricts the input allowed in parameters page
-        self.LRLtype = list(range(30,50,5))+list(range(50,90))+list(range(90,176,5))
-        self.URLtype = list(range(50,176,5))
+        self.LRLtype = list(range(30,50,5))+list(range(50,90))+list(range(90,180,5))
+        self.URLtype = list(range(50,180,5))
         self.PulseAmplitudetype = ["Off"]+list(self.float_range(1, 5.1, '0.1'))
         self.PulseWidthtype = list(range(1,31,1))
         self.Sensitivitytype = [0.25, 0.5, 0.75]+list(self.float_range(0, 10.5, '0.5'))
-        self.RPtype = list(range(150,501,10))
-        self.PVARPtype = list(range(150,501,10))
+        self.RPtype = list(range(150,510,10))
+        self.PVARPtype = list(range(150,510,10))
         self.Hysteresistype = ["Off", "Same as LRL"]
         self.RateSmoothingtype = ["Off", "3%", "6%", "9%", "12%", "15%", "18%", "21%", "25%"]
-        self.MaxSensorRate = list(range(50,176,5))
+        self.MaxSensorRate = list(range(50,180,5))
         self.ActivityThreshold = ["V-Low", 'Low', 'Med-Low', 'Med','Med-High', 'High', 'V-High']
-        self.ReactionTime = list(range(10,51,10))
+        self.ReactionTime = list(range(10,60,10))
         self.ResponseFactor = list(range(1,17,1))
         self.RecoveryTime = list(range(2,17,1))
 
@@ -1053,9 +1053,11 @@ class ParametersWindow:
                 self.AOOVOOdefaultSetting()
 
         elif self.currentmode == "AOOR":
+            self.AOORVOORRepsetup(bg_color, fg_color)
             self.AOORsetup(bg_color, fg_color)
             self.search = []
             self.searchresult = self.AOOR.Search(self.UserID)
+            print(self.searchresult)
             self.another = self.AOOR.Empty(self.UserID)
             if self.another[0][0] == 1:
                 self.AOORVOORinputrep()
@@ -1063,6 +1065,7 @@ class ParametersWindow:
                 self.AOORVOORdefaultSetting()
 
         elif self.currentmode == "VOOR":
+            self.AOORVOORRepsetup(bg_color, fg_color)
             self.VOORsetup(bg_color, fg_color)
             self.search = []
             self.searchresult = self.VOOR.Search(self.UserID)
@@ -1080,9 +1083,9 @@ class ParametersWindow:
             if self.another[0][0] == 1:
                 self.LRLBox.set(self.searchresult[0][1])
                 self.URLBox.set(self.searchresult[0][2])
-                self.MaxSensorRateBox.set(self.searchresult[0][3])
-                self.PulseAmplitudeBox.set(self.searchresult[0][4])
-                self.PulseWidthBox.set(self.searchresult[0][5])
+                self.PulseAmplitudeBox.set(self.searchresult[0][3])
+                self.PulseWidthBox.set(self.searchresult[0][4])
+                self.MaxSensorRateBox.set(self.searchresult[0][5])
                 self.SensitivityBox.set(self.searchresult[0][6])
                 self.ARPBox.set(self.searchresult[0][7])
                 self.PVARPBox.set(self.searchresult[0][8])
@@ -1103,9 +1106,9 @@ class ParametersWindow:
             if self.another[0][0] == 1:
                 self.LRLBox.set(self.searchresult[0][1])
                 self.URLBox.set(self.searchresult[0][2])
-                self.MaxSensorRateBox.set(self.searchresult[0][3])
-                self.PulseAmplitudeBox.set(self.searchresult[0][4])
-                self.PulseWidthBox.set(self.searchresult[0][5])
+                self.PulseAmplitudeBox.set(self.searchresult[0][3])
+                self.PulseWidthBox.set(self.searchresult[0][4])
+                self.MaxSensorRateBox.set(self.searchresult[0][5])
                 self.SensitivityBox.set(self.searchresult[0][6])
                 self.ARPBox.set(self.searchresult[0][7])
                 self.HysteresisBox.set(self.searchresult[0][8])
@@ -1180,6 +1183,7 @@ class ParametersWindow:
             self.RecoveryTimeBox.config(state='disabled')
             self.ReactionTimeBox.config(state='disabled')
             self.ResponseFactorBox.config(state='disabled')
+            self.MaxSensorRateBox.config(state='disabled')
             try:
                 self.AOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.MaxSensorRateBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
@@ -1193,6 +1197,7 @@ class ParametersWindow:
             self.RecoveryTimeBox.config(state='disabled')
             self.ReactionTimeBox.config(state='disabled')
             self.ResponseFactorBox.config(state='disabled')
+            self.MaxSensorRateBox.config(state='disabled')
             try:
                 self.AOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.MaxSensorRateBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
@@ -1202,6 +1207,7 @@ class ParametersWindow:
                                         self.PulseWidthBox.get(),self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
         elif self.currentmode == "AAIR":
+            self.MaxSensorRateBox.config(state='disabled')
             self.ARPBox.config(state='disabled')
             self.PVARPBox.config(state='disabled')
             self.SensitivityBox.config(state='disabled')
@@ -1233,6 +1239,7 @@ class ParametersWindow:
             self.RecoveryTimeBox.config(state='disabled')
             self.ReactionTimeBox.config(state='disabled')
             self.ResponseFactorBox.config(state='disabled')
+            self.MaxSensorRateBox.config(state='disabled')
             try:
                 self.VVIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.MaxSensorRateBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(), self.SensitivityBox.get(), self.ARPBox.get(),
@@ -1254,10 +1261,10 @@ class ParametersWindow:
         self.MaxSensorRateBox.set(self.searchresult[0][3])
         self.PulseAmplitudeBox.set(self.searchresult[0][4])
         self.PulseWidthBox.set(self.searchresult[0][5])
-        self.ActivityThreshold.set(self.searchresult[0][6])
+        self.ActivityThresholdBox.set(self.searchresult[0][6])
         self.ReactionTimeBox.set(self.searchresult[0][7])
         self.ResponseFactorBox.set(self.searchresult[0][8])
-        self.RecoveryTime.set(self.searchresult[0][9])
+        self.RecoveryTimeBox.set(self.searchresult[0][9])
     def float_range(self, start, stop, step):
         while start < stop:
             yield float(start)
@@ -1675,7 +1682,7 @@ class ParametersWindow:
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
-        self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RPtype, width=20,
+        self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.MaxSensorRate, width=20,
                                                      state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
@@ -1728,25 +1735,25 @@ class ParametersWindow:
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
-        self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20,
-                                                     state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
         self.PulseWidthBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
                                                   state='disabled')
-        self.ActivityThresholdBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
+        self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.MaxSensorRate, width=20,
+                                                     state='disabled')
+        self.ActivityThresholdBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.ActivityThreshold, width=20,
                                                          state='disabled')
-        self.ReactionTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
+        self.ReactionTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.ReactionTime, width=20,
                                                     state='disabled')
-        self.ResponseFactorBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
+        self.ResponseFactorBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.ResponseFactor, width=20,
                                                       state='disabled')
-        self.RecoveryTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
+        self.RecoveryTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RecoveryTime, width=20,
                                                     state='disabled')
         self.LRLBox.grid(pady=5, column=3, row=1)
         self.URLBox.grid(pady=5, column=3, row=2)
-        self.MaxSensorRateBox.grid(pady=5, column=3, row=3)
-        self.PulseAmplitudeBox.grid(pady=5, column=3, row=4)
-        self.PulseWidthBox.grid(pady=5, column=3, row=5)
+        self.PulseAmplitudeBox.grid(pady=5, column=3, row=3)
+        self.PulseWidthBox.grid(pady=5, column=3, row=4)
+        self.MaxSensorRateBox.grid(pady=5, column=3, row=5)
         self.ActivityThresholdBox.grid(pady=5, column=3, row=6)
         self.ReactionTimeBox.grid(pady=5, column=3, row=7)
         self.ResponseFactorBox.grid(pady=5, column=3, row=8)
