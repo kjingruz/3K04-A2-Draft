@@ -1060,7 +1060,6 @@ class ParametersWindow:
             self.AOORsetup(bg_color, fg_color)
             self.search = []
             self.searchresult = self.AOOR.Search(self.UserID)
-            #print(self.searchresult)
             self.another = self.AOOR.Empty(self.UserID)
             if self.another[0][0] == 1:
                 self.AOORVOORinputrep()
@@ -1113,7 +1112,7 @@ class ParametersWindow:
                 self.PulseWidthBox.set(self.searchresult[0][4])
                 self.MaxSensorRateBox.set(self.searchresult[0][5])
                 self.SensitivityBox.set(self.searchresult[0][6])
-                self.ARPBox.set(self.searchresult[0][7])
+                self.VRPBox.set(self.searchresult[0][7])
                 self.HysteresisBox.set(self.searchresult[0][8])
                 self.RateSmoothingBox.set(self.searchresult[0][9])
                 self.ActivityThresholdBox.set(self.searchresult[0][10])
@@ -1276,7 +1275,6 @@ class ParametersWindow:
     #make the comboxes editable again
     def Edit(self):
         tkinter.messagebox.showinfo("Edit Mode on", "Edit Mode on")
-        print(self.currentmode)
         self.LRLBox.config(state='readonly')
         self.URLBox.config(state='readonly')
         self.PulseAmplitudeBox.config(state='readonly')
@@ -1292,15 +1290,19 @@ class ParametersWindow:
             self.VRPBox.config(state='readonly')
             self.HysteresisBox.config(state='readonly')
             self.RateSmoothingBox.config(state='readonly')
-        elif self.currentmode == "AOOR" or "VOOR":
-            print("in AOOR or VOOR")
+        elif self.currentmode == "AOOR":
             self.MaxSensorRateBox.config(state='readonly')
             self.ActivityThresholdBox.config(state='readonly')
             self.RecoveryTimeBox.config(state='readonly')
             self.ReactionTimeBox.config(state='readonly')
             self.ResponseFactorBox.config(state='readonly')
-        elif self.currentmode == "AAIR" or "VVIR":
-            print("in AAIR or VVIR")
+        elif self.currentmode == "VOOR":
+            self.MaxSensorRateBox.config(state='readonly')
+            self.ActivityThresholdBox.config(state='readonly')
+            self.RecoveryTimeBox.config(state='readonly')
+            self.ReactionTimeBox.config(state='readonly')
+            self.ResponseFactorBox.config(state='readonly')
+        elif self.currentmode == "AAIR":
             self.MaxSensorRateBox.config(state='readonly')
             self.ActivityThresholdBox.config(state='readonly')
             self.RecoveryTimeBox.config(state='readonly')
@@ -1310,10 +1312,17 @@ class ParametersWindow:
             self.ARPBox.config(state='readonly')
             self.HysteresisBox.config(state='readonly')
             self.RateSmoothingBox.config(state='readonly')
-            if self.currentmode == "AAIR":
-                self.PVARPBox.config(state='readonly')
-
-
+            self.PVARPBox.config(state='readonly')
+        elif self.currentmode == "VVIR":
+            self.MaxSensorRateBox.config(state='readonly')
+            self.ActivityThresholdBox.config(state='readonly')
+            self.RecoveryTimeBox.config(state='readonly')
+            self.ReactionTimeBox.config(state='readonly')
+            self.ResponseFactorBox.config(state='readonly')
+            self.SensitivityBox.config(state='readonly')
+            self.VRPBox.config(state='readonly')
+            self.HysteresisBox.config(state='readonly')
+            self.RateSmoothingBox.config(state='readonly')
 
         #display the saved parameters in the database
     def Display(self):
@@ -1411,7 +1420,7 @@ class ParametersWindow:
         self.PulseAmplitudeBox.set(5.0)
         self.PulseWidthBox.set(1)
         self.SensitivityBox.set(2.5)
-        self.ARPBox.set(320)
+        self.VRPBox.set(320)
         self.HysteresisBox.set("Off")
         self.RateSmoothingBox.set("Off")
         self.ActivityThresholdBox.set('Med')
@@ -1658,16 +1667,16 @@ class ParametersWindow:
                       text="Maximum Sensor Rate: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Atrial Amplitude: ",
+                      text="Ventricular Amplitude: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Atrial Pulse Width: ",
+                      text="Ventricular Pulse Width: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=5)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Atrial Sensitivity: ",
+                      text="Ventricularl Sensitivity: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=6)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="ARP: ",
+                      text="VRP: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=7)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Hysteresis: ",
@@ -1699,7 +1708,7 @@ class ParametersWindow:
                                                   state='disabled')
         self.SensitivityBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.Sensitivitytype, width=20,
                                                    state='disabled')
-        self.ARPBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RPtype, width=20, state='disabled')
+        self.VRPBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RPtype, width=20, state='disabled')
         self.HysteresisBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.Hysteresistype,
                                                   width=20, state='disabled')
         self.RateSmoothingBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RateSmoothingtype, width=20,
@@ -1717,14 +1726,15 @@ class ParametersWindow:
         self.URLBox.grid(pady=5, column=3, row=2)
         self.PulseAmplitudeBox.grid(pady=5, column=3, row=3)
         self.PulseWidthBox.grid(pady=5, column=3, row=4)
-        self.SensitivityBox.grid(pady=5, column=3, row=5)
-        self.ARPBox.grid(pady=5, column=3, row=6)
-        self.HysteresisBox.grid(pady=5, column=3, row=7)
-        self.RateSmoothingBox.grid(pady=5, column=3, row=8)
-        self.ActivityThresholdBox.grid(pady=5, column=3, row=9)
-        self.ReactionTimeBox.grid(pady=5, column=3, row=10)
-        self.ResponseFactorBox.grid(pady=5, column=3, row=11)
-        self.RecoveryTimeBox.grid(pady=5, column=3, row=12)
+        self.MaxSensorRateBox.grid(pady=5, column=3, row=5)
+        self.SensitivityBox.grid(pady=5, column=3, row=6)
+        self.VRPBox.grid(pady=5, column=3, row=7)
+        self.HysteresisBox.grid(pady=5, column=3, row=8)
+        self.RateSmoothingBox.grid(pady=5, column=3, row=9)
+        self.ActivityThresholdBox.grid(pady=5, column=3, row=10)
+        self.ReactionTimeBox.grid(pady=5, column=3, row=11)
+        self.ResponseFactorBox.grid(pady=5, column=3, row=12)
+        self.RecoveryTimeBox.grid(pady=5, column=3, row=13)
     def AOORVOORRepsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Maximum Sensor Rate: ",
