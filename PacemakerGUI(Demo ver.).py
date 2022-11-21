@@ -329,7 +329,7 @@ class AAIRParameterDatabase:
         self.connection.close()
         #insert into the database
     def Insert(self, userID, LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
-        self.Cursor.execute("INSERT INTO AAIRRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        self.Cursor.execute("INSERT INTO AAIRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                               (userID, LRL, URL, Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
         self.connection.commit()
     #display the parameters
@@ -1862,13 +1862,13 @@ class ModeWindow:
         elif currentmode == "VVI":
             self.VVI()
         elif currentmode == 'AOOR':
-            self.AOO()
+            self.AOOR()
         elif currentmode == 'VOOR':
-            self.VOO()
+            self.VOOR()
         elif currentmode == "AAIR":
-            self.AAI()
+            self.AAIR()
         elif currentmode == "VVIR":
-            self.VVI()
+            self.VVIR()
     #when mode is AOO
     def AOO(self):
         #updates the database for the new value of mode
