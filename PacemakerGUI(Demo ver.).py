@@ -3,6 +3,7 @@ import tkinter.ttk
 import tkinter.messagebox
 import sqlite3
 import decimal
+import math
 
 #two variables that are subject to change based on the pacemaker.
 #warning is a boolean to show that there is another pacemaker nearby
@@ -21,6 +22,18 @@ class sendSerial:
         self.VOOR = VOORParameterDatabase()
         self.AAIR = AAIRParameterDatabase()
         self.VVIR = VVIRParameterDatabase()
+        # self.LRLtype = list(range(30, 50, 5)) + list(range(50, 90)) + list(range(90, 180, 5))
+        # self.URLtype = list(range(50, 180, 5))
+        # self.PulseAmplitudetype = ["Off"] + list(self.float_range(1, 5.1, '0.1'))
+        # self.PulseWidthtype = list(range(1, 31, 1))
+        # self.Sensitivitytype = [0.25, 0.5, 0.75] + list(self.float_range(0, 10.5, '0.5'))
+        # self.RPtype = list(range(150, 510, 10))
+        # self.PVARPtype = list(range(150, 510, 10))
+        # self.MaxSensorRate = list(range(50, 180, 5))
+        # self.ActivityThreshold = ["V-Low", 'Low', 'Med-Low', 'Med', 'Med-High', 'High', 'V-High']
+        # self.ReactionTime = list(range(10, 60, 10))
+        # self.ResponseFactor = list(range(1, 17, 1))
+        # self.RecoveryTime = list(range(2, 17, 1))
 
         if self.cmode == "AOO":
             pass
@@ -988,7 +1001,8 @@ class ParametersWindow:
 
         #restricts the input allowed in parameters page
         self.LRLtype = list(range(30,50,5))+list(range(50,90))+list(range(90,180,5))
-        self.URLtype = list(range(50,180,5))
+        #print(self.LRLBox.get())
+        #self.URLtype = list(range(50,180,5)) #self.LRLBox.get() to 180
         self.PulseAmplitudetype = ["Off"]+list(self.float_range(1, 5.1, '0.1'))
         self.PulseWidthtype = list(range(1,31,1))
         self.Sensitivitytype = [0.25, 0.5, 0.75]+list(self.float_range(0, 10.5, '0.5'))
@@ -1217,9 +1231,10 @@ class ParametersWindow:
             self.ResponseFactorBox.config(state='disabled')
             try:
                 self.AAIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.ARPBox.get(), self.PVARPBox.get(),
-                                        self.HysteresisBox.get(), self.RateSmoothingBox.get(),
-                                        self.ActivityThresholdBox.get(), self.ReactionTimeBox.get())
+                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
+                                        self.ARPBox.get(), self.PVARPBox.get(),
+                                        self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
             except sqlite3.IntegrityError:
                 self.AAIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
@@ -1263,7 +1278,20 @@ class ParametersWindow:
             yield float(start)
             start += decimal.Decimal(step)
 
+    def round_up_to_nearest_5(self, num):
+        return math.ceil(num / 5) * 5
+
     #make the comboxes editable again
+    def modified(self, event):
+        self.LRLinput = int(self.LRLBox.get())
+        if self.LRLinput%5 == 1:
+            self.inputs = self.round_up_to_nearest_5(self.LRLinput)
+        else:
+            self.inputs = self.LRLinput
+
+        self.URLtype = list(range(self.inputs,180,5))
+        #print(self.URLtype)
+        return self.URLtype
     def Edit(self):
         tkinter.messagebox.showinfo("Edit Mode on", "Edit Mode on")
         self.LRLBox.config(state='readonly')
@@ -1438,6 +1466,7 @@ class ParametersWindow:
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
+        self.URLtype = self.LRLBox.bind('<<ComboboxSelected>>', self.modified)
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
