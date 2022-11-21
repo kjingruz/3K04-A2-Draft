@@ -285,7 +285,7 @@ class VOORParameterDatabase:
         self.connection = sqlite3.connect("VOORparameter.db")
         self.Cursor = self.connection.cursor()
         self.Cursor.execute(
-            "CREATE TABLE IF NOT EXISTS VOORparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, AtrialAmplitude text, AtrialWidth text, MaxSensorRate text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
+            "CREATE TABLE IF NOT EXISTS VOORparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, VentricularAmplitude text, VentricularWidth text, MaxSensorRate text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
 
     def __del__(self):
         self.Cursor.close()
