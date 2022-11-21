@@ -97,15 +97,15 @@ class AAIParameterDatabase:
         self.connection = sqlite3.connect("AAIparameter.db")
         self.Cursor = self.connection.cursor()
         self.Cursor.execute(
-            "CREATE TABLE IF NOT EXISTS AAIparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, AtrialAmplitude text, AtrialWidth text, AtrialSensitivity text, ARP text, PVARP text, Hysteresis text, RateSmoothing text)")
+            "CREATE TABLE IF NOT EXISTS AAIparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, AtrialAmplitude text, AtrialWidth text, AtrialSensitivity text, ARP text, PVARP text)")
 
     def __del__(self):
         self.Cursor.close()
         self.connection.close()
 
-    def Insert(self, userID, LRL, URL,Atrial_Amplitude, Atrial_Pulse_Width, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing):
-        self.Cursor.execute("INSERT INTO AAIparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                              (userID, LRL, URL, Atrial_Amplitude,Atrial_Pulse_Width,Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing))
+    def Insert(self, userID, LRL, URL,Atrial_Amplitude, Atrial_Pulse_Width, Atrial_Sensitivity, ARP, PVARP):
+        self.Cursor.execute("INSERT INTO AAIparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                              (userID, LRL, URL, Atrial_Amplitude,Atrial_Pulse_Width,Atrial_Sensitivity, ARP, PVARP))
         self.connection.commit()
 
     def Display(self):
@@ -118,10 +118,10 @@ class AAIParameterDatabase:
         searchResults = self.Cursor.fetchall()
         return searchResults
 
-    def Update(self, LRL, URL,Atrial_Amplitude, Atrial_Pulse_Width, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, userID):
+    def Update(self, LRL, URL,Atrial_Amplitude, Atrial_Pulse_Width, Atrial_Sensitivity, ARP, PVARP, userID):
         self.Cursor.execute(
-            "UPDATE AAIparameter_table SET LRL = ?, URL = ?, AtrialAmplitude = ?, AtrialWidth = ?, AtrialSensitivity = ?, ARP = ?, PVARP = ?, Hysteresis = ?, RateSmoothing = ? WHERE userID = ?",
-            (LRL, URL, Atrial_Amplitude,Atrial_Pulse_Width,Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, userID))
+            "UPDATE AAIparameter_table SET LRL = ?, URL = ?, AtrialAmplitude = ?, AtrialWidth = ?, AtrialSensitivity = ?, ARP = ?, PVARP = ? WHERE userID = ?",
+            (LRL, URL, Atrial_Amplitude,Atrial_Pulse_Width,Atrial_Sensitivity, ARP, PVARP, userID))
         self.connection.commit()
 
     def Empty(self, userID):
@@ -135,15 +135,15 @@ class VVIParameterDatabase:
         self.connection = sqlite3.connect("VVIparameter.db")
         self.Cursor = self.connection.cursor()
         self.Cursor.execute(
-            "CREATE TABLE IF NOT EXISTS VVIparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, VentricularAmplitude text, VentricularWidth text, VentricularSensitivity text, VRP text, Hysteresis text, RateSmoothing text)")
+            "CREATE TABLE IF NOT EXISTS VVIparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, VentricularAmplitude text, VentricularWidth text, VentricularSensitivity text, VRP text)")
 
     def __del__(self):
         self.Cursor.close()
         self.connection.close()
 
-    def Insert(self, userID, LRL, URL,Ventricular_Amplitude, Ventricular_Pulse_Width, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing):
-        self.Cursor.execute("INSERT INTO VVIparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                              (userID, LRL, URL, Ventricular_Amplitude,Ventricular_Pulse_Width,Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing))
+    def Insert(self, userID, LRL, URL,Ventricular_Amplitude, Ventricular_Pulse_Width, Ventricular_Sensitivity, VRP):
+        self.Cursor.execute("INSERT INTO VVIparameter_table VALUES (?, ?, ?, ?, ?, ?, ?)",
+                              (userID, LRL, URL, Ventricular_Amplitude,Ventricular_Pulse_Width,Ventricular_Sensitivity, VRP))
         self.connection.commit()
 
     def Display(self):
@@ -156,10 +156,10 @@ class VVIParameterDatabase:
         searchResults = self.Cursor.fetchall()
         return searchResults
 
-    def Update(self, LRL, URL,Ventricular_Amplitude, Ventricular_Pulse_Width, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, userID):
+    def Update(self, LRL, URL,Ventricular_Amplitude, Ventricular_Pulse_Width, Ventricular_Sensitivity, VRP, userID):
         self.Cursor.execute(
-            "UPDATE VVIparameter_table SET LRL = ?, URL = ?, VentricularAmplitude = ?, VentricularWidth = ?, VentricularSensitivity = ?, VRP = ?, Hysteresis = ?, RateSmoothing = ? WHERE userID = ?",
-            (LRL, URL, Ventricular_Amplitude,Ventricular_Pulse_Width,Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, userID))
+            "UPDATE VVIparameter_table SET LRL = ?, URL = ?, VentricularAmplitude = ?, VentricularWidth = ?, VentricularSensitivity = ?, VRP = ? WHERE userID = ?",
+            (LRL, URL, Ventricular_Amplitude,Ventricular_Pulse_Width,Ventricular_Sensitivity, VRP, userID))
         self.connection.commit()
 
     def Empty(self, userID):
@@ -322,15 +322,15 @@ class AAIRParameterDatabase:
         self.connection = sqlite3.connect("AAIRparameter.db")
         self.Cursor = self.connection.cursor()
         self.Cursor.execute(
-            "CREATE TABLE IF NOT EXISTS AAIRparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, AtrialAmplitude text, AtrialWidth text, MaxSensorRate text, AtrialSensitivity text, ARP text, PVARP text, Hysteresis text, RateSmoothing text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
+            "CREATE TABLE IF NOT EXISTS AAIRparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, AtrialAmplitude text, AtrialWidth text, MaxSensorRate text, AtrialSensitivity text, ARP text, PVARP text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
 
     def __del__(self):
         self.Cursor.close()
         self.connection.close()
         #insert into the database
-    def Insert(self, userID, LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
-        self.Cursor.execute("INSERT INTO AAIRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                              (userID, LRL, URL, Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
+    def Insert(self, userID, LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
+        self.Cursor.execute("INSERT INTO AAIRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                              (userID, LRL, URL, Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
         self.connection.commit()
     #display the parameters
     def Display(self):
@@ -343,10 +343,10 @@ class AAIRParameterDatabase:
         searchResults = self.Cursor.fetchall()
         return searchResults
     #update the database
-    def Update(self, LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
+    def Update(self, LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
         self.Cursor.execute(
-            "UPDATE AAIRparameter_table SET LRL = ?, URL = ?, AtrialAmplitude = ?, AtrialWidth = ?, MaxSensorRate = ?, AtrialSensitivity = ?, ARP = ?, PVARP = ?, Hysteresis = ?, RateSmoothing = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
-            (LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
+            "UPDATE AAIRparameter_table SET LRL = ?, URL = ?, AtrialAmplitude = ?, AtrialWidth = ?, MaxSensorRate = ?, AtrialSensitivity = ?, ARP = ?, PVARP = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
+            (LRL, URL,Atrial_Amplitude, Atrial_Width, Max_Sensor_Rate, Atrial_Sensitivity, ARP, PVARP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
         self.connection.commit()
     #checking if there is anything using the userID in the database, returns boolean
     def Empty(self, userID):
@@ -359,15 +359,15 @@ class VVIRParameterDatabase:
         self.connection = sqlite3.connect("VVIRparameter.db")
         self.Cursor = self.connection.cursor()
         self.Cursor.execute(
-            "CREATE TABLE IF NOT EXISTS VVIRparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, VentricularAmplitude text, VentricularWidth text, MaxSensorRate text, VentricularSensitivity text, VRP text, Hysteresis text, RateSmoothing text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
+            "CREATE TABLE IF NOT EXISTS VVIRparameter_table (UserID PRIMARYKEY text unique, LRL text, URL text, VentricularAmplitude text, VentricularWidth text, MaxSensorRate text, VentricularSensitivity text, VRP text, ActivityThreshold text, ReactionTime text, ResponseFactor text, RecoveryTime text)")
 
     def __del__(self):
         self.Cursor.close()
         self.connection.close()
         #insert into the database
-    def Insert(self, userID, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
-        self.Cursor.execute("INSERT INTO VVIRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                              (userID, LRL, URL, Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
+    def Insert(self, userID, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
+        self.Cursor.execute("INSERT INTO VVIRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                              (userID, LRL, URL, Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
         self.connection.commit()
     #display the parameters
     def Display(self):
@@ -380,10 +380,10 @@ class VVIRParameterDatabase:
         searchResults = self.Cursor.fetchall()
         return searchResults
     #update the database
-    def Update(self, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
+    def Update(self, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
         self.Cursor.execute(
-            "UPDATE VVIRparameter_table SET LRL = ?, URL = ?, AtrialAmplitude = ?, AtrialWidth = ?, MaxSensorRate = ?, AtrialSensitivity = ?, ARP = ?, PVARP = ?, Hysteresis = ?, RateSmoothing = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
-            (LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
+            "UPDATE VVIRparameter_table SET LRL = ?, URL = ?, AtrialAmplitude = ?, AtrialWidth = ?, MaxSensorRate = ?, AtrialSensitivity = ?, ARP = ?, PVARP = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
+            (LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
         self.connection.commit()
     #checking if there is anything using the userID in the database, returns boolean
     def Empty(self, userID):
@@ -506,7 +506,7 @@ class AAIparametersDatabaseView:
         self.databaseView.grid(pady=5, column=1, row=2)
         self.databaseView["show"] = "headings"
         self.databaseView["columns"] = ("UserID", "LRL", "URL", "AtrialAmplitude", "AtrialWidth","AtrialSensitivity",
-                                        "ARP", "PVARP","Hysteresis", "RateSmoothing")
+                                        "ARP", "PVARP")
 
         # Treeview column headings
         self.databaseView.heading("UserID", text="UserID")
@@ -517,8 +517,6 @@ class AAIparametersDatabaseView:
         self.databaseView.heading("AtrialSensitivity", text="AtrialSensitivity")
         self.databaseView.heading("ARP", text="ARP")
         self.databaseView.heading("PVARP", text="PVARP")
-        self.databaseView.heading("Hysteresis", text="Hysteresis")
-        self.databaseView.heading("RateSmoothing", text="RateSmoothing")
 
         self.databaseView.column("UserID", width=100)
         self.databaseView.column("LRL", width=100)
@@ -528,8 +526,6 @@ class AAIparametersDatabaseView:
         self.databaseView.column("AtrialSensitivity", width=100)
         self.databaseView.column("ARP", width=100)
         self.databaseView.column("PVARP", width=100)
-        self.databaseView.column("Hysteresis", width=100)
-        self.databaseView.column("RateSmoothing", width=100)
 
         for record in data:
             self.databaseView.insert('', 'end', values=(record))
@@ -548,7 +544,7 @@ class VVIparametersDatabaseView:
         self.databaseView.grid(pady=5, column=1, row=2)
         self.databaseView["show"] = "headings"
         self.databaseView["columns"] = ("UserID", "LRL", "URL", "VentricularAmplitude", "VentricularWidth",
-                                        "VentricularSensitivity", "VRP", "Hysteresis", "RateSmoothing")
+                                        "VentricularSensitivity", "VRP")
 
         # Treeview column headings
         self.databaseView.heading("UserID", text="UserID")
@@ -558,8 +554,6 @@ class VVIparametersDatabaseView:
         self.databaseView.heading("VentricularWidth", text="VentricularWidth")
         self.databaseView.heading("VentricularSensitivity", text="VentricularSensitivity")
         self.databaseView.heading("VRP", text="VRP")
-        self.databaseView.heading("Hysteresis", text="Hysteresis")
-        self.databaseView.heading("RateSmoothing", text="RateSmoothing")
 
         self.databaseView.column("UserID", width=100)
         self.databaseView.column("LRL", width=100)
@@ -568,8 +562,6 @@ class VVIparametersDatabaseView:
         self.databaseView.column("VentricularWidth", width=100)
         self.databaseView.column("VentricularSensitivity", width=100)
         self.databaseView.column("VRP", width=100)
-        self.databaseView.column("Hysteresis", width=100)
-        self.databaseView.column("RateSmoothing", width=100)
 
         for record in data:
             self.databaseView.insert('', 'end', values=(record))
@@ -728,7 +720,7 @@ class AAIRparametersDatabaseView:
         self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
         self.databaseView.grid(pady=5, column=1, row=2)
         self.databaseView["show"] = "headings"
-        self.databaseView["columns"] = ("UserID", "LRL", "URL", "AtrialAmplitude", "AtrialWidth", "MaxSensorRate", "AtrialSensitivity", "ARP", "PVARP", "Hysteresis", "RateSmoothing", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "AtrialAmplitude", "AtrialWidth", "MaxSensorRate", "AtrialSensitivity", "ARP", "PVARP", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
 
         # Treeview column headings
         self.databaseView.heading("UserID", text="UserID")
@@ -740,8 +732,6 @@ class AAIRparametersDatabaseView:
         self.databaseView.heading("AtrialSensitivity", text="AtrialSensitivity")
         self.databaseView.heading("ARP", text="ARP")
         self.databaseView.heading("PVARP", text="PVARP")
-        self.databaseView.heading("Hysteresis", text="Hysteresis")
-        self.databaseView.heading("RateSmoothing", text="RateSmoothing")
         self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
         self.databaseView.heading("ReactionTime", text="ReactionTime")
         self.databaseView.heading("ResponseFactor", text="ResponseFactor")
@@ -756,8 +746,6 @@ class AAIRparametersDatabaseView:
         self.databaseView.column("AtrialSensitivity", width=100)
         self.databaseView.column("ARP", width=100)
         self.databaseView.column("PVARP", width=100)
-        self.databaseView.column("Hysteresis", width=100)
-        self.databaseView.column("RateSmoothing", width=100)
         self.databaseView.column("ActivityThreshold", width=100)
         self.databaseView.column("ReactionTime", width=100)
         self.databaseView.column("ResponseFactor", width=100)
@@ -778,7 +766,7 @@ class VVIRparametersDatabaseView:
         self.databaseView = tkinter.ttk.Treeview(self.databaseViewWindow)
         self.databaseView.grid(pady=5, column=1, row=2)
         self.databaseView["show"] = "headings"
-        self.databaseView["columns"] = ("UserID", "LRL", "URL", "VentricularAmplitude", "VentricularWidth", "MaxSensorRate", "VentricularSensitivity", "VRP", "Hysteresis", "RateSmoothing", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
+        self.databaseView["columns"] = ("UserID", "LRL", "URL", "VentricularAmplitude", "VentricularWidth", "MaxSensorRate", "VentricularSensitivity", "VRP", "ActivityThreshold", "ReactionTime", "ResponseFactor", "RecoveryTime")
         # Treeview column headings
         self.databaseView.heading("UserID", text="UserID")
         self.databaseView.heading("LRL", text="LRL")
@@ -788,8 +776,6 @@ class VVIRparametersDatabaseView:
         self.databaseView.heading("MaxSensorRate", text="MaxSensorRate")
         self.databaseView.heading("VentricularSensitivity", text="VentricularSensitivity")
         self.databaseView.heading("VRP", text="VRP")
-        self.databaseView.heading("Hysteresis", text="Hysteresis")
-        self.databaseView.heading("RateSmoothing", text="RateSmoothing")
         self.databaseView.heading("ActivityThreshold", text="ActivityThreshold")
         self.databaseView.heading("ReactionTime", text="ReactionTime")
         self.databaseView.heading("ResponseFactor", text="ResponseFactor")
@@ -803,8 +789,6 @@ class VVIRparametersDatabaseView:
         self.databaseView.column("MaxSensorRate", width=100)
         self.databaseView.column("VentricularSensitivity", width=100)
         self.databaseView.column("VRP", width=100)
-        self.databaseView.column("Hysteresis", width=100)
-        self.databaseView.column("RateSmoothing", width=100)
         self.databaseView.column("ActivityThreshold", width=100)
         self.databaseView.column("ReactionTime", width=100)
         self.databaseView.column("ResponseFactor", width=100)
@@ -1010,8 +994,6 @@ class ParametersWindow:
         self.Sensitivitytype = [0.25, 0.5, 0.75]+list(self.float_range(0, 10.5, '0.5'))
         self.RPtype = list(range(150,510,10))
         self.PVARPtype = list(range(150,510,10))
-        self.Hysteresistype = ["Off", "Same as LRL"]
-        self.RateSmoothingtype = ["Off", "3%", "6%", "9%", "12%", "15%", "18%", "21%", "25%"]
         self.MaxSensorRate = list(range(50,180,5))
         self.ActivityThreshold = ["V-Low", 'Low', 'Med-Low', 'Med','Med-High', 'High', 'V-High']
         self.ReactionTime = list(range(10,60,10))
@@ -1037,8 +1019,6 @@ class ParametersWindow:
                 self.SensitivityBox.set(self.searchresult[0][5])
                 self.ARPBox.set(self.searchresult[0][6])
                 self.PVARPBox.set(self.searchresult[0][7])
-                self.HysteresisBox.set(self.searchresult[0][8])
-                self.RateSmoothingBox.set(self.searchresult[0][9])
             else:
                 self.AAIdefaultSetting()
 
@@ -1054,8 +1034,6 @@ class ParametersWindow:
                 self.PulseWidthBox.set(self.searchresult[0][4])
                 self.SensitivityBox.set(self.searchresult[0][5])
                 self.VRPBox.set(self.searchresult[0][6])
-                self.HysteresisBox.set(self.searchresult[0][7])
-                self.RateSmoothingBox.set(self.searchresult[0][8])
             else:
                 self.VVIdefaultSetting()
 
@@ -1121,12 +1099,10 @@ class ParametersWindow:
                 self.SensitivityBox.set(self.searchresult[0][6])
                 self.ARPBox.set(self.searchresult[0][7])
                 self.PVARPBox.set(self.searchresult[0][8])
-                self.HysteresisBox.set(self.searchresult[0][9])
-                self.RateSmoothingBox.set(self.searchresult[0][10])
-                self.ActivityThresholdBox.set(self.searchresult[0][11])
-                self.ReactionTimeBox.set(self.searchresult[0][12])
-                self.ResponseFactorBox.set(self.searchresult[0][13])
-                self.RecoveryTimeBox.set(self.searchresult[0][14])
+                self.ActivityThresholdBox.set(self.searchresult[0][9])
+                self.ReactionTimeBox.set(self.searchresult[0][10])
+                self.ResponseFactorBox.set(self.searchresult[0][11])
+                self.RecoveryTimeBox.set(self.searchresult[0][12])
             else:
                 self.AAIRdefaultSetting()
 
@@ -1143,12 +1119,10 @@ class ParametersWindow:
                 self.MaxSensorRateBox.set(self.searchresult[0][5])
                 self.SensitivityBox.set(self.searchresult[0][6])
                 self.VRPBox.set(self.searchresult[0][7])
-                self.HysteresisBox.set(self.searchresult[0][8])
-                self.RateSmoothingBox.set(self.searchresult[0][9])
-                self.ActivityThresholdBox.set(self.searchresult[0][10])
-                self.ReactionTimeBox.set(self.searchresult[0][11])
-                self.ResponseFactorBox.set(self.searchresult[0][12])
-                self.RecoveryTimeBox.set(self.searchresult[0][13])
+                self.ActivityThresholdBox.set(self.searchresult[0][8])
+                self.ReactionTimeBox.set(self.searchresult[0][9])
+                self.ResponseFactorBox.set(self.searchresult[0][10])
+                self.RecoveryTimeBox.set(self.searchresult[0][11])
             else:
                 self.VVIRdefaultSetting()
 
@@ -1170,32 +1144,26 @@ class ParametersWindow:
             self.ARPBox.config(state='disabled')
             self.PVARPBox.config(state='disabled')
             self.SensitivityBox.config(state='disabled')
-            self.HysteresisBox.config(state='disabled')
-            self.RateSmoothingBox.config(state='disabled')
             #try to insert the parameters, if failed because of previously saved parameters, update them
             try:
                 self.AAIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
-                                        self.SensitivityBox.get(),self.HysteresisBox.get(),self.RateSmoothingBox.get())
+                                        self.SensitivityBox.get())
             except sqlite3.IntegrityError:
                 self.AAIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
-                                        self.SensitivityBox.get(),self.HysteresisBox.get(),self.RateSmoothingBox.get(),
-                                        self.UserID)
+                                        self.SensitivityBox.get(),self.UserID)
         elif self.currentmode == "VVI":
             self.VRPBox.config(state='disabled')
             self.SensitivityBox.config(state='disabled')
-            self.HysteresisBox.config(state='disabled')
-            self.RateSmoothingBox.config(state='disabled')
             try:
                 self.VVIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(),self.VRPBox.get(),
-                                        self.SensitivityBox.get(),self.HysteresisBox.get(),self.RateSmoothingBox.get())
+                                        self.SensitivityBox.get())
             except sqlite3.IntegrityError:
                 self.VVIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(),self.VRPBox.get(),
-                                        self.SensitivityBox.get(),self.HysteresisBox.get(),self.RateSmoothingBox.get(),
-                                        self.UserID)
+                                        self.SensitivityBox.get(),self.UserID)
         elif self.currentmode == "AOO":
             try:
                 self.AOOdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
@@ -1243,8 +1211,6 @@ class ParametersWindow:
             self.ARPBox.config(state='disabled')
             self.PVARPBox.config(state='disabled')
             self.SensitivityBox.config(state='disabled')
-            self.HysteresisBox.config(state='disabled')
-            self.RateSmoothingBox.config(state='disabled')
             self.ActivityThresholdBox.config(state='disabled')
             self.RecoveryTimeBox.config(state='disabled')
             self.ReactionTimeBox.config(state='disabled')
@@ -1253,20 +1219,17 @@ class ParametersWindow:
                 self.AAIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.ARPBox.get(), self.PVARPBox.get(),
                                         self.HysteresisBox.get(), self.RateSmoothingBox.get(),
-                                        self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                        self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
+                                        self.ActivityThresholdBox.get(), self.ReactionTimeBox.get())
             except sqlite3.IntegrityError:
                 self.AAIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.ARPBox.get(), self.PVARPBox.get(),
-                                        self.HysteresisBox.get(), self.RateSmoothingBox.get(),
+                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
+                                        self.ARPBox.get(), self.PVARPBox.get(),
                                         self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
 
         elif self.currentmode == "VVIR":
             self.VRPBox.config(state='disabled')
             self.SensitivityBox.config(state='disabled')
-            self.HysteresisBox.config(state='disabled')
-            self.RateSmoothingBox.config(state='disabled')
             self.ActivityThresholdBox.config(state='disabled')
             self.RecoveryTimeBox.config(state='disabled')
             self.ReactionTimeBox.config(state='disabled')
@@ -1275,13 +1238,11 @@ class ParametersWindow:
             try:
                 self.VVIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
-                                        self.HysteresisBox.get(), self.RateSmoothingBox.get(),
                                         self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
             except sqlite3.IntegrityError:
                 self.VVIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                         self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
-                                        self.HysteresisBox.get(), self.RateSmoothingBox.get(),
                                         self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
 
@@ -1313,13 +1274,9 @@ class ParametersWindow:
             self.SensitivityBox.config(state='readonly')
             self.ARPBox.config(state='readonly')
             self.PVARPBox.config(state='readonly')
-            self.HysteresisBox.config(state='readonly')
-            self.RateSmoothingBox.config(state='readonly')
         elif self.currentmode == "VVI":
             self.SensitivityBox.config(state='readonly')
             self.VRPBox.config(state='readonly')
-            self.HysteresisBox.config(state='readonly')
-            self.RateSmoothingBox.config(state='readonly')
         elif self.currentmode == "AOOR":
             self.MaxSensorRateBox.config(state='readonly')
             self.ActivityThresholdBox.config(state='readonly')
@@ -1340,8 +1297,6 @@ class ParametersWindow:
             self.ResponseFactorBox.config(state='readonly')
             self.SensitivityBox.config(state='readonly')
             self.ARPBox.config(state='readonly')
-            self.HysteresisBox.config(state='readonly')
-            self.RateSmoothingBox.config(state='readonly')
             self.PVARPBox.config(state='readonly')
         elif self.currentmode == "VVIR":
             self.MaxSensorRateBox.config(state='readonly')
@@ -1351,8 +1306,6 @@ class ParametersWindow:
             self.ResponseFactorBox.config(state='readonly')
             self.SensitivityBox.config(state='readonly')
             self.VRPBox.config(state='readonly')
-            self.HysteresisBox.config(state='readonly')
-            self.RateSmoothingBox.config(state='readonly')
 
         #display the saved parameters in the database
     def Display(self):
@@ -1397,8 +1350,6 @@ class ParametersWindow:
         self.SensitivityBox.set(0.75)
         self.ARPBox.set(250)
         self.PVARPBox.set(250)
-        self.HysteresisBox.set("Off")
-        self.RateSmoothingBox.set("Off")
 
     def VVIdefaultSetting(self):
         self.LRLBox.set(60)
@@ -1407,8 +1358,6 @@ class ParametersWindow:
         self.PulseWidthBox.set(1)
         self.SensitivityBox.set(2.5)
         self.VRPBox.set(320)
-        self.HysteresisBox.set("Off")
-        self.RateSmoothingBox.set("Off")
 
     def generalbuttonsetup(self, bg_color, fg_color, cha_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
@@ -1436,8 +1385,6 @@ class ParametersWindow:
         self.SensitivityBox.set(0.75)
         self.ARPBox.set(250)
         self.PVARPBox.set(250)
-        self.HysteresisBox.set("Off")
-        self.RateSmoothingBox.set("Off")
         self.ActivityThresholdBox.set('Med')
         self.ReactionTimeBox.set(30)
         self.ResponseFactorBox.set(8)
@@ -1451,8 +1398,6 @@ class ParametersWindow:
         self.PulseWidthBox.set(1)
         self.SensitivityBox.set(2.5)
         self.VRPBox.set(320)
-        self.HysteresisBox.set("Off")
-        self.RateSmoothingBox.set("Off")
         self.ActivityThresholdBox.set('Med')
         self.ReactionTimeBox.set(30)
         self.ResponseFactorBox.set(8)
@@ -1483,19 +1428,13 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Atrial Sensitivity: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=5)
-        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="ARP: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="PVARP: ",
+                      text="ARP: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Hysteresis: ",
+                      text="PVARP: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
-        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Rate Smoothing: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
@@ -1508,39 +1447,29 @@ class ParametersWindow:
                                                    state='disabled')
         self.ARPBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RPtype, width=20, state='disabled')
         self.PVARPBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PVARPtype, width=20, state='disabled')
-        self.HysteresisBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.Hysteresistype,
-                                                  width=20, state='disabled')
-        self.RateSmoothingBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RateSmoothingtype, width=20,
-                                                     state='disabled')
+
         # location of the comboboxes
         self.LRLBox.grid(pady=5, column=2, row=1)
         self.URLBox.grid(pady=5, column=2, row=2)
         self.PulseAmplitudeBox.grid(pady=5, column=2, row=3)
         self.PulseWidthBox.grid(pady=5, column=2, row=4)
-        self.SensitivityBox.grid(pady=5, column=2, row=5)
-        self.ARPBox.grid(pady=5, column=4, row=1)
-        self.PVARPBox.grid(pady=5, column=4, row=2)
-        self.HysteresisBox.grid(pady=5, column=4, row=3)
-        self.RateSmoothingBox.grid(pady=5, column=4, row=4)
+        self.SensitivityBox.grid(pady=5, column=4, row=1)
+        self.ARPBox.grid(pady=5, column=4, row=2)
+        self.PVARPBox.grid(pady=5, column=4, row=3)
+
     def VVIsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Ventricular Amplitude: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Ventricular Pulse Width: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
-        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Ventricular Sensitivity: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="VRP: ",
+                      text="Ventricular Sensitivity: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Hysteresis: ",
+                      text="VRP: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
-        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Rate Smoothing: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
@@ -1551,18 +1480,14 @@ class ParametersWindow:
         self.SensitivityBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.Sensitivitytype, width=20,
                                                    state='disabled')
         self.VRPBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RPtype, width=20, state='disabled')
-        self.HysteresisBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.Hysteresistype, width=20,
-                                                  state='disabled')
-        self.RateSmoothingBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RateSmoothingtype, width=20,
-                                                     state='disabled')
+
         self.LRLBox.grid(pady=5, column=2, row=1)
         self.URLBox.grid(pady=5, column=2, row=2)
         self.PulseAmplitudeBox.grid(pady=5, column=2, row=3)
-        self.PulseWidthBox.grid(pady=5, column=2, row=4)
-        self.SensitivityBox.grid(pady=5, column=4, row=1)
-        self.VRPBox.grid(pady=5, column=4, row=2)
-        self.HysteresisBox.grid(pady=5, column=4, row=3)
-        self.RateSmoothingBox.grid(pady=5, column=4, row=4)
+        self.PulseWidthBox.grid(pady=5, column=4, row=1)
+        self.SensitivityBox.grid(pady=5, column=4, row=2)
+        self.VRPBox.grid(pady=5, column=4, row=3)
+
     def AOOsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Atrial Amplitude: ",
@@ -1630,28 +1555,22 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=6)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="ARP: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=7)
-        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="PVARP: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Hysteresis: ",
+                      text="PVARP: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Rate Smoothing: ",
+                      text="Activity Threshold: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Activity Threshold: ",
+                      text="Reaction Time: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Reaction Time: ",
+                      text="Response Factor: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=5)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Response Factor: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=6)
-        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Recovery Time: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=7)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=6)
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
@@ -1665,10 +1584,6 @@ class ParametersWindow:
                                                    state='disabled')
         self.ARPBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RPtype, width=20, state='disabled')
         self.PVARPBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PVARPtype, width=20, state='disabled')
-        self.HysteresisBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.Hysteresistype,
-                                                  width=20, state='disabled')
-        self.RateSmoothingBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RateSmoothingtype, width=20,
-                                                     state='disabled')
         self.ActivityThresholdBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.ActivityThreshold, width=20,
                                                          state='disabled')
         self.ReactionTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.ReactionTime, width=20,
@@ -1684,14 +1599,12 @@ class ParametersWindow:
         self.PulseAmplitudeBox.grid(pady=5, column=2, row=4)
         self.PulseWidthBox.grid(pady=5, column=2, row=5)
         self.SensitivityBox.grid(pady=5, column=2, row=6)
-        self.ARPBox.grid(pady=5, column=2, row=7)
-        self.PVARPBox.grid(pady=5, column=4, row=1)
-        self.HysteresisBox.grid(pady=5, column=4, row=2)
-        self.RateSmoothingBox.grid(pady=5, column=4, row=3)
-        self.ActivityThresholdBox.grid(pady=5, column=4, row=4)
-        self.ReactionTimeBox.grid(pady=5, column=4, row=5)
-        self.ResponseFactorBox.grid(pady=5, column=4, row=6)
-        self.RecoveryTimeBox.grid(pady=5, column=4, row=7)
+        self.ARPBox.grid(pady=5, column=4, row=1)
+        self.PVARPBox.grid(pady=5, column=4, row=2)
+        self.ActivityThresholdBox.grid(pady=5, column=4, row=3)
+        self.ReactionTimeBox.grid(pady=5, column=4, row=4)
+        self.ResponseFactorBox.grid(pady=5, column=4, row=5)
+        self.RecoveryTimeBox.grid(pady=5, column=4, row=6)
     def VVIRsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Maximum Sensor Rate: ",
@@ -1707,25 +1620,19 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=6)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="VRP: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=7)
-        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Hysteresis: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Rate Smoothing: ",
+                      text="Activity Threshold: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Activity Threshold: ",
+                      text="Reaction Time: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Reaction Time: ",
+                      text="Response Factor: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Response Factor: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=5)
-        tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Recovery Time: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=6)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=5)
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
@@ -1739,10 +1646,6 @@ class ParametersWindow:
         self.SensitivityBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.Sensitivitytype, width=20,
                                                    state='disabled')
         self.VRPBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RPtype, width=20, state='disabled')
-        self.HysteresisBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.Hysteresistype,
-                                                  width=20, state='disabled')
-        self.RateSmoothingBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RateSmoothingtype, width=20,
-                                                     state='disabled')
         self.ActivityThresholdBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.ActivityThreshold, width=20,
                                                          state='disabled')
         self.ReactionTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.ReactionTime, width=20,
@@ -1758,13 +1661,11 @@ class ParametersWindow:
         self.PulseWidthBox.grid(pady=5, column=2, row=4)
         self.MaxSensorRateBox.grid(pady=5, column=2, row=5)
         self.SensitivityBox.grid(pady=5, column=2, row=6)
-        self.VRPBox.grid(pady=5, column=2, row=7)
-        self.HysteresisBox.grid(pady=5, column=4, row=1)
-        self.RateSmoothingBox.grid(pady=5, column=4, row=2)
-        self.ActivityThresholdBox.grid(pady=5, column=4, row=3)
-        self.ReactionTimeBox.grid(pady=5, column=4, row=4)
-        self.ResponseFactorBox.grid(pady=5, column=4, row=5)
-        self.RecoveryTimeBox.grid(pady=5, column=4, row=6)
+        self.VRPBox.grid(pady=5, column=4, row=1)
+        self.ActivityThresholdBox.grid(pady=5, column=4, row=2)
+        self.ReactionTimeBox.grid(pady=5, column=4, row=3)
+        self.ResponseFactorBox.grid(pady=5, column=4, row=4)
+        self.RecoveryTimeBox.grid(pady=5, column=4, row=5)
     def AOORVOORRepsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Maximum Sensor Rate: ",
