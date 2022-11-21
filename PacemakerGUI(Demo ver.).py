@@ -366,7 +366,7 @@ class VVIRParameterDatabase:
         self.connection.close()
         #insert into the database
     def Insert(self, userID, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time):
-        self.Cursor.execute("INSERT INTO VVIRRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        self.Cursor.execute("INSERT INTO VVIRparameter_table VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                               (userID, LRL, URL, Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Hysteresis, Rate_Smoothing, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time))
         self.connection.commit()
     #display the parameters
@@ -1263,7 +1263,7 @@ class ParametersWindow:
                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
 
         elif self.currentmode == "VVIR":
-            self.ARPBox.config(state='disabled')
+            self.VRPBox.config(state='disabled')
             self.SensitivityBox.config(state='disabled')
             self.HysteresisBox.config(state='disabled')
             self.RateSmoothingBox.config(state='disabled')
@@ -1274,13 +1274,13 @@ class ParametersWindow:
             self.MaxSensorRateBox.config(state='disabled')
             try:
                 self.VVIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.ARPBox.get(),
+                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
                                         self.HysteresisBox.get(), self.RateSmoothingBox.get(),
                                         self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
             except sqlite3.IntegrityError:
                 self.VVIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.ARPBox.get(),
+                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
                                         self.HysteresisBox.get(), self.RateSmoothingBox.get(),
                                         self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
