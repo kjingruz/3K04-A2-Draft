@@ -10,6 +10,35 @@ warning = True
 #connection is a boolean to show that the connection with the pacemaker
 connection = True
 
+class sendSerial:
+    def __init__(self, currentmode):
+        self.cmode = currentmode
+        self.AOO = AOOParameterDatabase()
+        self.VOO = VOOParameterDatabase()
+        self.AAI = AAIParameterDatabase()
+        self.VVI = VVIParameterDatabase()
+        self.AOOR = AOORParameterDatabase()
+        self.VOOR = VOORParameterDatabase()
+        self.AAIR = AAIRParameterDatabase()
+        self.VVIR = VVIRParameterDatabase()
+
+        if self.cmode == "AOO":
+            pass
+        elif self.cmode == "VOO":
+            pass
+        elif self.cmode == "AAI":
+            pass
+        elif self.cmode == "VVI":
+            pass
+        elif self.cmode == "AOOR":
+            pass
+        elif self.cmode == "VOOR":
+            pass
+        elif self.cmode == "AAIR":
+            pass
+        elif self.cmode == "VVIR":
+            pass
+
 #stores the login creditals
 class LoginDatabase:
     def __init__(self):
@@ -1457,16 +1486,16 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=5)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="ARP: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=6)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="PVARP: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=7)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Hysteresis: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=8)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Rate Smoothing: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=9)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
@@ -1484,15 +1513,15 @@ class ParametersWindow:
         self.RateSmoothingBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RateSmoothingtype, width=20,
                                                      state='disabled')
         # location of the comboboxes
-        self.LRLBox.grid(pady=5, column=3, row=1)
-        self.URLBox.grid(pady=5, column=3, row=2)
-        self.PulseAmplitudeBox.grid(pady=5, column=3, row=3)
-        self.PulseWidthBox.grid(pady=5, column=3, row=4)
-        self.SensitivityBox.grid(pady=5, column=3, row=5)
-        self.ARPBox.grid(pady=5, column=3, row=6)
-        self.PVARPBox.grid(pady=5, column=3, row=7)
-        self.HysteresisBox.grid(pady=5, column=3, row=8)
-        self.RateSmoothingBox.grid(pady=5, column=3, row=9)
+        self.LRLBox.grid(pady=5, column=2, row=1)
+        self.URLBox.grid(pady=5, column=2, row=2)
+        self.PulseAmplitudeBox.grid(pady=5, column=2, row=3)
+        self.PulseWidthBox.grid(pady=5, column=2, row=4)
+        self.SensitivityBox.grid(pady=5, column=2, row=5)
+        self.ARPBox.grid(pady=5, column=4, row=1)
+        self.PVARPBox.grid(pady=5, column=4, row=2)
+        self.HysteresisBox.grid(pady=5, column=4, row=3)
+        self.RateSmoothingBox.grid(pady=5, column=4, row=4)
     def VVIsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Ventricular Amplitude: ",
@@ -1502,16 +1531,16 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Ventricular Sensitivity: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=5)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="VRP: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=6)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Hysteresis: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=7)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Rate Smoothing: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=8)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
@@ -1526,21 +1555,21 @@ class ParametersWindow:
                                                   state='disabled')
         self.RateSmoothingBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RateSmoothingtype, width=20,
                                                      state='disabled')
-        self.LRLBox.grid(pady=5, column=3, row=1)
-        self.URLBox.grid(pady=5, column=3, row=2)
-        self.PulseAmplitudeBox.grid(pady=5, column=3, row=3)
-        self.PulseWidthBox.grid(pady=5, column=3, row=4)
-        self.SensitivityBox.grid(pady=5, column=3, row=5)
-        self.VRPBox.grid(pady=5, column=3, row=6)
-        self.HysteresisBox.grid(pady=5, column=3, row=7)
-        self.RateSmoothingBox.grid(pady=5, column=3, row=8)
+        self.LRLBox.grid(pady=5, column=2, row=1)
+        self.URLBox.grid(pady=5, column=2, row=2)
+        self.PulseAmplitudeBox.grid(pady=5, column=2, row=3)
+        self.PulseWidthBox.grid(pady=5, column=2, row=4)
+        self.SensitivityBox.grid(pady=5, column=4, row=1)
+        self.VRPBox.grid(pady=5, column=4, row=2)
+        self.HysteresisBox.grid(pady=5, column=4, row=3)
+        self.RateSmoothingBox.grid(pady=5, column=4, row=4)
     def AOOsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Atrial Amplitude: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=3)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                           text="Atrial Pulse Width: ",
-                          font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
+                          font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
@@ -1548,17 +1577,17 @@ class ParametersWindow:
                                                       state='disabled')
         self.PulseWidthBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
                                                   state='disabled')
-        self.LRLBox.grid(pady=5, column=3, row=1)
-        self.URLBox.grid(pady=5, column=3, row=2)
-        self.PulseAmplitudeBox.grid(pady=5, column=3, row=3)
-        self.PulseWidthBox.grid(pady=5, column=3, row=4)
+        self.LRLBox.grid(pady=5, column=2, row=1)
+        self.URLBox.grid(pady=5, column=2, row=2)
+        self.PulseAmplitudeBox.grid(pady=5, column=4, row=1)
+        self.PulseWidthBox.grid(pady=5, column=4, row=2)
     def VOOsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Ventricular Amplitude: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=3)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Ventricular Pulse Width: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
@@ -1566,10 +1595,10 @@ class ParametersWindow:
                                                       state='disabled')
         self.PulseWidthBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
                                                   state='disabled')
-        self.LRLBox.grid(pady=5, column=3, row=1)
-        self.URLBox.grid(pady=5, column=3, row=2)
-        self.PulseAmplitudeBox.grid(pady=5, column=3, row=3)
-        self.PulseWidthBox.grid(pady=5, column=3, row=4)
+        self.LRLBox.grid(pady=5, column=2, row=1)
+        self.URLBox.grid(pady=5, column=2, row=2)
+        self.PulseAmplitudeBox.grid(pady=5, column=4, row=1)
+        self.PulseWidthBox.grid(pady=5, column=4, row=2)
     def AOORsetup(self, bg_color, fg_color):
         self.AOORVOORRepsetup(bg_color, fg_color)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
@@ -1604,25 +1633,25 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=7)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="PVARP: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=8)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Hysteresis: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=9)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Rate Smoothing: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=10)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Activity Threshold: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=11)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Reaction Time: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=12)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=5)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Response Factor: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=13)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=6)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Recovery Time: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=14)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=7)
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
@@ -1649,20 +1678,20 @@ class ParametersWindow:
         self.RecoveryTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RecoveryTime, width=20,
                                                     state='disabled')
         # location of the comboboxes
-        self.LRLBox.grid(pady=5, column=3, row=1)
-        self.URLBox.grid(pady=5, column=3, row=2)
-        self.MaxSensorRateBox.grid(pady=5, column=3, row=3)
-        self.PulseAmplitudeBox.grid(pady=5, column=3, row=4)
-        self.PulseWidthBox.grid(pady=5, column=3, row=5)
-        self.SensitivityBox.grid(pady=5, column=3, row=6)
-        self.ARPBox.grid(pady=5, column=3, row=7)
-        self.PVARPBox.grid(pady=5, column=3, row=8)
-        self.HysteresisBox.grid(pady=5, column=3, row=9)
-        self.RateSmoothingBox.grid(pady=5, column=3, row=10)
-        self.ActivityThresholdBox.grid(pady=5, column=3, row=11)
-        self.ReactionTimeBox.grid(pady=5, column=3, row=12)
-        self.ResponseFactorBox.grid(pady=5, column=3, row=13)
-        self.RecoveryTimeBox.grid(pady=5, column=3, row=14)
+        self.LRLBox.grid(pady=5, column=2, row=1)
+        self.URLBox.grid(pady=5, column=2, row=2)
+        self.MaxSensorRateBox.grid(pady=5, column=2, row=3)
+        self.PulseAmplitudeBox.grid(pady=5, column=2, row=4)
+        self.PulseWidthBox.grid(pady=5, column=2, row=5)
+        self.SensitivityBox.grid(pady=5, column=2, row=6)
+        self.ARPBox.grid(pady=5, column=2, row=7)
+        self.PVARPBox.grid(pady=5, column=4, row=1)
+        self.HysteresisBox.grid(pady=5, column=4, row=2)
+        self.RateSmoothingBox.grid(pady=5, column=4, row=3)
+        self.ActivityThresholdBox.grid(pady=5, column=4, row=4)
+        self.ReactionTimeBox.grid(pady=5, column=4, row=5)
+        self.ResponseFactorBox.grid(pady=5, column=4, row=6)
+        self.RecoveryTimeBox.grid(pady=5, column=4, row=7)
     def VVIRsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Maximum Sensor Rate: ",
@@ -1681,22 +1710,22 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=7)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Hysteresis: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=8)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Rate Smoothing: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=9)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Activity Threshold: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=10)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Reaction Time: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=11)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Response Factor: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=12)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=5)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Recovery Time: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=13)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=6)
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
@@ -1723,35 +1752,35 @@ class ParametersWindow:
         self.RecoveryTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RecoveryTime, width=20,
                                                     state='disabled')
         # location of the comboboxes
-        self.LRLBox.grid(pady=5, column=3, row=1)
-        self.URLBox.grid(pady=5, column=3, row=2)
-        self.PulseAmplitudeBox.grid(pady=5, column=3, row=3)
-        self.PulseWidthBox.grid(pady=5, column=3, row=4)
-        self.MaxSensorRateBox.grid(pady=5, column=3, row=5)
-        self.SensitivityBox.grid(pady=5, column=3, row=6)
-        self.VRPBox.grid(pady=5, column=3, row=7)
-        self.HysteresisBox.grid(pady=5, column=3, row=8)
-        self.RateSmoothingBox.grid(pady=5, column=3, row=9)
-        self.ActivityThresholdBox.grid(pady=5, column=3, row=10)
-        self.ReactionTimeBox.grid(pady=5, column=3, row=11)
-        self.ResponseFactorBox.grid(pady=5, column=3, row=12)
-        self.RecoveryTimeBox.grid(pady=5, column=3, row=13)
+        self.LRLBox.grid(pady=5, column=2, row=1)
+        self.URLBox.grid(pady=5, column=2, row=2)
+        self.PulseAmplitudeBox.grid(pady=5, column=2, row=3)
+        self.PulseWidthBox.grid(pady=5, column=2, row=4)
+        self.MaxSensorRateBox.grid(pady=5, column=2, row=5)
+        self.SensitivityBox.grid(pady=5, column=2, row=6)
+        self.VRPBox.grid(pady=5, column=2, row=7)
+        self.HysteresisBox.grid(pady=5, column=4, row=1)
+        self.RateSmoothingBox.grid(pady=5, column=4, row=2)
+        self.ActivityThresholdBox.grid(pady=5, column=4, row=3)
+        self.ReactionTimeBox.grid(pady=5, column=4, row=4)
+        self.ResponseFactorBox.grid(pady=5, column=4, row=5)
+        self.RecoveryTimeBox.grid(pady=5, column=4, row=6)
     def AOORVOORRepsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Maximum Sensor Rate: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=5)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Activity Threshold: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=6)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=1)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Reaction Time: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=7)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Response Factor: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=8)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Recovery Time: ",
-                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=9)
+                      font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
@@ -1769,15 +1798,15 @@ class ParametersWindow:
                                                       state='disabled')
         self.RecoveryTimeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RecoveryTime, width=20,
                                                     state='disabled')
-        self.LRLBox.grid(pady=5, column=3, row=1)
-        self.URLBox.grid(pady=5, column=3, row=2)
-        self.PulseAmplitudeBox.grid(pady=5, column=3, row=3)
-        self.PulseWidthBox.grid(pady=5, column=3, row=4)
-        self.MaxSensorRateBox.grid(pady=5, column=3, row=5)
-        self.ActivityThresholdBox.grid(pady=5, column=3, row=6)
-        self.ReactionTimeBox.grid(pady=5, column=3, row=7)
-        self.ResponseFactorBox.grid(pady=5, column=3, row=8)
-        self.RecoveryTimeBox.grid(pady=5, column=3, row=9)
+        self.LRLBox.grid(pady=5, column=2, row=1)
+        self.URLBox.grid(pady=5, column=2, row=2)
+        self.PulseAmplitudeBox.grid(pady=5, column=2, row=3)
+        self.PulseWidthBox.grid(pady=5, column=2, row=4)
+        self.MaxSensorRateBox.grid(pady=5, column=2, row=5)
+        self.ActivityThresholdBox.grid(pady=5, column=4, row=1)
+        self.ReactionTimeBox.grid(pady=5, column=4, row=2)
+        self.ResponseFactorBox.grid(pady=5, column=4, row=3)
+        self.RecoveryTimeBox.grid(pady=5, column=4, row=4)
 
 #opens and initializes the mode window
 class ModeWindow:
