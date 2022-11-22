@@ -1002,7 +1002,8 @@ class ParametersWindow:
         #restricts the input allowed in parameters page
         self.LRLtype = list(range(30,50,5))+list(range(50,90))+list(range(90,180,5))
         #print(self.LRLBox.get())
-        #self.URLtype = list(range(50,180,5)) #self.LRLBox.get() to 180
+        self.URLtype = list(range(50,180,5)) #self.LRLBox.get() to 180
+        #self.URLtype = []
         self.PulseAmplitudetype = ["Off"]+list(self.float_range(1, 5.1, '0.1'))
         self.PulseWidthtype = list(range(1,31,1))
         self.Sensitivitytype = [0.25, 0.5, 0.75]+list(self.float_range(0, 10.5, '0.5'))
@@ -1284,14 +1285,22 @@ class ParametersWindow:
     #make the comboxes editable again
     def modified(self, event):
         self.LRLinput = int(self.LRLBox.get())
-        if self.LRLinput%5 == 1:
+        if self.LRLinput % 5 == 1:
             self.inputs = self.round_up_to_nearest_5(self.LRLinput)
         else:
             self.inputs = self.LRLinput
 
-        self.URLtype = list(range(self.inputs,180,5))
+        self.URLtype = list(range(self.inputs, 180, 5))
         #print(self.URLtype)
-        return self.URLtype
+    def returntype(self):
+        self.LRLinput = int(self.LRLBox.get())
+        if self.LRLinput % 5 == 1:
+            self.inputs = self.round_up_to_nearest_5(self.LRLinput)
+        else:
+            self.inputs = self.LRLinput
+
+        self.LRLtype = list(range(self.inputs, 180, 5))
+        return self.LRLtype
     def Edit(self):
         tkinter.messagebox.showinfo("Edit Mode on", "Edit Mode on")
         self.LRLBox.config(state='readonly')
@@ -1466,7 +1475,7 @@ class ParametersWindow:
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
-        self.URLtype = self.LRLBox.bind('<<ComboboxSelected>>', self.modified)
+        self.LRLBox.bind('<<ComboboxSelected>>', self.modified)
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
