@@ -973,20 +973,23 @@ class LoggedInWindow:
             self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
             #double security and prevents the mode not selected and goes to the parameters window
             try:
-                self.parameterWindow = ParametersWindow(self.UserID)
+                self.parameterWindow = ParametersWindow(self.UserID, self.window)
             except AttributeError:
                 tkinter.messagebox.showerror("Invalid Mode", "Select your mode first!")
 
 
 #opens and intializes the parameters window
 class ParametersWindow:
-    def __init__(self, userID):
+    def __init__(self, userID, loggedinwindow):
         self.UserID = userID
         self.login = LoginDatabase()
         self.result = self.login.ReturnMode(self.UserID)
         self.currentmode = self.result[0][4]
         self.parameterwindow = tkinter.Tk()
         self.parameterwindow.wm_title("Current Parameters")
+        self.loggedinpage = loggedinwindow
+        if 'normal' == self.parameterwindow.state():
+            self.loggedinpage.withdraw()
         self.AAI = AAIParameterDatabase()
         self.VVI = VVIParameterDatabase()
         self.AOO = AOOParameterDatabase()
@@ -1412,7 +1415,13 @@ class ParametersWindow:
         tkinter.Button(self.parameterwindow, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
                        text="Display (Demo Only)",
                        font=("times new roman", 15, "bold"), command=self.Display).grid(pady=15, column=3, row=15)
+        tkinter.Button(self.parameterwindow, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+                       text="Back",
+                       font=("times new roman", 15, "bold"), command=self.Back).grid(pady=15, column=4, row=15)
 
+    def Back(self):
+        self.parameterwindow.destroy()
+        self.loggedinpage.deiconify()
     def AAIRdefaultSetting(self):
         self.LRLBox.set(60)
         self.URLBox.set(120)
