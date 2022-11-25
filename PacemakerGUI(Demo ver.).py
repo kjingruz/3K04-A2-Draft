@@ -1297,12 +1297,12 @@ class ParametersWindow:
                     #try to insert the parameters, if failed because of previously saved parameters, update them
                     try:
                         self.AAIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                                self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
-                                                self.SensitivityBox.get())
+                                                self.PulseWidthBox.get(), self.SensitivityBox.get(),
+                                                self.ARPBox.get(),self.PVARPBox.get())
                     except sqlite3.IntegrityError:
                         self.AAIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                                self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
-                                                self.SensitivityBox.get(),self.UserID)
+                                                self.PulseWidthBox.get(),self.SensitivityBox.get(),
+                                                self.ARPBox.get(),self.PVARPBox.get(), self.UserID)
                 else:
                     tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period and PVARP must be lower than Upper rate limit, please reenter")
                     self.ARPBox.set(250)
@@ -1313,12 +1313,11 @@ class ParametersWindow:
                     self.SensitivityBox.config(state='disabled')
                     try:
                         self.VVIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                                self.PulseWidthBox.get(),self.VRPBox.get(),
-                                                self.SensitivityBox.get())
+                                                self.PulseWidthBox.get(), self.SensitivityBox.get(), self.VRPBox.get())
                     except sqlite3.IntegrityError:
                         self.VVIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                                self.PulseWidthBox.get(),self.VRPBox.get(),
-                                                self.SensitivityBox.get(),self.UserID)
+                                                self.PulseWidthBox.get(),self.SensitivityBox.get(), self.VRPBox.get(),
+                                                self.UserID)
                 else:
                     tkinter.messagebox.showerror("Input Error", "Ventricular Refractory Period must be lower than Upper rate limit, please reenter")
                     self.VRPBox.set(250)
