@@ -1066,14 +1066,14 @@ class LoggedInWindow:
                       else "Status update: Connection with DCM is " + "OFF",font=("times new roman", 10, "bold"),
                       width=50).grid(pady=20, column=1, row=2)
     def Graph(self):
-        self.graph = GraphWindow(self.UserID)
+        self.graph = GraphWindow(self.UserID, self.window)
         self.window.destroy()
     def Signout(self):
         self.window.destroy()
         self.homepage = HomePage()
     #directs to the mode window
     def Mode(self):
-        self.modewindow = ModeWindow(self.UserID)
+        self.modewindow = ModeWindow(self.UserID, self.window)
 
     #directs to the parameters window
     def Parameters(self):
@@ -1123,7 +1123,7 @@ class ParametersWindow:
         self.parameterwindow.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         #restricts the input allowed in parameters page
-        self.LRLtype = list(range(30,50,5))+list(range(50,90))+list(range(90,180,5))
+        self.LRLtype = list(range(30,50,5))+list(range(50,90))+list(range(90,185,5))
         #print(self.LRLBox.get())
         self.URLtype = list(range(50,180,5)) #self.LRLBox.get() to 180
         #self.URLtype = []
@@ -1290,29 +1290,39 @@ class ParametersWindow:
             self.PulseAmplitudeBox.config(state='disabled')
             self.PulseWidthBox.config(state='disabled')
             if self.currentmode == "AAI":
-                self.ARPBox.config(state='disabled')
-                self.PVARPBox.config(state='disabled')
-                self.SensitivityBox.config(state='disabled')
-                #try to insert the parameters, if failed because of previously saved parameters, update them
-                try:
-                    self.AAIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
-                                            self.SensitivityBox.get())
-                except sqlite3.IntegrityError:
-                    self.AAIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
-                                            self.SensitivityBox.get(),self.UserID)
+                if int(self.ARPBox.get()) >= 60/int(self.URLBox.get()):
+                    self.ARPBox.config(state='disabled')
+                    self.PVARPBox.config(state='disabled')
+                    self.SensitivityBox.config(state='disabled')
+                    #try to insert the parameters, if failed because of previously saved parameters, update them
+                    try:
+                        self.AAIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
+                                                self.SensitivityBox.get())
+                    except sqlite3.IntegrityError:
+                        self.AAIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
+                                                self.SensitivityBox.get(),self.UserID)
+                else:
+                    tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period must be lower than Upper rate limit, please reenter")
+                    self.ARPBox.set(250)
+                    self.URLBox.set(120)
             elif self.currentmode == "VVI":
-                self.VRPBox.config(state='disabled')
-                self.SensitivityBox.config(state='disabled')
-                try:
-                    self.VVIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(),self.VRPBox.get(),
-                                            self.SensitivityBox.get())
-                except sqlite3.IntegrityError:
-                    self.VVIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(),self.VRPBox.get(),
-                                            self.SensitivityBox.get(),self.UserID)
+                if int(self.VRPBox.get()) >= 60 / int(self.URLBox.get()):
+                    self.VRPBox.config(state='disabled')
+                    self.SensitivityBox.config(state='disabled')
+                    try:
+                        self.VVIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(),self.VRPBox.get(),
+                                                self.SensitivityBox.get())
+                    except sqlite3.IntegrityError:
+                        self.VVIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(),self.VRPBox.get(),
+                                                self.SensitivityBox.get(),self.UserID)
+                else:
+                    tkinter.messagebox.showerror("Input Error", "Ventricular Refractory Period must be lower than Upper rate limit, please reenter")
+                    self.VRPBox.set(250)
+                    self.URLBox.set(120)
             elif self.currentmode == "AOO":
                 try:
                     self.AOOdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
@@ -1328,74 +1338,104 @@ class ParametersWindow:
                     self.VOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                             self.PulseWidthBox.get(),self.UserID)
             elif self.currentmode == "AOOR":
-                self.ActivityThresholdBox.config(state='disabled')
-                self.RecoveryTimeBox.config(state='disabled')
-                self.ReactionTimeBox.config(state='disabled')
-                self.ResponseFactorBox.config(state='disabled')
-                self.MaxSensorRateBox.config(state='disabled')
-                try:
-                    self.AOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(),self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
-                except sqlite3.IntegrityError:
-                    self.AOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
+                if int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
+                    tkinter.messagebox.showerror("Input Error",
+                                                 "Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
+                    self.MaxSensorRateBox.set(120)
+                    self.URLBox.set(120)
+                else:
+                    self.ActivityThresholdBox.config(state='disabled')
+                    self.RecoveryTimeBox.config(state='disabled')
+                    self.ReactionTimeBox.config(state='disabled')
+                    self.ResponseFactorBox.config(state='disabled')
+                    self.MaxSensorRateBox.config(state='disabled')
+                    try:
+                        self.AOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(),self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                                self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
+                    except sqlite3.IntegrityError:
+                        self.AOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                                self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
             elif self.currentmode == "VOOR":
-                self.ActivityThresholdBox.config(state='disabled')
-                self.RecoveryTimeBox.config(state='disabled')
-                self.ReactionTimeBox.config(state='disabled')
-                self.ResponseFactorBox.config(state='disabled')
-                self.MaxSensorRateBox.config(state='disabled')
-                try:
-                    self.VOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
-                except sqlite3.IntegrityError:
-                    self.VOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
+                if int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
+                    tkinter.messagebox.showerror("Input Error",
+                                                 "Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
+                    self.MaxSensorRateBox.set(120)
+                    self.URLBox.set(120)
+                else:
+                    self.ActivityThresholdBox.config(state='disabled')
+                    self.RecoveryTimeBox.config(state='disabled')
+                    self.ReactionTimeBox.config(state='disabled')
+                    self.ResponseFactorBox.config(state='disabled')
+                    self.MaxSensorRateBox.config(state='disabled')
+                    try:
+                        self.VOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                                self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
+                    except sqlite3.IntegrityError:
+                        self.VOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                                self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
             elif self.currentmode == "AAIR":
-                self.MaxSensorRateBox.config(state='disabled')
-                self.ARPBox.config(state='disabled')
-                self.PVARPBox.config(state='disabled')
-                self.SensitivityBox.config(state='disabled')
-                self.ActivityThresholdBox.config(state='disabled')
-                self.RecoveryTimeBox.config(state='disabled')
-                self.ReactionTimeBox.config(state='disabled')
-                self.ResponseFactorBox.config(state='disabled')
-                try:
-                    self.AAIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
-                                            self.ARPBox.get(), self.PVARPBox.get(),
-                                            self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                             self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
-                except sqlite3.IntegrityError:
-                    self.AAIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
-                                            self.ARPBox.get(), self.PVARPBox.get(),
-                                            self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
-
+                if int(self.ARPBox.get()) < 60 / int(self.MaxSensorRateBox.get()):
+                    tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period must be lower than Max Sensor Rate, please reenter")
+                    self.MaxSensorRateBox.set(120)
+                    self.ARPBox.set(250)
+                elif int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
+                    tkinter.messagebox.showerror("Input Error", "Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
+                    self.MaxSensorRateBox.set(120)
+                    self.URLBox.set(120)
+                else:
+                    self.MaxSensorRateBox.config(state='disabled')
+                    self.ARPBox.config(state='disabled')
+                    self.PVARPBox.config(state='disabled')
+                    self.SensitivityBox.config(state='disabled')
+                    self.ActivityThresholdBox.config(state='disabled')
+                    self.RecoveryTimeBox.config(state='disabled')
+                    self.ReactionTimeBox.config(state='disabled')
+                    self.ResponseFactorBox.config(state='disabled')
+                    try:
+                        self.AAIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
+                                                self.ARPBox.get(), self.PVARPBox.get(),
+                                                self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
+                    except sqlite3.IntegrityError:
+                        self.AAIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
+                                                self.ARPBox.get(), self.PVARPBox.get(),
+                                                self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                                self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
             elif self.currentmode == "VVIR":
-                self.VRPBox.config(state='disabled')
-                self.SensitivityBox.config(state='disabled')
-                self.ActivityThresholdBox.config(state='disabled')
-                self.RecoveryTimeBox.config(state='disabled')
-                self.ReactionTimeBox.config(state='disabled')
-                self.ResponseFactorBox.config(state='disabled')
-                self.MaxSensorRateBox.config(state='disabled')
-                try:
-                    self.VVIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
-                                            self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
-                except sqlite3.IntegrityError:
-                    self.VVIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
-                                            self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
-
+                if int(self.VRPBox.get()) < 60 / int(self.MaxSensorRateBox.get()):
+                    tkinter.messagebox.showerror("Input Error",
+                                                 "Ventricular Refractory Period must be lower than Max Sensor Rate, please reenter")
+                    self.MaxSensorRateBox.set(120)
+                    self.VRPBox.set(250)
+                elif int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
+                    tkinter.messagebox.showerror("Input Error",
+                                                 "Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
+                    self.MaxSensorRateBox.set(120)
+                    self.URLBox.set(120)
+                else:
+                    self.VRPBox.config(state='disabled')
+                    self.SensitivityBox.config(state='disabled')
+                    self.ActivityThresholdBox.config(state='disabled')
+                    self.RecoveryTimeBox.config(state='disabled')
+                    self.ReactionTimeBox.config(state='disabled')
+                    self.ResponseFactorBox.config(state='disabled')
+                    self.MaxSensorRateBox.config(state='disabled')
+                    try:
+                        self.VVIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
+                                                self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                                self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
+                    except sqlite3.IntegrityError:
+                        self.VVIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                                self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
+                                                self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                                self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
             tkinter.messagebox.showinfo("Saved", "Saved")
             self.EditButton.config(state='active')
             self.SaveButton.config(state='disabled')
@@ -1898,14 +1938,17 @@ class ParametersWindow:
 
 #opens and initializes the mode window
 class ModeWindow:
-    def __init__(self, userID):
+    def __init__(self, userID, loggedinWindow):
         self.UserID = userID
         self.login = LoginDatabase()
         self.result = self.login.ReturnMode(self.UserID)
         #the current mode
         self.cmode = self.result[0][4]
+        self.loggedin = loggedinWindow
         self.window = tkinter.Tk()
         self.window.wm_title("Pacemaker Modes")
+        if 'normal' == self.window.state():
+            self.loggedin.withdraw()
         bg_color = "blue"
         fg_color = "white"
         cha_color = "black"
@@ -1937,8 +1980,21 @@ class ModeWindow:
         self.VVIRbutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
                                          text="VVIR", font=("times new roman", 15, "bold"), command=self.VVIR)
         self.VVIRbutton.grid(pady=15, column=1, row=9)
+        self.BackRbutton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+                                         text="Back", font=("times new roman", 15, "bold"), command=self.close)
+        self.BackRbutton.grid(pady=15, column=1, row=10)
 
         self.CheckMode(self.cmode)
+        self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.window.mainloop()
+
+    def on_closing(self):
+        self.window.destroy()
+        self.loggedin.deiconify()
+
+    def close(self):
+        self.window.destroy()
+        self.loggedin.deiconify()
 
     def CheckMode(self, currentmode):
         if currentmode == 'AOO':
@@ -2072,7 +2128,7 @@ class ModeWindow:
 
 
 class GraphWindow:
-    def __init__(self, userID):
+    def __init__(self, userID, loggedinwindow):
         self.UserID = userID
         self.login = LoginDatabase()
         self.result = self.login.ReturnMode(self.UserID)
@@ -2080,16 +2136,26 @@ class GraphWindow:
         self.cmode = self.result[0][4]
         self.window = tkinter.Tk()
         self.window.wm_title("Egram Graphs")
+        self.loggedin = loggedinwindow
+        if 'normal' == self.window.state():
+            self.loggedin.withdraw()
         bg_color = "blue"
         fg_color = "white"
         cha_color = "black"
         self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
                                         text="Back",font=("times new roman", 15, "bold"), command=self.Back)
         self.BackButton.grid(pady=15, column=1, row=2)
+        self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.window.mainloop()
+
+    def on_closing(self):
+        self.window.destroy()
+        self.loggedin.deiconify()
 
     def Back(self):
-        self.loggedin = LoggedInWindow(self.UserID)
         self.window.destroy()
+        self.loggedin.deiconify()
+
 
 
 #opens and initializes the home page
