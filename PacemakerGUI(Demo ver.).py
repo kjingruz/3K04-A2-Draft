@@ -1290,7 +1290,7 @@ class ParametersWindow:
             self.PulseAmplitudeBox.config(state='disabled')
             self.PulseWidthBox.config(state='disabled')
             if self.currentmode == "AAI":
-                if int(self.ARPBox.get()) >= 60/int(self.URLBox.get()):
+                if int(self.ARPBox.get()) >= 60/int(self.URLBox.get()) and int(self.PVARPBox.get()) >= 60/int(self.URLBox.get()):
                     self.ARPBox.config(state='disabled')
                     self.PVARPBox.config(state='disabled')
                     self.SensitivityBox.config(state='disabled')
@@ -1304,7 +1304,7 @@ class ParametersWindow:
                                                 self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
                                                 self.SensitivityBox.get(),self.UserID)
                 else:
-                    tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period must be lower than Upper rate limit, please reenter")
+                    tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period and PVARP must be lower than Upper rate limit, please reenter")
                     self.ARPBox.set(250)
                     self.URLBox.set(120)
             elif self.currentmode == "VVI":
@@ -1378,8 +1378,8 @@ class ParametersWindow:
                                                 self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
             elif self.currentmode == "AAIR":
-                if int(self.ARPBox.get()) < 60 / int(self.MaxSensorRateBox.get()):
-                    tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period must be lower than Max Sensor Rate, please reenter")
+                if int(self.ARPBox.get()) < 60 / int(self.MaxSensorRateBox.get()) and int(self.PVARPBox.get()) >= 60/int(self.URLBox.get()):
+                    tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period and PVARP must be lower than Max Sensor Rate, please reenter")
                     self.MaxSensorRateBox.set(120)
                     self.ARPBox.set(250)
                 elif int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
