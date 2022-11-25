@@ -395,7 +395,7 @@ class VVIRParameterDatabase:
     #update the database
     def Update(self, LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID):
         self.Cursor.execute(
-            "UPDATE VVIRparameter_table SET LRL = ?, URL = ?, VentricularAmplitude = ?, VentricularWidth = ?, MaxSensorRate = ?, VentricularSensitivity = ?, VRP = ?, PVARP = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
+            "UPDATE VVIRparameter_table SET LRL = ?, URL = ?, VentricularAmplitude = ?, VentricularWidth = ?, MaxSensorRate = ?, VentricularSensitivity = ?, VRP = ?, ActivityThreshold = ?, ReactionTime = ?, ResponseFactor = ?, RecoveryTime = ? WHERE userID = ?",
             (LRL, URL,Ventricular_Amplitude, Ventricular_Width, Max_Sensor_Rate, Ventricular_Sensitivity, VRP, Activity_Threshold, Reaction_Time, Response_Factor, Recovery_Time, userID))
         self.connection.commit()
     #checking if there is anything using the userID in the database, returns boolean
