@@ -1129,7 +1129,7 @@ class ParametersWindow:
         #self.URLtype = []
         self.PulseAmplitudetype = ["Off"]+list(self.float_range(1, 5.1, '0.1'))
         self.PulseWidthtype = list(range(1,31,1))
-        self.Sensitivitytype = list(self.float_range(0, 10.5, '0.5'))
+        self.Sensitivitytype = list(self.float_range(0, 5.1, '0.1'))
         self.RPtype = list(range(150,510,10))
         self.PVARPtype = list(range(150,510,10))
         self.MaxSensorRate = list(range(50,180,5))
