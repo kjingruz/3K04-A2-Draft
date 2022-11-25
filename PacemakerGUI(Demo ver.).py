@@ -1270,128 +1270,135 @@ class ParametersWindow:
 
     #save the currently entered parameter and disable the comboboxes from editing again until clicking edit again
     def Save(self):
-        self.AAIdatabase = AAIParameterDatabase()
-        self.VVIdatabase = VVIParameterDatabase()
-        self.AOOdatabase = AOOParameterDatabase()
-        self.VOOdatabase = VOOParameterDatabase()
-        self.AOORdatabase = AOORParameterDatabase()
-        self.VOORdatabase = VOORParameterDatabase()
-        self.AAIRdatabase = AAIRParameterDatabase()
-        self.VVIRdatabase = VVIRParameterDatabase()
-        self.LRLBox.config(state='disabled')
-        self.URLBox.config(state='disabled')
-        self.PulseAmplitudeBox.config(state='disabled')
-        self.PulseWidthBox.config(state='disabled')
-        if self.currentmode == "AAI":
-            self.ARPBox.config(state='disabled')
-            self.PVARPBox.config(state='disabled')
-            self.SensitivityBox.config(state='disabled')
-            #try to insert the parameters, if failed because of previously saved parameters, update them
-            try:
-                self.AAIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
-                                        self.SensitivityBox.get())
-            except sqlite3.IntegrityError:
-                self.AAIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
-                                        self.SensitivityBox.get(),self.UserID)
-        elif self.currentmode == "VVI":
-            self.VRPBox.config(state='disabled')
-            self.SensitivityBox.config(state='disabled')
-            try:
-                self.VVIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(),self.VRPBox.get(),
-                                        self.SensitivityBox.get())
-            except sqlite3.IntegrityError:
-                self.VVIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(),self.VRPBox.get(),
-                                        self.SensitivityBox.get(),self.UserID)
-        elif self.currentmode == "AOO":
-            try:
-                self.AOOdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get())
-            except sqlite3.IntegrityError:
-                self.AOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(),self.UserID)
-        elif self.currentmode == "VOO":
-            try:
-                self.VOOdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get())
-            except sqlite3.IntegrityError:
-                self.VOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(),self.UserID)
-        elif self.currentmode == "AOOR":
-            self.ActivityThresholdBox.config(state='disabled')
-            self.RecoveryTimeBox.config(state='disabled')
-            self.ReactionTimeBox.config(state='disabled')
-            self.ResponseFactorBox.config(state='disabled')
-            self.MaxSensorRateBox.config(state='disabled')
-            try:
-                self.AOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(),self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                        self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
-            except sqlite3.IntegrityError:
-                self.AOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                        self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
-        elif self.currentmode == "VOOR":
-            self.ActivityThresholdBox.config(state='disabled')
-            self.RecoveryTimeBox.config(state='disabled')
-            self.ReactionTimeBox.config(state='disabled')
-            self.ResponseFactorBox.config(state='disabled')
-            self.MaxSensorRateBox.config(state='disabled')
-            try:
-                self.VOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                        self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
-            except sqlite3.IntegrityError:
-                self.VOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                        self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
-        elif self.currentmode == "AAIR":
-            self.MaxSensorRateBox.config(state='disabled')
-            self.ARPBox.config(state='disabled')
-            self.PVARPBox.config(state='disabled')
-            self.SensitivityBox.config(state='disabled')
-            self.ActivityThresholdBox.config(state='disabled')
-            self.RecoveryTimeBox.config(state='disabled')
-            self.ReactionTimeBox.config(state='disabled')
-            self.ResponseFactorBox.config(state='disabled')
-            try:
-                self.AAIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
-                                        self.ARPBox.get(), self.PVARPBox.get(),
-                                        self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                         self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
-            except sqlite3.IntegrityError:
-                self.AAIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
-                                        self.ARPBox.get(), self.PVARPBox.get(),
-                                        self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                        self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
+        #print(self.LRLBox.get())
+        #print(self.URLBox.get())
+        if int(self.LRLBox.get()) > int(self.URLBox.get()):
+            tkinter.messagebox.showerror("Input Error", "Lower rate limit higher than upper rate limit, please reenter")
+            self.LRLBox.set(60)
+            self.URLBox.set(120)
+        else:
+            self.AAIdatabase = AAIParameterDatabase()
+            self.VVIdatabase = VVIParameterDatabase()
+            self.AOOdatabase = AOOParameterDatabase()
+            self.VOOdatabase = VOOParameterDatabase()
+            self.AOORdatabase = AOORParameterDatabase()
+            self.VOORdatabase = VOORParameterDatabase()
+            self.AAIRdatabase = AAIRParameterDatabase()
+            self.VVIRdatabase = VVIRParameterDatabase()
+            self.LRLBox.config(state='disabled')
+            self.URLBox.config(state='disabled')
+            self.PulseAmplitudeBox.config(state='disabled')
+            self.PulseWidthBox.config(state='disabled')
+            if self.currentmode == "AAI":
+                self.ARPBox.config(state='disabled')
+                self.PVARPBox.config(state='disabled')
+                self.SensitivityBox.config(state='disabled')
+                #try to insert the parameters, if failed because of previously saved parameters, update them
+                try:
+                    self.AAIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
+                                            self.SensitivityBox.get())
+                except sqlite3.IntegrityError:
+                    self.AAIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(),self.ARPBox.get(),self.PVARPBox.get(),
+                                            self.SensitivityBox.get(),self.UserID)
+            elif self.currentmode == "VVI":
+                self.VRPBox.config(state='disabled')
+                self.SensitivityBox.config(state='disabled')
+                try:
+                    self.VVIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(),self.VRPBox.get(),
+                                            self.SensitivityBox.get())
+                except sqlite3.IntegrityError:
+                    self.VVIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(),self.VRPBox.get(),
+                                            self.SensitivityBox.get(),self.UserID)
+            elif self.currentmode == "AOO":
+                try:
+                    self.AOOdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get())
+                except sqlite3.IntegrityError:
+                    self.AOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(),self.UserID)
+            elif self.currentmode == "VOO":
+                try:
+                    self.VOOdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get())
+                except sqlite3.IntegrityError:
+                    self.VOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(),self.UserID)
+            elif self.currentmode == "AOOR":
+                self.ActivityThresholdBox.config(state='disabled')
+                self.RecoveryTimeBox.config(state='disabled')
+                self.ReactionTimeBox.config(state='disabled')
+                self.ResponseFactorBox.config(state='disabled')
+                self.MaxSensorRateBox.config(state='disabled')
+                try:
+                    self.AOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(),self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
+                except sqlite3.IntegrityError:
+                    self.AOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
+            elif self.currentmode == "VOOR":
+                self.ActivityThresholdBox.config(state='disabled')
+                self.RecoveryTimeBox.config(state='disabled')
+                self.ReactionTimeBox.config(state='disabled')
+                self.ResponseFactorBox.config(state='disabled')
+                self.MaxSensorRateBox.config(state='disabled')
+                try:
+                    self.VOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
+                except sqlite3.IntegrityError:
+                    self.VOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
+            elif self.currentmode == "AAIR":
+                self.MaxSensorRateBox.config(state='disabled')
+                self.ARPBox.config(state='disabled')
+                self.PVARPBox.config(state='disabled')
+                self.SensitivityBox.config(state='disabled')
+                self.ActivityThresholdBox.config(state='disabled')
+                self.RecoveryTimeBox.config(state='disabled')
+                self.ReactionTimeBox.config(state='disabled')
+                self.ResponseFactorBox.config(state='disabled')
+                try:
+                    self.AAIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
+                                            self.ARPBox.get(), self.PVARPBox.get(),
+                                            self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                             self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
+                except sqlite3.IntegrityError:
+                    self.AAIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
+                                            self.ARPBox.get(), self.PVARPBox.get(),
+                                            self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
 
-        elif self.currentmode == "VVIR":
-            self.VRPBox.config(state='disabled')
-            self.SensitivityBox.config(state='disabled')
-            self.ActivityThresholdBox.config(state='disabled')
-            self.RecoveryTimeBox.config(state='disabled')
-            self.ReactionTimeBox.config(state='disabled')
-            self.ResponseFactorBox.config(state='disabled')
-            self.MaxSensorRateBox.config(state='disabled')
-            try:
-                self.VVIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
-                                        self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                        self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
-            except sqlite3.IntegrityError:
-                self.VVIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
-                                        self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
-                                        self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
-                                        self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
+            elif self.currentmode == "VVIR":
+                self.VRPBox.config(state='disabled')
+                self.SensitivityBox.config(state='disabled')
+                self.ActivityThresholdBox.config(state='disabled')
+                self.RecoveryTimeBox.config(state='disabled')
+                self.ReactionTimeBox.config(state='disabled')
+                self.ResponseFactorBox.config(state='disabled')
+                self.MaxSensorRateBox.config(state='disabled')
+                try:
+                    self.VVIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
+                                            self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get())
+                except sqlite3.IntegrityError:
+                    self.VVIRdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
+                                            self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
+                                            self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
+                                            self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
 
-        tkinter.messagebox.showinfo("Saved", "Saved")
-        self.EditButton.config(state='active')
-        self.SaveButton.config(state='disabled')
+            tkinter.messagebox.showinfo("Saved", "Saved")
+            self.EditButton.config(state='active')
+            self.SaveButton.config(state='disabled')
 
 
     def AOORVOORinputrep(self):
