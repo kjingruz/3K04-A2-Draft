@@ -26,7 +26,7 @@ class sendSerial:
         # self.URLtype = list(range(50, 180, 5))
         # self.PulseAmplitudetype = ["Off"] + list(self.float_range(1, 5.1, '0.1'))
         # self.PulseWidthtype = list(range(1, 31, 1))
-        # self.Sensitivitytype = [0.25, 0.5, 0.75] + list(self.float_range(0, 10.5, '0.5'))
+        # self.Sensitivitytype = list(self.float_range(0, 10.5, '0.5'))
         # self.RPtype = list(range(150, 510, 10))
         # self.PVARPtype = list(range(150, 510, 10))
         # self.MaxSensorRate = list(range(50, 180, 5))
@@ -1001,6 +1001,7 @@ class ParametersWindow:
         bg_color = "blue"
         fg_color = "white"
         cha_color = "black"
+        self.parameterwindow.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         #restricts the input allowed in parameters page
         self.LRLtype = list(range(30,50,5))+list(range(50,90))+list(range(90,180,5))
@@ -1009,7 +1010,7 @@ class ParametersWindow:
         #self.URLtype = []
         self.PulseAmplitudetype = ["Off"]+list(self.float_range(1, 5.1, '0.1'))
         self.PulseWidthtype = list(range(1,31,1))
-        self.Sensitivitytype = [0.25, 0.5, 0.75]+list(self.float_range(0, 10.5, '0.5'))
+        self.Sensitivitytype = list(self.float_range(0, 10.5, '0.5'))
         self.RPtype = list(range(150,510,10))
         self.PVARPtype = list(range(150,510,10))
         self.MaxSensorRate = list(range(50,180,5))
@@ -1143,6 +1144,10 @@ class ParametersWindow:
                 self.RecoveryTimeBox.set(self.searchresult[0][11])
             else:
                 self.VVIRdefaultSetting()
+
+    def on_closing(self):
+        self.parameterwindow.destroy()
+        self.loggedinpage.deiconify()
 
     #save the currently entered parameter and disable the comboboxes from editing again until clicking edit again
     def Save(self):
