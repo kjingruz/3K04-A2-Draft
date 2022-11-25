@@ -5,11 +5,21 @@ import serial
 
 ser = serial.Serial('COM4',115200) #windows
 
+print(ser.name)
+# hex(value) outputs a string :(
+enter = [0x16, 0x55, 0x1, 0x32, 0x32, 0x32, 0x5, 0x1, 0x0, 0x96, 0x96, 0x1, 0xA, 0x1, 0x2] #hex
+ser.write(enter)
+print("test file sent")
+
 fig = plt.figure()
 ax1 = fig.add_subplot(1,1,1)
 
 
 def updateFile():
+
+    #ask for new values
+     enter = [0x16, 0x61, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0] #hex
+     ser.write(enter)
 
     #read values
      xin = text = ser.read()
@@ -31,9 +41,6 @@ def updateFile():
      writeVal = str(xin)+','+str(yin)+'\n'
      f.write(writeVal)
      f.close()
-
-     
-     
 
 def animate(i):
 

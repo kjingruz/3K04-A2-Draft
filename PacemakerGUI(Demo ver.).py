@@ -50,13 +50,13 @@ class sendSerial:
 
         # self.LRLtype = list(range(30, 50, 5)) + list(range(50, 90)) + list(range(90, 180, 5))
         # self.URLtype = list(range(50, 180, 5))
-        # self.PulseAmplitudetype = ["Off"] + list(self.float_range(1, 5.1, '0.1'))
-        # self.PulseWidthtype = list(range(1, 31, 1))
+        # self.PulseAmplitudetype = ["Off"] + list(self.float_range(1, 5.1, '0.1')) #chg off --> 0 , 0:0.1:5
+        # self.PulseWidthtype = list(range(1, 31, 1)) #chg 1:1:30
         # self.MaxSensorRate = list(range(50, 180, 5))
-        # self.Sensitivitytype = list(self.float_range(0, 10.5, '0.5'))
+        # self.Sensitivitytype = list(self.float_range(0, 10.5, '0.5')) #chg 0:0.1:5
         # self.RPtype = list(range(150, 510, 10))
         # self.PVARPtype = list(range(150, 510, 10))
-        # self.ActivityThreshold = ["V-Low", 'Low', 'Med-Low', 'Med', 'Med-High', 'High', 'V-High']
+        # self.ActivityThreshold = ["V-Low", 'Low', 'Med-Low', 'Med', 'Med-High', 'High', 'V-High'] #chg 0:7
         # self.ReactionTime = list(range(10, 60, 10))
         # self.ResponseFactor = list(range(1, 17, 1))
         # self.RecoveryTime = list(range(2, 17, 1))
