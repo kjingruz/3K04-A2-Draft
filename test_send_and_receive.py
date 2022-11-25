@@ -4,75 +4,15 @@ import serial
 ser = serial.Serial('COM4',115200) #windows
 print(ser.name)
 
-enter = [0x16, 0x55, 0x1, 0x32, 0x32, 0x32, 0x5, 0x1, 0x0, 0x96, 0x96, 0x1, 0xA, 0x1, 0x2] #hex
-enter = [0x16, 0x22, 0x1, 0x32, 0x32, 0x32, 0x5, 0x1, 0x0, 0x96, 0x96, 0x1, 0xA, 0x1, 0x2] #hex
-
+enter = [0x16, 0x55, 0x1, 0x32, 0x32, 0x32, 0x5, 0x1, 0x0, 0x96, 0x96, 0x1, 0xA, 0x1, 0x2] #hex need 17 input
 ser.write(enter)
 print("test file sent")
 
-text = ser.read()
-print(text)
-text = ser.read()
-print(text)
-text = ser.read()
-print(text)
-text = ser.read()
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
+enter = [0x16, 0x22, 0x1, 0x32, 0x32, 0x32, 0x5, 0x1, 0x0, 0x96, 0x96, 0x1, 0xA, 0x1, 0x2] #hex need 17 input
+ser.write(enter)
+print("test file sent")
 
-#first 8
-text = ser.read()   
+text = ser.read(36) #36 bytes
 print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-
-#second 8
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-text = ser.read()   
-print(text)
-
-
 
 ser.close()
