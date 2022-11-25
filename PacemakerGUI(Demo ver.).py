@@ -52,10 +52,10 @@ class sendSerial:
         # self.URLtype = list(range(50, 180, 5))
         # self.PulseAmplitudetype = ["Off"] + list(self.float_range(1, 5.1, '0.1'))
         # self.PulseWidthtype = list(range(1, 31, 1))
+        # self.MaxSensorRate = list(range(50, 180, 5))
         # self.Sensitivitytype = list(self.float_range(0, 10.5, '0.5'))
         # self.RPtype = list(range(150, 510, 10))
         # self.PVARPtype = list(range(150, 510, 10))
-        # self.MaxSensorRate = list(range(50, 180, 5))
         # self.ActivityThreshold = ["V-Low", 'Low', 'Med-Low', 'Med', 'Med-High', 'High', 'V-High']
         # self.ReactionTime = list(range(10, 60, 10))
         # self.ResponseFactor = list(range(1, 17, 1))
@@ -63,32 +63,93 @@ class sendSerial:
 
         if self.cmode == "AOO":
             self.AOO_receive = self.AOO.Search(self.userID)
-            self.enter = [self.mode[self.cmode]] + self.AOO_receive
+            if self.AOO_receive[0][2] != "Off":
+                self.enter = [self.mode[self.cmode]] + self.AOO_receive
+                self.enter[3] *= 10
+            else:
+                self.enter = [self.mode[self.cmode]] + self.AOO_receive
+                self.enter[3] = 0
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "VOO":
             self.VOO_receive = self.VOO.Search(self.userID)
-            self.enter = [self.mode[self.cmode]] + self.VOO_receive
+            if self.VOO_receive[0][2] != "Off":
+                self.enter = [self.mode[self.cmode]] + self.VOO_receive
+                self.enter[3] *= 10
+            else:
+                self.enter = [self.mode[self.cmode]] + self.VOO_receive
+                self.enter[3] = 0
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "AAI":
             self.AAI_receive = self.AAI.Search(self.userID)
-            self.enter = [self.mode[self.cmode]] + self.AAI_receive
+            if self.AAI_receive[0][2] != "Off":
+                self.enter = [self.mode[self.cmode]] + self.AAI_receive
+                self.enter[3] *= 10
+                self.enter[5] *= 10
+            else:
+                self.enter = [self.mode[self.cmode]] + self.AAI_receive
+                self.enter[3] = 0
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "VVI":
             self.VVI_receive = self.VVI.Search(self.userID)
-            self.enter = [self.mode[self.cmode]] + self.VVI_receive
+            if self.VVI_receive[0][2] != "Off":
+                self.enter = [self.mode[self.cmode]] + self.VVI_receive
+                self.enter[3] *= 10
+                self.enter[5] *= 10
+            else:
+                self.enter = [self.mode[self.cmode]] + self.VVI_receive
+                self.enter[3] = 0
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "AOOR":
-            pass
+            self.AOOR_receive = self.AOOR.Search(self.userID)
+            if self.AOOR_receive[0][2] != "Off":
+                self.enter = [self.mode[self.cmode]] + self.AOOR_receive
+                self.enter[3] *= 10
+                self.enter[6] = self.ActivityThresholdDict[self.AOOR_receive[0][5]]
+            else:
+                self.enter = [self.mode[self.cmode]] + self.AOOR_receive
+                self.enter[3] = 0
+
+            self.ser.write(self.enter)
+            print("test file sent")
         elif self.cmode == "VOOR":
-            pass
+            self.VOOR_receive = self.VOOR.Search(self.userID)
+            if self.VOOR_receive[0][2] != "Off":
+                self.enter = [self.mode[self.cmode]] + self.VOOR_receive
+                self.enter[3] *= 10
+                self.enter[6] = self.ActivityThresholdDict[self.VOOR_receive[0][5]]
+            else:
+                self.enter = [self.mode[self.cmode]] + self.VOOR_receive
+                self.enter[3] = 0
+
+            self.ser.write(self.enter)
         elif self.cmode == "AAIR":
-            pass
+            self.AAIR_receive = self.AAIR.Search(self.userID)
+            if self.AAIR_receive[0][2] != "Off":
+                self.enter = [self.mode[self.cmode]] + self.AAIR_receive
+                self.enter[3] *= 10 #pulse amplitude
+                self.enter[6] *= 10 #sensitivity
+                self.enter[9] = self.ActivityThresholdDict[self.AAIR_receive[0][5]]
+            else:
+                self.enter = [self.mode[self.cmode]] + self.AAIR_receive
+                self.enter[3] = 0
+
+            self.ser.write(self.enter)
         elif self.cmode == "VVIR":
-            pass
+            self.VVIR_receive = self.VVIR.Search(self.userID)
+            if self.VVIR_receive[0][2] != "Off":
+                self.enter = [self.mode[self.cmode]] + self.VVIR_receive
+                self.enter[3] *= 10  # pulse amplitude
+                self.enter[6] *= 10  # sensitivity
+                self.enter[8] = self.ActivityThresholdDict[self.VVIR_receive[0][5]]
+            else:
+                self.enter = [self.mode[self.cmode]] + self.VVIR_receive
+                self.enter[3] = 0
+
+            self.ser.write(self.enter)
 
 
 #stores the login creditals
