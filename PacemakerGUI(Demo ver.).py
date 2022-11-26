@@ -63,90 +63,173 @@ class sendSerial:
 
         if self.cmode == "AOO":
             self.AOO_receive = self.AOO.Search(self.userID)
-            self.enter = [self.mode[self.cmode]] + self.AOO_receive + [0] * 8
-            if self.AOO_receive[0][2] != "Off":
+            self.enter = [self.mode[self.cmode]]
+            self.enter.append(self.AOO_receive[0][0]) #LRL
+            self.enter.append(self.AOO_receive[0][1]) #URL
+            self.enter.append(self.AOO_receive[0][2]) #pulse Amplitude
+            self.enter.append(self.AOO_receive[0][3]) #pulse width
+            if self.AOO_receive[0][2] != "Off": #pulse amplitude
                 self.enter[3] *= 10
             else:
                 self.enter[3] = 0
+            self.enter.insert(5, 0)  # max sensor rate
+            self.enter.insert(6, 0)  # sensitivity
+            self.enter.insert(7, 0)  # ARP
+            self.enter.insert(8, 0)  # PVARP
+            self.enter.insert(9, 0)  # Activity Threshold
+            self.enter.insert(10, 0)  # reaction time
+            self.enter.insert(11, 0)  # response factor
+            self.enter.insert(12, 0)  # recovery time
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "VOO":
             self.VOO_receive = self.VOO.Search(self.userID)
-            self.enter = [self.mode[self.cmode]] + self.VOO_receive + [0] * 8
+            self.enter = [self.mode[self.cmode]]
+            self.enter.append(self.VOO_receive[0][0])  # LRL
+            self.enter.append(self.VOO_receive[0][1])  # URL
+            self.enter.append(self.VOO_receive[0][2])  # pulse Amplitude
+            self.enter.append(self.VOO_receive[0][3])  # pulse width
             if self.VOO_receive[0][2] != "Off":
                 self.enter[3] *= 10
             else:
                 self.enter[3] = 0
+            self.enter.insert(5, 0)  # max sensor rate
+            self.enter.insert(6, 0)  # sensitivity
+            self.enter.insert(7, 0)  # VRP
+            self.enter.insert(8, 0)  # PVARP
+            self.enter.insert(9, 0)  # Activity Threshold
+            self.enter.insert(10, 0)  # reaction time
+            self.enter.insert(11, 0)  # response factor
+            self.enter.insert(12, 0)  # recovery time
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "AAI":
             self.AAI_receive = self.AAI.Search(self.userID)
-            self.enter = [self.mode[self.cmode]] + self.AAI_receive
+            self.enter = [self.mode[self.cmode]]
+            self.enter.append(self.AAI_receive[0][0])  # LRL
+            self.enter.append(self.AAI_receive[0][1])  # URL
+            self.enter.append(self.AAI_receive[0][2])  # pulse Amplitude
+            self.enter.append(self.AAI_receive[0][3])  # pulse width
             if self.AAI_receive[0][2] != "Off":
                 self.enter[3] *= 10
             else:
                 self.enter[3] = 0
-            self.enter.insert(5, 0)
-            self.enter[6] *= 10
+            self.enter.insert(5, 0) #max sensor rate
+            self.enter.append(self.AAI_receive[0][4])  # sensitivity
+            self.enter[6] *= 10 #sensitivity
+            self.enter.append(self.AAI_receive[0][5])  # ARP
+            self.enter.append(self.AAI_receive[0][6]) # PVARP
+            self.enter.insert(9, 0)  # Activity Threshold
+            self.enter.insert(10, 0)  # reaction time
+            self.enter.insert(11, 0)  # response factor
+            self.enter.insert(12, 0)  # recovery time
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "VVI":
             self.VVI_receive = self.VVI.Search(self.userID)
-            self.enter = [self.mode[self.cmode]] + self.VVI_receive
+            self.enter = [self.mode[self.cmode]]
+            self.enter.append(self.VVI_receive[0][0])  # LRL
+            self.enter.append(self.VVI_receive[0][1])  # URL
+            self.enter.append(self.VVI_receive[0][2])  # pulse Amplitude
+            self.enter.append(self.VVI_receive[0][3])  # pulse width
             if self.VVI_receive[0][2] != "Off":
                 self.enter[3] *= 10
             else:
                 self.enter[3] = 0
-            self.enter.insert(5, 0)
-            self.enter[6] *= 10
+            self.enter.insert(5, 0)  # max sensor rate
+            self.enter.append(self.VVI_receive[0][4])  # sensitivity
+            self.enter[6] *= 10  # sensitivity
+            self.enter.append(self.VVI_receive[0][5])  # VRP
+            self.enter.insert(8, 0) # PVARP
+            self.enter.insert(9, 0)  # Activity Threshold
+            self.enter.insert(10, 0)  # reaction time
+            self.enter.insert(11, 0)  # response factor
+            self.enter.insert(12, 0)  # recovery time
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "AOOR":
             self.AOOR_receive = self.AOOR.Search(self.userID)
+            self.enter = [self.mode[self.cmode]]
+            self.enter.append(self.AOOR_receive[0][0])  # LRL
+            self.enter.append(self.AOOR_receive[0][1])  # URL
+            self.enter.append(self.AOOR_receive[0][2])  # pulse Amplitude
+            self.enter.append(self.AOOR_receive[0][3])  # pulse width
             if self.AOOR_receive[0][2] != "Off":
-                self.enter = [self.mode[self.cmode]] + self.AOOR_receive
                 self.enter[3] *= 10
-                self.enter[6] = self.ActivityThresholdDict[self.AOOR_receive[0][5]]
             else:
-                self.enter = [self.mode[self.cmode]] + self.AOOR_receive
                 self.enter[3] = 0
-
+            self.enter.append(self.AOOR_receive[0][4])  # max sensor rate
+            self.enter.insert(6, 0)  # sensitivity
+            self.enter.insert(7, 0)  # ARP
+            self.enter.insert(8, 0)  # PVARP
+            self.enter[9] = self.ActivityThresholdDict[self.AOOR_receive[0][5]]
+            self.enter.append(self.AOOR_receive[0][6])  # reaction time
+            self.enter.append(self.AOOR_receive[0][7])  # response factor
+            self.enter.append(self.AOOR_receive[0][8]) # recovery time
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "VOOR":
             self.VOOR_receive = self.VOOR.Search(self.userID)
-            if self.VOOR_receive[0][2] != "Off":
-                self.enter = [self.mode[self.cmode]] + self.VOOR_receive
+            self.enter = [self.mode[self.cmode]]
+            self.enter.append(self.VOOR_receive[0][0])  # LRL
+            self.enter.append(self.VOOR_receive[0][1])  # URL
+            self.enter.append(self.VOOR_receive[0][2])  # pulse Amplitude
+            self.enter.append(self.VOOR_receive[0][3])  # pulse width
+            if self.VOOR_receive[0][2] != "Off": #pulse amplitude
                 self.enter[3] *= 10
-                self.enter[6] = self.ActivityThresholdDict[self.VOOR_receive[0][5]]
             else:
-                self.enter = [self.mode[self.cmode]] + self.VOOR_receive
                 self.enter[3] = 0
-
+            self.enter.append(self.AOOR_receive[0][4])  # max sensor rate
+            self.enter.insert(6, 0) #sensitivity
+            self.enter[6] *= 10  # sensitivity
+            self.enter.insert(7, 0) #VRP
+            self.enter.insert(8, 0) #PVARP
+            self.enter[9] = self.ActivityThresholdDict[self.VOOR_receive[0][5]] #activity threshold
+            self.enter.append(self.VOOR_receive[0][6])  #reaction time
+            self.enter.append(self.VOOR_receive[0][7])  #response factor
+            self.enter.append(self.VOOR_receive[0][8])  #recovery time
             self.ser.write(self.enter)
         elif self.cmode == "AAIR":
             self.AAIR_receive = self.AAIR.Search(self.userID)
+            self.enter = [self.mode[self.cmode]]
+            self.enter.append(self.AAIR_receive[0][0])  # LRL
+            self.enter.append(self.AAIR_receive[0][1])  # URL
+            self.enter.append(self.AAIR_receive[0][2])  # pulse Amplitude
+            self.enter.append(self.AAIR_receive[0][3])  # pulse width
             if self.AAIR_receive[0][2] != "Off":
-                self.enter = [self.mode[self.cmode]] + self.AAIR_receive
                 self.enter[3] *= 10 #pulse amplitude
-                self.enter[6] *= 10 #sensitivity
-                self.enter[9] = self.ActivityThresholdDict[self.AAIR_receive[0][5]]
             else:
-                self.enter = [self.mode[self.cmode]] + self.AAIR_receive
                 self.enter[3] = 0
-
+            self.enter.append(self.AAIR_receive[0][4])  # max sensor rate
+            self.enter.append(self.AAIR_receive[0][5])  # sensitivity
+            self.enter[6] *= 10  # sensitivity
+            self.enter.append(self.AAIR_receive[0][6])   # ARP
+            self.enter.append(self.AAIR_receive[0][7])   # PVARP
+            self.enter[9] = self.ActivityThresholdDict[self.AAIR_receive[0][8]]
+            self.enter.append(self.AAIR_receive[0][9])  # reaction time
+            self.enter.append(self.AAIR_receive[0][10])  # response factor
+            self.enter.append(self.AAIR_receive[0][11])  # recovery time
             self.ser.write(self.enter)
         elif self.cmode == "VVIR":
             self.VVIR_receive = self.VVIR.Search(self.userID)
+            self.enter = [self.mode[self.cmode]]
+            self.enter.append(self.VVIR_receive[0][0])  # LRL
+            self.enter.append(self.VVIR_receive[0][1])  # URL
+            self.enter.append(self.VVIR_receive[0][2])  # pulse Amplitude
+            self.enter.append(self.VVIR_receive[0][3])  # pulse width
             if self.VVIR_receive[0][2] != "Off":
-                self.enter = [self.mode[self.cmode]] + self.VVIR_receive
                 self.enter[3] *= 10  # pulse amplitude
-                self.enter[6] *= 10  # sensitivity
-                self.enter[8] = self.ActivityThresholdDict[self.VVIR_receive[0][5]]
             else:
-                self.enter = [self.mode[self.cmode]] + self.VVIR_receive
                 self.enter[3] = 0
-
+            self.enter.append(self.VVIR_receive[0][4])  # max sensor rate
+            self.enter.append(self.VVIR_receive[0][5])  # sensitivity
+            self.enter[6] *= 10  # sensitivity
+            self.enter.append(self.VVIR_receive[0][6])  # VRP
+            self.enter.insert(8, 0)  # PVARP
+            self.enter[9] = self.ActivityThresholdDict[self.VVIR_receive[0][7]]
+            self.enter.append(self.AAIR_receive[0][8])  # reaction time
+            self.enter.append(self.AAIR_receive[0][9])  # response factor
+            self.enter.append(self.AAIR_receive[0][10])  # recovery time
             self.ser.write(self.enter)
 
 
