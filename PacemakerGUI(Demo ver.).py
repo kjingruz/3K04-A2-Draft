@@ -63,44 +63,42 @@ class sendSerial:
 
         if self.cmode == "AOO":
             self.AOO_receive = self.AOO.Search(self.userID)
+            self.enter = [self.mode[self.cmode]] + self.AOO_receive + [0] * 8
             if self.AOO_receive[0][2] != "Off":
-                self.enter = [self.mode[self.cmode]] + self.AOO_receive + [0]*8
                 self.enter[3] *= 10
             else:
-                self.enter = [self.mode[self.cmode]] + self.AOO_receive + [0]*8
                 self.enter[3] = 0
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "VOO":
             self.VOO_receive = self.VOO.Search(self.userID)
+            self.enter = [self.mode[self.cmode]] + self.VOO_receive + [0] * 8
             if self.VOO_receive[0][2] != "Off":
-                self.enter = [self.mode[self.cmode]] + self.VOO_receive + [0]*8
                 self.enter[3] *= 10
             else:
-                self.enter = [self.mode[self.cmode]] + self.VOO_receive + [0]*8
                 self.enter[3] = 0
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "AAI":
             self.AAI_receive = self.AAI.Search(self.userID)
+            self.enter = [self.mode[self.cmode]] + self.AAI_receive
             if self.AAI_receive[0][2] != "Off":
-                self.enter = [self.mode[self.cmode]] + self.AAI_receive
                 self.enter[3] *= 10
-                self.enter[5] *= 10
             else:
-                self.enter = [self.mode[self.cmode]] + self.AAI_receive
                 self.enter[3] = 0
+            self.enter.insert(5, 0)
+            self.enter[6] *= 10
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "VVI":
             self.VVI_receive = self.VVI.Search(self.userID)
+            self.enter = [self.mode[self.cmode]] + self.VVI_receive
             if self.VVI_receive[0][2] != "Off":
-                self.enter = [self.mode[self.cmode]] + self.VVI_receive
                 self.enter[3] *= 10
-                self.enter[5] *= 10
             else:
-                self.enter = [self.mode[self.cmode]] + self.VVI_receive
                 self.enter[3] = 0
+            self.enter.insert(5, 0)
+            self.enter[6] *= 10
             self.ser.write(self.enter)
             print("test file sent")
         elif self.cmode == "AOOR":
