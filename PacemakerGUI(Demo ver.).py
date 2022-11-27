@@ -2572,6 +2572,8 @@ class GraphWindow:
         self.loggedin = loggedinwindow
         if 'normal' == self.window.state():
             self.loggedin.withdraw()
+        self.serial = pacemakerSerial(self.cmode)
+        self.graph = animateGraph(self.serial)
         bg_color = "blue"
         fg_color = "white"
         cha_color = "black"
