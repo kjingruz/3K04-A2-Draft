@@ -30,15 +30,19 @@ class pacemakerSerial:
         self.LRL = struct.pack("B", 1)
         self.URL = struct.pack("B", 1)
         self.MSR = struct.pack("B", 1)
-        self.A_V_PA = struct.pack("f", 1.0)
-        self.A_V_PW = struct.pack("B", 1)
-        self.A_V_Sense = struct.pack("B", 1)
-        self.A_V_R = struct.pack("H", 1)
+        self.A_PA = struct.pack("f", 1.0)
+        self.V_PA = struct.pack("f", 1.0)
+        self.A_PW = struct.pack("B", 1)
+        self.V_PW = struct.pack("B", 1)
+        self.A_Sense = struct.pack("f", 1)
+        self.V_Sense = struct.pack("f", 1)
+        self.A_R = struct.pack("H", 1)
+        self.V_R = struct.pack("H", 1)
         self.PVARP = struct.pack("H", 1)
         self.Act_thres = struct.pack("B", 1)
         self.React_time = struct.pack("B", 1)
         self.Response_factor = struct.pack("B", 1)
-        self.Recovery_time = struct.pack("B", 1)
+        self.Recovery_time = struct.pack("H", 1)
 
         # values to read for ECG
         self.Atr = 0.0
@@ -47,7 +51,7 @@ class pacemakerSerial:
     # send current parameter values to pacemaker
     def send_param(self):
         # create signal to send
-        Signal_set = self.Start + self.Fn_set + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_V_PA + self.A_V_PW + self.A_V_Sense + self.A_V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
+        Signal_set = self.Start + self.Fn_set + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_PA + self.V_PA + self.A_PW + self.V_PW + self.A_Sense + self.V_Sense + self.A_R + self.V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
 
         with serial.Serial(self.frdm_port, 115200) as pacemaker:
             pacemaker.write(Signal_set)
@@ -55,32 +59,16 @@ class pacemakerSerial:
     # recieve Atr and Vnt values from pacemaker for ECG
     def get_echo(self):
         # create signal to send
-        Signal_echo = self.Start + self.SYNC + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_V_PA + self.A_V_PW + self.A_V_Sense + self.A_V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
+        Signal_echo = self.Start + self.SYNC + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_PA + self.V_PA + self.A_PW + self.V_PW + self.A_Sense + self.V_Sense + self.A_R + self.V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
 
         with serial.Serial(self.frdm_port, 115200) as pacemaker:
             pacemaker.write(Signal_echo)
-            data = pacemaker.read(34)
-            self.Atr = struct.unpack("d", data[18:26])[0]
-            self.Vnt = struct.unpack("d", data[26:34])[0]
+            data = pacemaker.read(49)
+            self.Atr = struct.unpack("d", data[33:41])[0]
+            self.Vnt = struct.unpack("d", data[41:49])[0]
 
             print(self.Atr)
             print(self.Vnt)
-
-    def update(self, database):
-
-        self.Pacing_mode = struct.pack("B", 1)
-        self.LRL = struct.pack("B", 1)
-        self.URL = struct.pack("B", 1)
-        self.MSR = struct.pack("B", 1)
-        self.A_V_PA = struct.pack("f", 1.0)
-        self.A_V_PW = struct.pack("B", 1)
-        self.A_V_Sense = struct.pack("B", 1)
-        self.A_V_R = struct.pack("H", 1)
-        self.PVARP = struct.pack("H", 1)
-        self.Act_thres = struct.pack("B", 1)
-        self.React_time = struct.pack("B", 1)
-        self.Response_factor = struct.pack("B", 1)
-        self.Recovery_time = struct.pack("B", 1)
 
     def getAtr(self):
         return self.Atr
