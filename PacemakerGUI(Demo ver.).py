@@ -1354,7 +1354,7 @@ class ParametersWindow:
         #print(self.LRLBox.get())
         #print(self.URLBox.get())
         if int(self.LRLBox.get()) > int(self.URLBox.get()):
-            tkinter.messagebox.showerror("Input Error", "Lower rate limit higher than upper rate limit, please reenter")
+            tkinter.messagebox.showerror("Input Error", "Lower rate limit higher than upper rate limit, please re-enter")
             self.LRLBox.set(60)
             self.URLBox.set(120)
         else:
@@ -1367,17 +1367,17 @@ class ParametersWindow:
             self.AAIRdatabase = AAIRParameterDatabase()
             self.VVIRdatabase = VVIRParameterDatabase()
             if self.currentmode == "AAI":
-                if int(self.ARPBox.get()) < 30000 / int(self.URLBox.get()):
+                if int(self.ARPBox.get()) > 60000/int(self.URLBox.get()):
                     tkinter.messagebox.showerror("Input Error",
-                                                 "Atrial Refractory Period must be lower than Upper rate limit, please reenter")
+                                                 "Atrial Refractory Period must be lower than the respective heart rate, please re-enter")
                     self.ARPBox.set(250)
                     self.URLBox.set(120)
-                elif int(self.PVARPBox.get()) < 30000/int(self.URLBox.get()):
+                elif int(self.PVARPBox.get()) > 60000/int(self.URLBox.get()):
                     tkinter.messagebox.showerror("Input Error",
-                                                 "PVARP must be lower than Upper rate limit, please reenter")
+                                                 "PVARP must be lower than the respective heart rate, please re-enter")
                     self.PVARPBox.set(250)
                     self.URLBox.set(120)
-                elif int(self.ARPBox.get()) >= 30000/int(self.URLBox.get()) and int(self.PVARPBox.get()) >= 30000/int(self.URLBox.get()):
+                elif int(self.ARPBox.get()) <= 60000/int(self.URLBox.get()) and int(self.PVARPBox.get()) <= 60000/int(self.URLBox.get()):
                     self.ARPBox.config(state='disabled')
                     self.PVARPBox.config(state='disabled')
                     self.SensitivityBox.config(state='disabled')
@@ -1398,7 +1398,7 @@ class ParametersWindow:
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVI":
-                if int(self.VRPBox.get()) >= 30000/ int(self.URLBox.get()):
+                if int(self.VRPBox.get()) <= 60000/int(self.URLBox.get()):
                     self.VRPBox.config(state='disabled')
                     self.SensitivityBox.config(state='disabled')
                     self.LRLBox.config(state='disabled')
@@ -1416,7 +1416,7 @@ class ParametersWindow:
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
                 else:
-                    tkinter.messagebox.showerror("Input Error", "Ventricular Refractory Period must be lower than Upper rate limit, please reenter")
+                    tkinter.messagebox.showerror("Input Error", "Ventricular Refractory Period must be lower than the respective heart rate, please re-enter, please re-enter")
                     self.VRPBox.set(250)
                     self.URLBox.set(120)
             elif self.currentmode == "AOO":
@@ -1450,7 +1450,7 @@ class ParametersWindow:
             elif self.currentmode == "AOOR":
                 if int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
                     tkinter.messagebox.showerror("Input Error",
-                                                 "Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
+                                                 "Upper Rate Limit must be higher or equal to Max Sensor Rate, please re-enter")
                     self.MaxSensorRateBox.set(120)
                     self.URLBox.set(120)
                 else:
@@ -1502,25 +1502,23 @@ class ParametersWindow:
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "AAIR":
-                print(self.ARPBox.get())
-                print(self.MaxSensorRateBox.get())
                 if int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
                     tkinter.messagebox.showerror("Input Error", "Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
                     self.MaxSensorRateBox.set(120)
                     self.URLBox.set(120)
-                elif int(self.ARPBox.get()) < 30000/int(self.MaxSensorRateBox.get()) and int(self.PVARPBox.get()) < 30000/int(self.MaxSensorRateBox.get()):
+                elif int(self.ARPBox.get()) > 60000/int(self.MaxSensorRateBox.get()) and int(self.PVARPBox.get()) > 60000/int(self.MaxSensorRateBox.get()):
                     tkinter.messagebox.showerror("Input Error",
-                                                 "Atrial Refractory Period and PVARP must be lower than Max Sensor Rate, please reenter")
+                                                 "Atrial Refractory Period and PVARP must be lower than the respective heart rate, please re-enter")
                     self.MaxSensorRateBox.set(120)
                     self.ARPBox.set(250)
                     self.PVARPBox.set(250)
-                elif int(self.ARPBox.get()) < 30000/int(self.MaxSensorRateBox.get()):
+                elif int(self.ARPBox.get()) > 60000/int(self.MaxSensorRateBox.get()):
                     tkinter.messagebox.showerror("Input Error",
-                                                 "Atrial Refractory Period must be lower than Max Sensor Rate, please reenter")
+                                                 "Atrial Refractory Period must be lower than the respective heart rate, please re-enter")
                     self.MaxSensorRateBox.set(120)
                     self.ARPBox.set(250)
-                elif int(self.PVARPBox.get()) < 30000/int(self.MaxSensorRateBox.get()):
-                    tkinter.messagebox.showerror("Input Error", "PVARP must be lower than Max Sensor Rate, please reenter")
+                elif int(self.PVARPBox.get()) > 60000/int(self.MaxSensorRateBox.get()):
+                    tkinter.messagebox.showerror("Input Error", "PVARP must be lower than the respective heart rate, please re-enter")
                     self.MaxSensorRateBox.set(120)
                     self.PVARPBox.set(250)
                 else:
@@ -1552,14 +1550,15 @@ class ParametersWindow:
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVIR":
-                if int(self.VRPBox.get()) < 30000 / int(self.MaxSensorRateBox.get()):
-                    tkinter.messagebox.showerror("Input Error","Ventricular Refractory Period must be lower than Max Sensor Rate, please reenter")
-                    self.MaxSensorRateBox.set(120)
-                    self.VRPBox.set(250)
-                elif int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
-                    tkinter.messagebox.showerror("Input Error","Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
+                if int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
+                    tkinter.messagebox.showerror("Input Error",
+                                                 "Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
                     self.MaxSensorRateBox.set(120)
                     self.URLBox.set(120)
+                elif int(self.VRPBox.get()) > 60000/int(self.MaxSensorRateBox.get()):
+                    tkinter.messagebox.showerror("Input Error","Ventricular Refractory Period must be lower than the respective heart rate, please re-enter")
+                    self.MaxSensorRateBox.set(120)
+                    self.VRPBox.set(250)
                 else:
                     self.VRPBox.config(state='disabled')
                     self.SensitivityBox.config(state='disabled')
