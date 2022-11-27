@@ -66,6 +66,22 @@ class pacemakerSerial:
             print(self.Atr)
             print(self.Vnt)
 
+    def update(self, database):
+
+        self.Pacing_mode = struct.pack("B", 1)
+        self.LRL = struct.pack("B", 1)
+        self.URL = struct.pack("B", 1)
+        self.MSR = struct.pack("B", 1)
+        self.A_V_PA = struct.pack("f", 1.0)
+        self.A_V_PW = struct.pack("B", 1)
+        self.A_V_Sense = struct.pack("B", 1)
+        self.A_V_R = struct.pack("H", 1)
+        self.PVARP = struct.pack("H", 1)
+        self.Act_thres = struct.pack("B", 1)
+        self.React_time = struct.pack("B", 1)
+        self.Response_factor = struct.pack("B", 1)
+        self.Recovery_time = struct.pack("B", 1)
+
     def getAtr(self):
         return self.Atr
 
