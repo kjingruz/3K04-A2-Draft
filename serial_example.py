@@ -29,7 +29,7 @@ Recovery_time = struct.pack("B", 1)
 
 
 
-Signal_set = Start + Fn_set + Pacing_mode + LRL + URL + MSR + A_V_PA + A_V_PW + A_V_Sense + A_V_R + PVARP + Act_thres + React_time + Response_factor + Recovery_time + Atr + Vnt
+Signal_set = Start + Fn_set + Pacing_mode + LRL + URL + MSR + A_V_PA + A_V_PW + A_V_Sense + A_V_R + PVARP + Act_thres + React_time + Response_factor + Recovery_time
 Signal_echo = Start + SYNC + Pacing_mode + LRL + URL + MSR + A_V_PA + A_V_PW + A_V_Sense + A_V_R + PVARP + Act_thres + React_time + Response_factor + Recovery_time
 
 with serial.Serial(frdm_port, 115200) as pacemaker:
@@ -37,7 +37,7 @@ with serial.Serial(frdm_port, 115200) as pacemaker:
 
 with serial.Serial(frdm_port, 115200) as pacemaker:
     pacemaker.write(Signal_echo)
-    data = pacemaker.read(18)
+    data = pacemaker.read(34)
     Pacing_mode = data[0]
     LRL = data[1]
     URL = data[2]
