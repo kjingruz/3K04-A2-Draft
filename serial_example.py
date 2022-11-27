@@ -13,15 +13,15 @@ Start = b'\x16'
 SYNC = b'\x22'
 Fn_set = b'\x55'
 Pacing_mode = struct.pack("B", 1)
-LRL = struct.pack("B", 1) 
+LRL = struct.pack("B", 1)
 URL = struct.pack("B", 1)
 MSR = struct.pack("B", 1)
 A_V_PA = struct.pack("f", 1.0)
-A_V_PW = struct.pack("B", 1) 
+A_V_PW = struct.pack("B", 1)
 A_V_Sense = struct.pack("B", 1)
 A_V_R = struct.pack("H", 1)
 PVARP = struct.pack("H", 1)
-Act_thres = struct.pack("B", 1) 
+Act_thres = struct.pack("B", 1)
 React_time = struct.pack("B", 1)
 Response_factor = struct.pack("B", 1)
 Recovery_time = struct.pack("B", 1)
@@ -35,20 +35,20 @@ with serial.Serial(frdm_port, 115200) as pacemaker:
 
 with serial.Serial(frdm_port, 115200) as pacemaker:
     pacemaker.write(Signal_echo)
-    data = pacemaker.read(13)
+    data = pacemaker.read(18)
     Pacing_mode = data[0]
     LRL = data[1]
     URL = data[2]
     MSR = data[3]
-    A_V_PA = data[4]
-    A_V_PW = data[5]
-    A_V_Sens = data[6]
-    A_V_R = data[7]
-    PVARP = data[8]
-    Act_thres = data[9]
-    React_time = data[10]
-    Response_factor = data[11]
-    Recovery_time = data[12]
+    A_V_PA = struct.unpack("f", data[4:8])[0]
+    A_V_PW = data[8]
+    A_V_Sens = data[9]
+    A_V_R = struct.unpack("H", data[10:12])[0]
+    PVARP = struct.unpack("H", data[12:14])[0]
+    Act_thres = data[14]
+    React_time = data[15]
+    Response_factor = data[16]
+    Recovery_time = data[17]
 
 print("From the board:")
 print("Pacing_mode = ", Pacing_mode)
