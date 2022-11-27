@@ -1366,15 +1366,15 @@ class ParametersWindow:
             self.VOORdatabase = VOORParameterDatabase()
             self.AAIRdatabase = AAIRParameterDatabase()
             self.VVIRdatabase = VVIRParameterDatabase()
-            self.LRLBox.config(state='disabled')
-            self.URLBox.config(state='disabled')
-            self.PulseAmplitudeBox.config(state='disabled')
-            self.PulseWidthBox.config(state='disabled')
             if self.currentmode == "AAI":
                 if int(self.ARPBox.get()) >= 60/int(self.URLBox.get()) and int(self.PVARPBox.get()) >= 60/int(self.URLBox.get()):
                     self.ARPBox.config(state='disabled')
                     self.PVARPBox.config(state='disabled')
                     self.SensitivityBox.config(state='disabled')
+                    self.LRLBox.config(state='disabled')
+                    self.URLBox.config(state='disabled')
+                    self.PulseAmplitudeBox.config(state='disabled')
+                    self.PulseWidthBox.config(state='disabled')
                     #try to insert the parameters, if failed because of previously saved parameters, update them
                     try:
                         self.AAIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
@@ -1384,6 +1384,9 @@ class ParametersWindow:
                         self.AAIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                                 self.PulseWidthBox.get(),self.SensitivityBox.get(),
                                                 self.ARPBox.get(),self.PVARPBox.get(), self.UserID)
+                    tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.EditButton.config(state='active')
+                    self.SaveButton.config(state='disabled')
                 else:
                     tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period and PVARP must be lower than Upper rate limit, please reenter")
                     self.ARPBox.set(250)
@@ -1392,6 +1395,10 @@ class ParametersWindow:
                 if int(self.VRPBox.get()) >= 60 / int(self.URLBox.get()):
                     self.VRPBox.config(state='disabled')
                     self.SensitivityBox.config(state='disabled')
+                    self.LRLBox.config(state='disabled')
+                    self.URLBox.config(state='disabled')
+                    self.PulseAmplitudeBox.config(state='disabled')
+                    self.PulseWidthBox.config(state='disabled')
                     try:
                         self.VVIdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                                 self.PulseWidthBox.get(), self.SensitivityBox.get(), self.VRPBox.get())
@@ -1399,11 +1406,18 @@ class ParametersWindow:
                         self.VVIdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                                 self.PulseWidthBox.get(),self.SensitivityBox.get(), self.VRPBox.get(),
                                                 self.UserID)
+                    tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.EditButton.config(state='active')
+                    self.SaveButton.config(state='disabled')
                 else:
                     tkinter.messagebox.showerror("Input Error", "Ventricular Refractory Period must be lower than Upper rate limit, please reenter")
                     self.VRPBox.set(250)
                     self.URLBox.set(120)
             elif self.currentmode == "AOO":
+                self.LRLBox.config(state='disabled')
+                self.URLBox.config(state='disabled')
+                self.PulseAmplitudeBox.config(state='disabled')
+                self.PulseWidthBox.config(state='disabled')
                 try:
                     self.AOOdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                             self.PulseWidthBox.get())
@@ -1411,12 +1425,19 @@ class ParametersWindow:
                     self.AOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                             self.PulseWidthBox.get(),self.UserID)
             elif self.currentmode == "VOO":
+                self.LRLBox.config(state='disabled')
+                self.URLBox.config(state='disabled')
+                self.PulseAmplitudeBox.config(state='disabled')
+                self.PulseWidthBox.config(state='disabled')
                 try:
                     self.VOOdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                             self.PulseWidthBox.get())
                 except sqlite3.IntegrityError:
                     self.VOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                             self.PulseWidthBox.get(),self.UserID)
+                    tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.EditButton.config(state='active')
+                    self.SaveButton.config(state='disabled')
             elif self.currentmode == "AOOR":
                 if int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
                     tkinter.messagebox.showerror("Input Error",
@@ -1429,6 +1450,10 @@ class ParametersWindow:
                     self.ReactionTimeBox.config(state='disabled')
                     self.ResponseFactorBox.config(state='disabled')
                     self.MaxSensorRateBox.config(state='disabled')
+                    self.LRLBox.config(state='disabled')
+                    self.URLBox.config(state='disabled')
+                    self.PulseAmplitudeBox.config(state='disabled')
+                    self.PulseWidthBox.config(state='disabled')
                     try:
                         self.AOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                                 self.PulseWidthBox.get(),self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
@@ -1437,6 +1462,9 @@ class ParametersWindow:
                         self.AOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                                 self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
+                    tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.EditButton.config(state='active')
+                    self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOOR":
                 if int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
                     tkinter.messagebox.showerror("Input Error",
@@ -1449,6 +1477,10 @@ class ParametersWindow:
                     self.ReactionTimeBox.config(state='disabled')
                     self.ResponseFactorBox.config(state='disabled')
                     self.MaxSensorRateBox.config(state='disabled')
+                    self.LRLBox.config(state='disabled')
+                    self.URLBox.config(state='disabled')
+                    self.PulseAmplitudeBox.config(state='disabled')
+                    self.PulseWidthBox.config(state='disabled')
                     try:
                         self.VOORdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                                 self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
@@ -1457,6 +1489,9 @@ class ParametersWindow:
                         self.VOORdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                                 self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
+                    tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.EditButton.config(state='active')
+                    self.SaveButton.config(state='disabled')
             elif self.currentmode == "AAIR":
                 if int(self.ARPBox.get()) < 60 / int(self.MaxSensorRateBox.get()) and int(self.PVARPBox.get()) >= 60/int(self.URLBox.get()):
                     tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period and PVARP must be lower than Max Sensor Rate, please reenter")
@@ -1475,6 +1510,10 @@ class ParametersWindow:
                     self.RecoveryTimeBox.config(state='disabled')
                     self.ReactionTimeBox.config(state='disabled')
                     self.ResponseFactorBox.config(state='disabled')
+                    self.LRLBox.config(state='disabled')
+                    self.URLBox.config(state='disabled')
+                    self.PulseAmplitudeBox.config(state='disabled')
+                    self.PulseWidthBox.config(state='disabled')
                     try:
                         self.AAIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                                 self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(),
@@ -1487,15 +1526,16 @@ class ParametersWindow:
                                                 self.ARPBox.get(), self.PVARPBox.get(),
                                                 self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
+                    tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.EditButton.config(state='active')
+                    self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVIR":
                 if int(self.VRPBox.get()) < 60 / int(self.MaxSensorRateBox.get()):
-                    tkinter.messagebox.showerror("Input Error",
-                                                 "Ventricular Refractory Period must be lower than Max Sensor Rate, please reenter")
+                    tkinter.messagebox.showerror("Input Error","Ventricular Refractory Period must be lower than Max Sensor Rate, please reenter")
                     self.MaxSensorRateBox.set(120)
                     self.VRPBox.set(250)
                 elif int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
-                    tkinter.messagebox.showerror("Input Error",
-                                                 "Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
+                    tkinter.messagebox.showerror("Input Error","Upper Rate Limit must be higher or equal to Max Sensor Rate, please reenter")
                     self.MaxSensorRateBox.set(120)
                     self.URLBox.set(120)
                 else:
@@ -1506,6 +1546,10 @@ class ParametersWindow:
                     self.ReactionTimeBox.config(state='disabled')
                     self.ResponseFactorBox.config(state='disabled')
                     self.MaxSensorRateBox.config(state='disabled')
+                    self.LRLBox.config(state='disabled')
+                    self.URLBox.config(state='disabled')
+                    self.PulseAmplitudeBox.config(state='disabled')
+                    self.PulseWidthBox.config(state='disabled')
                     try:
                         self.VVIRdatabase.Insert(self.UserID, self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                                 self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
@@ -1516,9 +1560,9 @@ class ParametersWindow:
                                                 self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.SensitivityBox.get(), self.VRPBox.get(),
                                                 self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
-            tkinter.messagebox.showinfo("Saved", "Saved")
-            self.EditButton.config(state='active')
-            self.SaveButton.config(state='disabled')
+                    tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.EditButton.config(state='active')
+                    self.SaveButton.config(state='disabled')
 
 
     def AOORVOORinputrep(self):
@@ -1848,13 +1892,13 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
     def AAIRsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Maximum Sensor Rate: ",
+                      text="Atrial Amplitude: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Atrial Amplitude: ",
+                      text="Atrial Pulse Width: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Atrial Pulse Width: ",
+                      text="Maximum Sensor Rate: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=5)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Atrial Sensitivity: ",
@@ -1881,7 +1925,7 @@ class ParametersWindow:
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
-        self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RPtype, width=20, state='disabled')
+        self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.MaxSensorRate, width=20, state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
         self.PulseWidthBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
@@ -1901,9 +1945,9 @@ class ParametersWindow:
         # location of the comboboxes
         self.LRLBox.grid(pady=5, column=2, row=1)
         self.URLBox.grid(pady=5, column=2, row=2)
-        self.MaxSensorRateBox.grid(pady=5, column=2, row=3)
-        self.PulseAmplitudeBox.grid(pady=5, column=2, row=4)
-        self.PulseWidthBox.grid(pady=5, column=2, row=5)
+        self.PulseAmplitudeBox.grid(pady=5, column=2, row=3)
+        self.PulseWidthBox.grid(pady=5, column=2, row=4)
+        self.MaxSensorRateBox.grid(pady=5, column=2, row=5)
         self.SensitivityBox.grid(pady=5, column=2, row=6)
         self.ARPBox.grid(pady=5, column=4, row=1)
         self.PVARPBox.grid(pady=5, column=4, row=2)
@@ -1913,13 +1957,13 @@ class ParametersWindow:
         self.RecoveryTimeBox.grid(pady=5, column=4, row=6)
     def VVIRsetup(self, bg_color, fg_color):
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Maximum Sensor Rate: ",
+                      text="Ventricular Amplitude: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=3)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Ventricular Amplitude: ",
+                      text="Ventricular Pulse Width: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=4)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
-                      text="Ventricular Pulse Width: ",
+                      text="Maximum Sensor Rate: ",
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=1, row=5)
         tkinter.Label(self.parameterwindow, relief=tkinter.GROOVE, fg=fg_color, bg=bg_color,
                       text="Ventricularl Sensitivity: ",
@@ -1943,12 +1987,12 @@ class ParametersWindow:
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
-        self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.MaxSensorRate, width=20,
-                                                     state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
         self.PulseWidthBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseWidthtype, width=20,
                                                   state='disabled')
+        self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.MaxSensorRate, width=20,
+                                                     state='disabled')
         self.SensitivityBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.Sensitivitytype, width=20,
                                                    state='disabled')
         self.VRPBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.RPtype, width=20, state='disabled')
