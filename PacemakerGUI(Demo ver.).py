@@ -1367,9 +1367,17 @@ class ParametersWindow:
             self.AAIRdatabase = AAIRParameterDatabase()
             self.VVIRdatabase = VVIRParameterDatabase()
             if self.currentmode == "AAI":
-                print(self.ARPBox.get())
-                print(self.URLBox.get())
-                if int(self.ARPBox.get()) >= 30000/int(self.URLBox.get()) and int(self.PVARPBox.get()) >= 30000/int(self.URLBox.get()):
+                if int(self.ARPBox.get()) < 30000 / int(self.URLBox.get()):
+                    tkinter.messagebox.showerror("Input Error",
+                                                 "Atrial Refractory Period must be lower than Upper rate limit, please reenter")
+                    self.ARPBox.set(250)
+                    self.URLBox.set(120)
+                elif int(self.PVARPBox.get()) < 30000/int(self.URLBox.get()):
+                    tkinter.messagebox.showerror("Input Error",
+                                                 "PVARP must be lower than Upper rate limit, please reenter")
+                    self.PVARPBox.set(250)
+                    self.URLBox.set(120)
+                elif int(self.ARPBox.get()) >= 30000/int(self.URLBox.get()) and int(self.PVARPBox.get()) >= 30000/int(self.URLBox.get()):
                     self.ARPBox.config(state='disabled')
                     self.PVARPBox.config(state='disabled')
                     self.SensitivityBox.config(state='disabled')
@@ -1389,12 +1397,8 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
-                else:
-                    tkinter.messagebox.showerror("Input Error", "Atrial Refractory Period and PVARP must be lower than Upper rate limit, please reenter")
-                    self.ARPBox.set(250)
-                    self.URLBox.set(120)
             elif self.currentmode == "VVI":
-                if int(self.VRPBox.get()) <= 60 / int(self.URLBox.get()):
+                if int(self.VRPBox.get()) >= 30000/ int(self.URLBox.get()):
                     self.VRPBox.config(state='disabled')
                     self.SensitivityBox.config(state='disabled')
                     self.LRLBox.config(state='disabled')
@@ -1426,6 +1430,9 @@ class ParametersWindow:
                 except sqlite3.IntegrityError:
                     self.AOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                             self.PulseWidthBox.get(),self.UserID)
+                tkinter.messagebox.showinfo("Saved", "Saved")
+                self.EditButton.config(state='active')
+                self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOO":
                 self.LRLBox.config(state='disabled')
                 self.URLBox.config(state='disabled')
@@ -1437,9 +1444,9 @@ class ParametersWindow:
                 except sqlite3.IntegrityError:
                     self.VOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                             self.PulseWidthBox.get(),self.UserID)
-                    tkinter.messagebox.showinfo("Saved", "Saved")
-                    self.EditButton.config(state='active')
-                    self.SaveButton.config(state='disabled')
+                tkinter.messagebox.showinfo("Saved", "Saved")
+                self.EditButton.config(state='active')
+                self.SaveButton.config(state='disabled')
             elif self.currentmode == "AOOR":
                 if int(self.URLBox.get()) < int(self.MaxSensorRateBox.get()):
                     tkinter.messagebox.showerror("Input Error",
@@ -1704,7 +1711,7 @@ class ParametersWindow:
         self.URLBox.set(120)
         self.PulseAmplitudeBox.set(5.0)
         self.PulseWidthBox.set(1)
-        self.SensitivityBox.set(0.75)
+        self.SensitivityBox.set(2.5)
         self.ARPBox.set(250)
         self.PVARPBox.set(250)
 
@@ -1746,7 +1753,7 @@ class ParametersWindow:
         self.MaxSensorRateBox.set(120)
         self.PulseAmplitudeBox.set(5.0)
         self.PulseWidthBox.set(1)
-        self.SensitivityBox.set(0.75)
+        self.SensitivityBox.set(2.5)
         self.ARPBox.set(250)
         self.PVARPBox.set(250)
         self.ActivityThresholdBox.set('Med')
