@@ -1713,6 +1713,7 @@ class ParametersWindow:
                                                 self.ARPBox.get(),self.PVARPBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
+                    self.serial.send_param()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVI":
@@ -1732,6 +1733,7 @@ class ParametersWindow:
                                                 self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
+                    self.serial.send_param()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
                 else:
@@ -1751,6 +1753,7 @@ class ParametersWindow:
                                             self.PulseWidthBox.get(),self.UserID)
                 tkinter.messagebox.showinfo("Saved", "Saved")
                 self.serial.update()
+                self.serial.send_param()
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOO":
@@ -1766,6 +1769,7 @@ class ParametersWindow:
                                             self.PulseWidthBox.get(),self.UserID)
                 tkinter.messagebox.showinfo("Saved", "Saved")
                 self.serial.update()
+                self.serial.send_param()
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "AOOR":
@@ -1794,6 +1798,7 @@ class ParametersWindow:
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
+                    self.serial.send_param()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOOR":
@@ -1822,6 +1827,7 @@ class ParametersWindow:
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
+                    self.serial.send_param()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "AAIR":
@@ -1871,6 +1877,7 @@ class ParametersWindow:
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
+                    self.serial.send_param()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVIR":
@@ -1907,6 +1914,7 @@ class ParametersWindow:
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
+                    self.serial.send_param()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
 
@@ -2610,6 +2618,7 @@ class GraphWindow:
         if 'normal' == self.window.state():
             self.loggedin.withdraw()
         self.serial = pacemakerSerial(self.cmode)
+        self.serial.get_echo()
         self.graph = animateGraph(self.serial)
         bg_color = "blue"
         fg_color = "white"
