@@ -1466,10 +1466,7 @@ class LoggedInWindow:
                       else "Status update: Connection with DCM is " + "OFF",font=("times new roman", 10, "bold"),
                       width=50).grid(pady=20, column=1, row=2)
     def Graph(self):
-        self.loginn = LoginDatabase()
-        # find the current mode
-        self.cmode = self.loginn.ReturnMode(self.UserID)[0][4]
-        self.graph = GraphWindow(self.UserID, self.window, self.cmode)
+        self.graph = GraphWindow(self.UserID, self.window)
     def Signout(self):
         self.window.destroy()
         self.homepage = HomePage()
@@ -2609,11 +2606,13 @@ class ModeWindow:
 
 
 class GraphWindow:
-    def __init__(self, userID, loggedinwindow, currentmode):
+    def __init__(self, userID, loggedinwindow):
         self.UserID = userID
         self.login = LoginDatabase()
+        self.result = self.login.ReturnMode(self.UserID)
         #the current mode
-        self.cmode = currentmode
+        print(self.result)
+        self.cmode = self.result[0][4]
         self.window = tkinter.Tk()
         self.window.wm_title("Egram Graphs")
         self.loggedin = loggedinwindow
