@@ -1,74 +1,123 @@
+import serial
+import serial.tools.list_ports
+import struct
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import random
-import serial
-
-ser = serial.Serial('COM4',115200) #windows
-
-print(ser.name)
-# hex(value) outputs a string :(
-enter = [0x16, 0x55, 0x1, 0x32, 0x32, 0x32, 0x5, 0x1, 0x0, 0x96, 0x96, 0x1, 0xA, 0x1, 0x2] #hex
-ser.write(enter)
-print("test file sent")
-
-fig = plt.figure()
-ax1 = fig.add_subplot(1,1,1)
+#import time
 
 
-def updateFile():
+class pacemakerSerial:
 
-    #ask for new values
-     enter = [0x16, 0x61, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0] #hex
-     ser.write(enter)
+    def __init__(self):
+        # Mac port, for windows you have to find the ports yourself lmao
+        frdm_port = "/dev/cu.usbmodem0000001234561"
 
-    #read values
-     xin = text = ser.read()
-     print(text)
-     yin = text = ser.read()
-     print(text)
+        # Windows port, check COM port in device manager
+        # win_port = "COM4"
 
-     f = open('sampleText.txt', 'r')
-     xval,yval = f.readline().split(',')
-     f.close()
+        # B = uint8
+        # f = single
+        # H = uint16
+        # d = double ( 8 bytes)
 
-     xnum = int(xval)
-     ynum = int(yval)
+        # parameter values to send to pacemaker
+        self.Start = b'\x16'
+        self.SYNC = b'\x22'
+        self.Fn_set = b'\x55'
+        self.Pacing_mode = struct.pack("B", 1)
+        self.LRL = struct.pack("B", 1)
+        self.URL = struct.pack("B", 1)
+        self.MSR = struct.pack("B", 1)
+        self.A_V_PA = struct.pack("f", 1.0)
+        self.A_V_PW = struct.pack("B", 1)
+        self.A_V_Sense = struct.pack("B", 1)
+        self.A_V_R = struct.pack("H", 1)
+        self.PVARP = struct.pack("H", 1)
+        self.Act_thres = struct.pack("B", 1)
+        self.React_time = struct.pack("B", 1)
+        self.Response_factor = struct.pack("B", 1)
+        self.Recovery_time = struct.pack("B", 1)
+
+        # values to read for ECG
+        self.Atr = 0.0
+        self.Vnt = 0.0
+
+    # send current parameter values to pacemaker
+    def set_param(self):
+        # create signal to send
+        Signal_set = self.Start + self.Fn_set + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_V_PA + self.A_V_PW + self.A_V_Sense + self.A_V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
+
+        with serial.Serial(self.frdm_port, 115200) as pacemaker:
+            pacemaker.write(Signal_set)
+
+    # recieve Atr and Vnt values from pacemaker for ECG
+    def get_echo(self):
+        # create signal to send
+        Signal_echo = self.Start + self.SYNC + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_V_PA + self.A_V_PW + self.A_V_Sense + self.A_V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
+
+        with serial.Serial(self.frdm_port, 115200) as pacemaker:
+            pacemaker.write(Signal_echo)
+            data = pacemaker.read(34)
+            self.Atr = struct.unpack("d", data[18:26])[0]
+            self.Vnt = struct.unpack("d", data[26:34])[0]
+
+            print(self.Atr)
+            print(self.Vnt)
+
+    def getAtr(self):
+       return self.Atr
+
+    def getVnt(self):
+        return self.Vnt
 
 
-     f = open('sampleText.txt', 'a')
-    # writeVal = str(xnum)+","+str(ynum)+'\n'
-    # writeVal = str(random.randrange(0,10))+','+str(random.randrange(0,10))+'\n'
-     writeVal = str(xin)+','+str(yin)+'\n'
-     f.write(writeVal)
-     f.close()
+class animateGraph:
 
-def animate(i):
+    def __init__(self):
+        #serial com
+        self.pacemaker = pacemakerSerial()
 
-    updateFile()#update vals
-    #print("test")
+        #for plot
+        self.time = 0
+        self.fig = plt.figure()
+        self.ax1 = self.fig.add_subplot(1,1,1)
 
-    pullData = open("sampleText.txt","r").read()                                 # must use txt file for input, else graph wont update
-    #pullData.close()
+    def addToFile(self):
+        
+        #saved as: time, Atr, Vnt
+        f = open('sampleText.txt', 'r')
+        self.time = f.readline().split(',')[0] # pulls most recent time to increment
+        self.time += 0.5
+        f.close()
 
+        f = open('EGRAM_vals.txt', 'a')
+        writeVal = str(self.time) + ',' + str(self.pacemaker.getAtr()) + ',' + str(self.pacemaker.getVnt()) + '\n'
+        f.write(writeVal)
+        f.close()
 
-    dataArray = pullData.split('\n')
-    xar = []
-    yar = []
-    for eachLine in dataArray:
-        if len(eachLine)>1:
-            x,y = eachLine.split(',')
-            xar.append(int(x))
-            yar.append(int(y))
-    ax1.clear()
-    ax1.plot(xar,yar)
+    def animate(self,i):
 
-print("before")
+        self.addToFile()#update vals
 
-ani = animation.FuncAnimation(fig, animate, interval=1)
-print("ani")
-plt.show()
-print("show")
-plt.close()
-print("close")
+        pullData = open("EGRAM_vals.txt","r").read()                                 # must use txt file for input, else graph wont update
+        #pullData.close()
 
-serial.close()#do this earlier??
+        #saved as: time, Atr, Vnt
+        dataArray = pullData.split('\n')
+        tar = []
+        aar = []
+        var = []
+        for eachLine in dataArray:
+            if len(eachLine)>1:
+                t,a,v = eachLine.split(',')
+                tar.append(int(t))
+                aar.append(int(a))
+                var.append(int(v))
+        self.ax1.clear()
+        self.ax1.plot(tar,aar,var)
+
+    #run this to open the plot
+    def showPlot (self):
+        ani = animation.FuncAnimation(self.fig, self.animate, interval=500)
+        plt.show()
