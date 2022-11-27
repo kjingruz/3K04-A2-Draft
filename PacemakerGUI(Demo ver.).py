@@ -37,12 +37,12 @@ class pacemakerSerial:
         self.currentmode = self.login.ReturnMode(self.userID)[0][4]
         self.modeDict = {
             'AOO': 1,
-            'VOO': 2,
-            'AAI': 3,
-            'VVI': 4,
-            'AOOR': 5,
-            'VOOR': 6,
-            'AAIR': 7,
+            'AOOR': 2,
+            'VOO': 3,
+            'VOOR': 4,
+            'AAI': 5,
+            'AAIR': 6,
+            'VVI': 7,
             'VVIR': 8
         }
         self.ActivityThresholdDict = {
