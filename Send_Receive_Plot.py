@@ -125,3 +125,6 @@ class animateGraph:
     def showPlot (self):
         ani = animation.FuncAnimation(self.fig, self.animate, interval=10) # refresh every 10ms
         plt.show()
+
+a1 = animateGraph()
+a1.showPlot()
