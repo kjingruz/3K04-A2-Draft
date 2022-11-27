@@ -35,16 +35,32 @@ with serial.Serial(frdm_port, 115200) as pacemaker:
 
 with serial.Serial(frdm_port, 115200) as pacemaker:
     pacemaker.write(Signal_echo)
-    data = pacemaker.read(4)
-    red_rev = data[0]
-    green_rev = data[1]
-    blue_rev = data[2]
-    off_rev = data[3]
-    #switch_rev =  struct.unpack("H", data[7:9])[0]
+    data = pacemaker.read(13)
+    Pacing_mode = data[0]
+    LRL = data[1]
+    URL = data[2]
+    MSR = data[3]
+    A_V_PA = data[4]
+    A_V_PW = data[5]
+    A_V_Sens = data[6]
+    A_V_R = data[7]
+    PVARP = data[8]
+    Act_thres = data[9]
+    React_time = data[10]
+    Response_factor = data[11]
+    Recovery_time = data[12]
 
 print("From the board:")
-print("red_en = ", red_rev)
-print("green_en = ", green_rev)
-print("blue_en = ", blue_rev)
-print("off_time = ",  off_rev)
-#print("switch_time = ", switch_rev)
+print("Pacing_mode = ", Pacing_mode)
+print("LRL = ", LRL)
+print("URL = ", URL)
+print("MSR = ",  MSR)
+print("A_V_PA = ",  A_V_PA)
+print("A_V_PW = ",  A_V_PW)
+print("A_V_Sens = ",  A_V_Sens)
+print("A_V_R = ",  A_V_R)
+print("PVARP = ",  PVARP)
+print("Act_thres = ",  Act_thres)
+print("React_time = ",  React_time)
+print("Response_factor = ",  Response_factor)
+print("Recovery_time = ",  Recovery_time)
