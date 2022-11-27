@@ -3,7 +3,6 @@ import serial.tools.list_ports
 import struct
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import random
 #import time
 
 
@@ -44,7 +43,7 @@ class pacemakerSerial:
         self.Vnt = 0.0
 
     # send current parameter values to pacemaker
-    def set_param(self):
+    def send_param(self):
         # create signal to send
         Signal_set = self.Start + self.Fn_set + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_V_PA + self.A_V_PW + self.A_V_Sense + self.A_V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
 
@@ -74,9 +73,10 @@ class pacemakerSerial:
 
 class animateGraph:
 
-    def __init__(self):
-        #serial com
-        self.pacemaker = pacemakerSerial()
+    # pass in pacemakerSerial object on  init, assumes you already have on instantiated
+    def __init__(self, pacemakerSerial):
+        #for serial com
+        self.pacemaker = pacemakerSerial
 
         #for plot
         self.time = 0
@@ -91,6 +91,9 @@ class animateGraph:
         self.time += 0.5
         f.close()
 
+        #pulls new Atr and Vnt values from pacemaker... loop this to get more values , but keep animate interval in mind
+        self.pacemaker.get_echo()
+
         f = open('EGRAM_vals.txt', 'a')
         writeVal = str(self.time) + ',' + str(self.pacemaker.getAtr()) + ',' + str(self.pacemaker.getVnt()) + '\n'
         f.write(writeVal)
@@ -100,8 +103,7 @@ class animateGraph:
 
         self.addToFile()#update vals
 
-        pullData = open("EGRAM_vals.txt","r").read()                                 # must use txt file for input, else graph wont update
-        #pullData.close()
+        pullData = open("EGRAM_vals.txt","r").read() # must use txt file for input, else graph wont update
 
         #saved as: time, Atr, Vnt
         dataArray = pullData.split('\n')
@@ -115,9 +117,11 @@ class animateGraph:
                 aar.append(int(a))
                 var.append(int(v))
         self.ax1.clear()
-        self.ax1.plot(tar,aar,var)
+        self.ax1.plot(tar, aar, label = "Atrial")
+        self.ax1.plot(tar, var, label = "Ventrical")
+        self.ax1.legend()
 
     #run this to open the plot
     def showPlot (self):
-        ani = animation.FuncAnimation(self.fig, self.animate, interval=500)
+        ani = animation.FuncAnimation(self.fig, self.animate, interval=10) # refresh every 10ms
         plt.show()
