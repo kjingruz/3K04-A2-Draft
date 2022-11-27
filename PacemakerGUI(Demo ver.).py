@@ -1398,8 +1398,10 @@ class LoginWindow:
         self.lastnameEntry.grid(pady=5, column=3, row=3)
         self.passwordEntry.grid(pady=5, column=3, row=4)
         #submit the login request
-        tkinter.Button(self.loginwindow, width=10, fg=cha_color, bg=bg_color, font=("times new roman", 10, "bold"),
-                       text="Submit", command=self.Submit).grid(pady=15, padx=5, column=1,row=14)
+        submitbutton = tkinter.Button(self.loginwindow, width=10, fg=cha_color, bg=bg_color, font=("times new roman", 10, "bold"),
+                       text="Submit", command=self.Submit)
+        submitbutton.grid(pady=15, padx=5, column=1,row=14)
+        submitbutton.bind('<KP_Enter>', self.Submit)
         tkinter.Button(self.loginwindow, width=10, fg=cha_color, bg=bg_color, font=("times new roman", 10, "bold"),
                        text="Back to Home", command=self.Home).grid(pady=15, padx=5, column=3, row=14)
         self.loginwindow.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -1946,16 +1948,7 @@ class ParametersWindow:
             self.inputs = self.LRLinput
 
         self.URLtype = list(range(self.inputs, 180, 5))
-        #print(self.URLtype)
-    def returntype(self):
-        self.LRLinput = int(self.LRLBox.get())
-        if self.LRLinput % 5 == 1:
-            self.inputs = self.round_up_to_nearest_5(self.LRLinput)
-        else:
-            self.inputs = self.LRLinput
 
-        self.LRLtype = list(range(self.inputs, 180, 5))
-        return self.LRLtype
     def Edit(self):
         tkinter.messagebox.showinfo("Edit Mode on", "Edit Mode on")
         self.EditButton.config(state='disabled')
@@ -2176,6 +2169,7 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=3)
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
+        self.LRLBox.bind('<<ComboboxSelected>>', self.modified)
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
@@ -2201,6 +2195,7 @@ class ParametersWindow:
                           font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
+        self.LRLBox.bind('<<ComboboxSelected>>', self.modified)
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
@@ -2219,6 +2214,7 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=2)
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
+        self.LRLBox.bind('<<ComboboxSelected>>', self.modified)
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
@@ -2278,6 +2274,7 @@ class ParametersWindow:
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
+        self.LRLBox.bind('<<ComboboxSelected>>', self.modified)
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
         self.MaxSensorRateBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.MaxSensorRate, width=20, state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
@@ -2340,6 +2337,7 @@ class ParametersWindow:
 
         # creates the right hand side of the page consisting of comboboxes
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
+        self.LRLBox.bind('<<ComboboxSelected>>', self.modified)
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
@@ -2388,6 +2386,7 @@ class ParametersWindow:
                       font=("times new roman", 10, "bold"), width=50).grid(pady=20, column=3, row=4)
 
         self.LRLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.LRLtype, width=20, state='disabled')
+        self.LRLBox.bind('<<ComboboxSelected>>', self.modified)
         self.URLBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.URLtype, width=20, state='disabled')
         self.PulseAmplitudeBox = tkinter.ttk.Combobox(self.parameterwindow, values=self.PulseAmplitudetype, width=20,
                                                       state='disabled')
