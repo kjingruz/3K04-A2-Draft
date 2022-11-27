@@ -113,12 +113,12 @@ class pacemakerSerial:
         if self.currentmode == "AOO":
             self.AOO_receive = self.AOO.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
-            self.LRL = struct.pack("B", int(self.AOO_receive[0][0]))
-            self.URL = struct.pack("B", int(self.AOO_receive[0][1]))
+            self.LRL = struct.pack("B", int(self.AOO_receive[0][1]))
+            self.URL = struct.pack("B", int(self.AOO_receive[0][2]))
             self.MSR = struct.pack("B", 1) #max sensor rate
-            self.A_PA = struct.pack("f", float(self.AOO_receive[0][2]))  # pulse amplitude
+            self.A_PA = struct.pack("f", float(self.AOO_receive[0][3]))  # pulse amplitude
             self.V_PA = struct.pack("f", 1)  # pulse amplitude
-            self.A_PW = struct.pack("B", int(self.AOO_receive[0][3]))  # pulse width
+            self.A_PW = struct.pack("B", int(self.AOO_receive[0][4]))  # pulse width
             self.V_PW = struct.pack("B", 1)  # pulse width
             self.A_Sense = struct.pack("f", 1.0)  # sensitivity
             self.V_Sense = struct.pack("f", 1.0)  # sensitivity
@@ -132,13 +132,13 @@ class pacemakerSerial:
         elif self.currentmode == "VOO":
             self.VOO_receive = self.VOO.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
-            self.LRL = struct.pack("B", int(self.VOO_receive[0][0]))
-            self.URL = struct.pack("B", int(self.VOO_receive[0][1]))
+            self.LRL = struct.pack("B", int(self.VOO_receive[0][1]))
+            self.URL = struct.pack("B", int(self.VOO_receive[0][2]))
             self.MSR = struct.pack("B", 1) #max sensor rate
             self.A_PA = struct.pack("f", 1)  # pulse amplitude
-            self.V_PA = struct.pack("f", float(self.AOO_receive[0][2]))  # pulse amplitude
+            self.V_PA = struct.pack("f", float(self.AOO_receive[0][3]))  # pulse amplitude
             self.A_PW = struct.pack("B", 1)  # pulse width
-            self.V_PW = struct.pack("B", int(self.AOO_receive[0][3]))  # pulse width
+            self.V_PW = struct.pack("B", int(self.AOO_receive[0][4]))  # pulse width
             self.A_Sense = struct.pack("f", 1.0)  # sensitivity
             self.V_Sense = struct.pack("f", 1.0)  # sensitivity
             self.A_R = struct.pack("H", 1)  # ARP
@@ -1466,7 +1466,10 @@ class LoggedInWindow:
                       else "Status update: Connection with DCM is " + "OFF",font=("times new roman", 10, "bold"),
                       width=50).grid(pady=20, column=1, row=2)
     def Graph(self):
-        self.graph = GraphWindow(self.UserID, self.window)
+        self.loginn = LoginDatabase()
+        # find the current mode
+        self.cmode = self.loginn.ReturnMode(self.UserID)[0][4]
+        self.graph = GraphWindow(self.UserID, self.window, self.cmode)
     def Signout(self):
         self.window.destroy()
         self.homepage = HomePage()
@@ -2606,12 +2609,11 @@ class ModeWindow:
 
 
 class GraphWindow:
-    def __init__(self, userID, loggedinwindow):
+    def __init__(self, userID, loggedinwindow, currentmode):
         self.UserID = userID
         self.login = LoginDatabase()
-        self.result = self.login.ReturnMode(self.UserID)
         #the current mode
-        self.cmode = self.result[0][4]
+        self.cmode = currentmode
         self.window = tkinter.Tk()
         self.window.wm_title("Egram Graphs")
         self.loggedin = loggedinwindow
