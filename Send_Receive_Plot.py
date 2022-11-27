@@ -3,14 +3,16 @@ import serial.tools.list_ports
 import struct
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-#import time
+
+
+# import time
 
 
 class pacemakerSerial:
 
     def __init__(self):
         # Mac port, for windows you have to find the ports yourself lmao
-        frdm_port = "/dev/cu.usbmodem0000001234561"
+        self.frdm_port = "/dev/cu.usbmodem0000001234561"
 
         # Windows port, check COM port in device manager
         # win_port = "COM4"
@@ -65,7 +67,7 @@ class pacemakerSerial:
             print(self.Vnt)
 
     def getAtr(self):
-       return self.Atr
+        return self.Atr
 
     def getVnt(self):
         return self.Vnt
@@ -75,23 +77,25 @@ class animateGraph:
 
     # pass in pacemakerSerial object on  init, assumes you already have on instantiated
     def __init__(self, pacemakerSerial):
-        #for serial com
+        # for serial com
         self.pacemaker = pacemakerSerial
 
-        #for plot
+        # for plot
+        self.inc = 0
         self.time = 0
         self.fig = plt.figure()
-        self.ax1 = self.fig.add_subplot(1,1,1)
+        self.ax1 = self.fig.add_subplot(1, 1, 1)
 
     def addToFile(self):
-        
-        #saved as: time, Atr, Vnt
+
+        # saved as: time, Atr, Vnt
         f = open('sampleText.txt', 'r')
-        self.time = f.readline().split(',')[0] # pulls most recent time to increment
-        self.time += 0.5
+        self.time = f.readline().split(',')[0]  # pulls most recent time to increment
+        self.inc += float(0.5)
+        self.time += str(self.inc)
         f.close()
 
-        #pulls new Atr and Vnt values from pacemaker... loop this to get more values , but keep animate interval in mind
+        # pulls new Atr and Vnt values from pacemaker... loop this to get more values , but keep animate interval in mind
         self.pacemaker.get_echo()
 
         f = open('EGRAM_vals.txt', 'a')
@@ -99,32 +103,34 @@ class animateGraph:
         f.write(writeVal)
         f.close()
 
-    def animate(self,i):
+    def animate(self, i):
 
-        self.addToFile()#update vals
+        self.addToFile()  # update vals
 
-        pullData = open("EGRAM_vals.txt","r").read() # must use txt file for input, else graph wont update
+        pullData = open("EGRAM_vals.txt", "r").read()  # must use txt file for input, else graph wont update
 
-        #saved as: time, Atr, Vnt
+        # saved as: time, Atr, Vnt
         dataArray = pullData.split('\n')
         tar = []
         aar = []
         var = []
         for eachLine in dataArray:
-            if len(eachLine)>1:
-                t,a,v = eachLine.split(',')
-                tar.append(int(t))
-                aar.append(int(a))
-                var.append(int(v))
+            if len(eachLine) > 1:
+                t, a, v = eachLine.split(',')
+                tar.append(str(t))
+                aar.append(str(a))
+                var.append(str(v))
         self.ax1.clear()
-        self.ax1.plot(tar, aar, label = "Atrial")
-        self.ax1.plot(tar, var, label = "Ventrical")
+        self.ax1.plot(tar, aar, label="Atrial")
+        self.ax1.plot(tar, var, label="Ventrical")
         self.ax1.legend()
 
-    #run this to open the plot
-    def showPlot (self):
-        ani = animation.FuncAnimation(self.fig, self.animate, interval=10) # refresh every 10ms
+    # run this to open the plot
+    def showPlot(self):
+        ani = animation.FuncAnimation(self.fig, self.animate, interval=10)  # refresh every 10ms
         plt.show()
 
-a1 = animateGraph()
+
+b1 = pacemakerSerial()
+a1 = animateGraph(b1)
 a1.showPlot()
