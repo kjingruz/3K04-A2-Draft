@@ -1148,7 +1148,6 @@ class LoggedInWindow:
                       width=50).grid(pady=20, column=1, row=2)
     def Graph(self):
         self.graph = GraphWindow(self.UserID, self.window)
-        self.window.destroy()
     def Signout(self):
         self.window.destroy()
         self.homepage = HomePage()
