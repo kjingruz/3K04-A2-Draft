@@ -295,7 +295,7 @@ class animateGraph:
     def __init__(self, pacemakerSerial, userID):
         # for serial com
         self.pacemaker = pacemakerSerial
-
+        self.UserID = userID
         # for plot
         self.inc = 0
         self.time = 0
@@ -305,10 +305,6 @@ class animateGraph:
         #print(self.fig.number)
         self.ax1 = self.fig.add_subplot(1, 1, 1)
 
-
-    def on_close(self):
-        #self.loggedin = LoggedInWindow()
-        plt.close()
     def addToFile(self):
 
         # saved as: time, Atr, Vnt
@@ -327,7 +323,6 @@ class animateGraph:
         f.close()
 
     def animate(self, i):
-
         self.addToFile()  # update vals
 
         pullData = open("EGRAM_vals.txt", "r").read()  # must use txt file for input, else graph wont update
@@ -355,10 +350,10 @@ class animateGraph:
         plt.show()
 
     def on_close(self, event):
-            print('Closed Figure!')
-
-            f = open("EGRAM_vals.txt","w")
-            f.write('0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n')
+        print('Closed Figure!')
+        self.loggedin = LoggedInWindow(self.UserID)
+        f = open("EGRAM_vals.txt","w")
+        f.write('0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n')
 
 
 #stores the login creditals
