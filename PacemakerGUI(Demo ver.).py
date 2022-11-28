@@ -2442,10 +2442,6 @@ class GraphWindow:
         self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
                                         text="Back",font=("times new roman", 15, "bold"), command=self.Back)
         self.BackButton.grid(pady=15, column=1, row=2)
-
-
-
-
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.window.mainloop()
 
