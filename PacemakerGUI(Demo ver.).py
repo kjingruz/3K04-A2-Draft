@@ -11,12 +11,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-matplotlib.use('TkAgg')
-
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
-
 #two variables that are subject to change based on the pacemaker.
 #warning is a boolean to show that there is another pacemaker nearby
 warning = True
@@ -115,48 +109,6 @@ class pacemakerSerial:
 
             print(self.Atr)
             print(self.Vnt)
-
-    # recieve all values from pacemaker for verification
-    def get_echo_all(self):
-        # create signal to send
-        Signal_echo = self.Start + self.SYNC + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_PA + self.V_PA + self.A_PW + self.V_PW + self.A_Sense + self.V_Sense + self.A_R + self.V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
-
-        with serial.Serial(self.frdm_port, 115200) as pacemaker:
-            pacemaker.write(Signal_echo)
-            data = pacemaker.read(34)
-            Pacing_mode = data[0]
-            LRL = data[1]
-            URL = data[2]
-            MSR = data[3]
-            A_V_PA = struct.unpack("f", data[4:8])[0]
-            A_V_PW = data[8]
-            A_V_Sens = data[9]
-            A_V_R = struct.unpack("H", data[10:12])[0]
-            PVARP = struct.unpack("H", data[12:14])[0]
-            Act_thres = data[14]
-            React_time = data[15]
-            Response_factor = data[16]
-            Recovery_time = data[17]
-            Atr = struct.unpack("d", data[18:26])[0]
-            Vnt = struct.unpack("d", data[26:34])[0]
-
-            print("From the board:")
-            print("Pacing_mode = ", Pacing_mode)
-            print("LRL = ", LRL)
-            print("URL = ", URL)
-            print("MSR = ",  MSR)
-            print("A_V_PA = ",  A_V_PA)
-            print("A_V_PW = ",  A_V_PW)
-            print("A_V_Sens = ",  A_V_Sens)
-            print("A_V_R = ",  A_V_R)
-            print("PVARP = ",  PVARP)
-            print("Act_thres = ",  Act_thres)
-            print("React_time = ",  React_time)
-            print("Response_factor = ",  Response_factor)
-            print("Recovery_time = ",  Recovery_time)
-            print("Atrial graph value = ", Atr)
-            print("Ventrical graph value = ", Vnt)
-
 
     def update(self):
         if self.currentmode == "AOO":
@@ -1301,10 +1253,12 @@ class LoggedInWindow:
                        font=("times new roman", 15, "bold"), command=self.Mode).grid(pady=15, column=1, row=4)
         tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Parameters",
                        font=("times new roman", 15, "bold"), command=self.Parameters).grid(pady=15, column=1, row=5)
+        tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Send",
+                       font=("times new roman", 15, "bold"), command=self.Send).grid(pady=15, column=1, row=6)
         tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Load Graph",
-                       font=("times new roman", 15, "bold"), command=self.Graph).grid(pady=15, column=1, row=6)
+                       font=("times new roman", 15, "bold"), command=self.Graph).grid(pady=15, column=1, row=7)
         tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Sign Out",
-                       font=("times new roman", 15, "bold"), command=self.Signout).grid(pady=15, column=1, row=7)
+                       font=("times new roman", 15, "bold"), command=self.Signout).grid(pady=15, column=1, row=8)
         #if another pacemaker is nearby, it will trigger an alert on the window
         if warning:
             tkinter.Label(self.window, relief=tkinter.GROOVE, fg=warning_color, bg=bg_color,
@@ -1323,6 +1277,11 @@ class LoggedInWindow:
     #directs to the mode window
     def Mode(self):
         self.modewindow = ModeWindow(self.UserID, self.window)
+
+    def Send(self):
+        self.serial = pacemakerSerial(self.UserID)
+        self.serial.get_echo()
+        #print()
 
     #directs to the parameters window
     def Parameters(self):
@@ -1564,7 +1523,6 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVI":
@@ -1585,7 +1543,6 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
                 else:
@@ -1606,7 +1563,6 @@ class ParametersWindow:
                 tkinter.messagebox.showinfo("Saved", "Saved")
                 self.serial.update()
                 self.serial.send_param()
-                self.serial.get_echo_all()
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOO":
@@ -1623,7 +1579,6 @@ class ParametersWindow:
                 tkinter.messagebox.showinfo("Saved", "Saved")
                 self.serial.update()
                 self.serial.send_param()
-                self.serial.get_echo_all()
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "AOOR":
@@ -1653,7 +1608,6 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOOR":
@@ -1683,7 +1637,6 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "AAIR":
@@ -1734,7 +1687,6 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVIR":
@@ -1772,7 +1724,6 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
 
