@@ -292,7 +292,7 @@ class pacemakerSerial:
 class animateGraph:
 
     # pass in pacemakerSerial object on  init, assumes you already have on instantiated
-    def __init__(self, pacemakerSerial):
+    def __init__(self, pacemakerSerial, userID):
         # for serial com
         self.pacemaker = pacemakerSerial
 
@@ -300,8 +300,15 @@ class animateGraph:
         self.inc = 0
         self.time = 0
         self.fig = plt.figure()
+        self.fig.canvas.mpl_connect('close_event', self.on_close)
+        print(plt.get_fignums())
+        print(self.fig.number)
         self.ax1 = self.fig.add_subplot(1, 1, 1)
 
+
+    def on_close(self):
+        self.loggedin = LoggedInWindow()
+        plt.close()
     def addToFile(self):
 
         # saved as: time, Atr, Vnt
@@ -2408,7 +2415,7 @@ class GraphWindow:
         # print(self.result)
         # self.cmode = self.result[0][4]
         self.window = tkinter.Tk()
-        self.window.wm_title("Egram Graphs")
+        #self.window.wm_title("Egram Graphs")
         self.loggedin = loggedinwindow
         if 'normal' == self.window.state():
             self.loggedin.withdraw()
@@ -2420,38 +2427,20 @@ class GraphWindow:
         fg_color = "white"
         cha_color = "black"
         # create a figure
-        figure = Figure(figsize=(6, 4), dpi=100)
 
-        # create FigureCanvasTkAgg object
-        figure_canvas = FigureCanvasTkAgg(figure, self)
+        # self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+        #                                 text="Back",font=("times new roman", 15, "bold"), command=self.Back)
+        # self.BackButton.grid(pady=15, column=1, row=2)
+        #self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+        #self.window.mainloop()
 
-        # create the toolbar
-        NavigationToolbar2Tk(figure_canvas, self)
+    # def on_closing(self):
+    #     self.window.destroy()
+    #     self.loggedin.deiconify()
 
-        # create axes
-        axes = figure.add_subplot()
-
-        # create the barchart
-        #axes.bar(languages, popularity)
-        axes.set_title('Egram')
-        axes.set_ylabel('Pulse')
-        axes.set_xlabel('Time')
-
-        figure_canvas.get_tk_widget().grid(column=1, row=1, expand=1)
-
-        self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
-                                        text="Back",font=("times new roman", 15, "bold"), command=self.Back)
-        self.BackButton.grid(pady=15, column=1, row=2)
-        self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
-        self.window.mainloop()
-
-    def on_closing(self):
-        self.window.destroy()
-        self.loggedin.deiconify()
-
-    def Back(self):
-        self.window.destroy()
-        self.loggedin.deiconify()
+    # def Back(self):
+    #     self.window.destroy()
+    #     self.loggedin.deiconify()
 
 
 
