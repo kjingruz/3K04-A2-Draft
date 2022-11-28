@@ -2408,6 +2408,7 @@ class GraphWindow:
         self.serial = pacemakerSerial(self.UserID)
         self.serial.get_echo()
         self.graph = animateGraph(self.serial)
+        self.graph.showPlot()
         bg_color = "blue"
         fg_color = "white"
         cha_color = "black"
