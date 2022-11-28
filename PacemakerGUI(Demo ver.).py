@@ -330,7 +330,7 @@ class animateGraph:
         tar = []
         aar = []
         var = []
-        for eachLine in dataArray:
+        for eachLine in dataArray[-21:-1]: # pulls last 20 lines from txt file
             if len(eachLine) > 1:
                 t, a, v = eachLine.split(',')
                 tar.append(str(t))
