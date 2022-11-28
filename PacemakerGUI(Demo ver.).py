@@ -116,6 +116,48 @@ class pacemakerSerial:
             print(self.Atr)
             print(self.Vnt)
 
+    # recieve all values from pacemaker for verification
+    def get_echo_all(self):
+        # create signal to send
+        Signal_echo = self.Start + self.SYNC + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_PA + self.V_PA + self.A_PW + self.V_PW + self.A_Sense + self.V_Sense + self.A_R + self.V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
+
+        with serial.Serial(self.frdm_port, 115200) as pacemaker:
+            pacemaker.write(Signal_echo)
+            data = pacemaker.read(34)
+            Pacing_mode = data[0]
+            LRL = data[1]
+            URL = data[2]
+            MSR = data[3]
+            A_V_PA = struct.unpack("f", data[4:8])[0]
+            A_V_PW = data[8]
+            A_V_Sens = data[9]
+            A_V_R = struct.unpack("H", data[10:12])[0]
+            PVARP = struct.unpack("H", data[12:14])[0]
+            Act_thres = data[14]
+            React_time = data[15]
+            Response_factor = data[16]
+            Recovery_time = data[17]
+            Atr = struct.unpack("d", data[18:26])[0]
+            Vnt = struct.unpack("d", data[26:34])[0]
+
+            print("From the board:")
+            print("Pacing_mode = ", Pacing_mode)
+            print("LRL = ", LRL)
+            print("URL = ", URL)
+            print("MSR = ",  MSR)
+            print("A_V_PA = ",  A_V_PA)
+            print("A_V_PW = ",  A_V_PW)
+            print("A_V_Sens = ",  A_V_Sens)
+            print("A_V_R = ",  A_V_R)
+            print("PVARP = ",  PVARP)
+            print("Act_thres = ",  Act_thres)
+            print("React_time = ",  React_time)
+            print("Response_factor = ",  Response_factor)
+            print("Recovery_time = ",  Recovery_time)
+            print("Atrial graph value = ", Atr)
+            print("Ventrical graph value = ", Vnt)
+
+
     def update(self):
         if self.currentmode == "AOO":
             self.AOO_receive = self.AOO.Search(self.userID)
