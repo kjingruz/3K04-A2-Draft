@@ -1564,7 +1564,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo()
+                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVI":
@@ -1585,7 +1585,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo()
+                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
                 else:
@@ -1606,7 +1606,7 @@ class ParametersWindow:
                 tkinter.messagebox.showinfo("Saved", "Saved")
                 self.serial.update()
                 self.serial.send_param()
-                self.serial.get_echo()
+                self.serial.get_echo_all()
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOO":
@@ -1623,7 +1623,7 @@ class ParametersWindow:
                 tkinter.messagebox.showinfo("Saved", "Saved")
                 self.serial.update()
                 self.serial.send_param()
-                self.serial.get_echo()
+                self.serial.get_echo_all()
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "AOOR":
@@ -1653,7 +1653,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo()
+                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOOR":
@@ -1683,7 +1683,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo()
+                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "AAIR":
@@ -1734,7 +1734,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo()
+                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVIR":
@@ -1772,7 +1772,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
-                    self.serial.get_echo()
+                    self.serial.get_echo_all()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
 
