@@ -7,7 +7,6 @@ import math
 import serial
 import serial.tools.list_ports
 import struct
-import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
@@ -1243,6 +1242,7 @@ class LoggedInWindow:
         self.window = tkinter.Tk()
         self.window.wm_title("Welcome Page")
         self.UserID = userID
+        self.serial = pacemakerSerial(self.UserID)
         bg_color = "blue"
         fg_color = "white"
         cha_color = "black"
@@ -1270,7 +1270,7 @@ class LoggedInWindow:
                       else "Status update: Connection with DCM is " + "OFF",font=("times new roman", 10, "bold"),
                       width=50).grid(pady=20, column=1, row=2)
     def Graph(self):
-        self.graph = GraphWindow(self.UserID, self.window)
+        self.graph = GraphWindow(self.UserID, self.window, self.serial)
     def Signout(self):
         self.window.destroy()
         self.homepage = HomePage()
@@ -1279,7 +1279,6 @@ class LoggedInWindow:
         self.modewindow = ModeWindow(self.UserID, self.window)
 
     def Send(self):
-        self.serial = pacemakerSerial(self.UserID)
         self.serial.get_echo()
         #print()
 
@@ -1300,14 +1299,14 @@ class LoggedInWindow:
             self.login.setMode("UPDATE Login_table SET mode = ? WHERE UserID = ?", (self.cmode, self.UserID))
             #double security and prevents the mode not selected and goes to the parameters window
             try:
-                self.parameterWindow = ParametersWindow(self.UserID, self.window)
+                self.parameterWindow = ParametersWindow(self.UserID, self.window, self.serial)
             except AttributeError:
                 tkinter.messagebox.showerror("Invalid Mode", "Select your mode first!")
 
 
 #opens and intializes the parameters window
 class ParametersWindow:
-    def __init__(self, userID, loggedinwindow):
+    def __init__(self, userID, loggedinwindow, Serial):
         self.UserID = userID
         self.login = LoginDatabase()
         self.result = self.login.ReturnMode(self.UserID)
@@ -1315,6 +1314,7 @@ class ParametersWindow:
         self.parameterwindow = tkinter.Tk()
         self.parameterwindow.wm_title("Current Parameters")
         self.loggedinpage = loggedinwindow
+        self.serial = Serial
         if 'normal' == self.parameterwindow.state():
             self.loggedinpage.withdraw()
         self.AAI = AAIParameterDatabase()
@@ -1523,6 +1523,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
+                    self.serial.get_echo()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVI":
@@ -1543,6 +1544,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
+                    self.serial.get_echo()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
                 else:
@@ -1563,6 +1565,7 @@ class ParametersWindow:
                 tkinter.messagebox.showinfo("Saved", "Saved")
                 self.serial.update()
                 self.serial.send_param()
+                self.serial.get_echo()
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOO":
@@ -1579,6 +1582,7 @@ class ParametersWindow:
                 tkinter.messagebox.showinfo("Saved", "Saved")
                 self.serial.update()
                 self.serial.send_param()
+                self.serial.get_echo()
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "AOOR":
@@ -1608,6 +1612,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
+                    self.serial.get_echo()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOOR":
@@ -1637,6 +1642,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
+                    self.serial.get_echo()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "AAIR":
@@ -1687,6 +1693,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
+                    self.serial.get_echo()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVIR":
@@ -1724,6 +1731,7 @@ class ParametersWindow:
                     tkinter.messagebox.showinfo("Saved", "Saved")
                     self.serial.update()
                     self.serial.send_param()
+                    self.serial.get_echo()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
 
@@ -2412,7 +2420,7 @@ class ModeWindow:
 
 
 class GraphWindow:
-    def __init__(self, userID, loggedinwindow):
+    def __init__(self, userID, loggedinwindow, Serial):
         self.UserID = userID
         self.login = LoginDatabase()
         # self.result = self.login.ReturnMode(self.UserID)
@@ -2424,7 +2432,8 @@ class GraphWindow:
         self.loggedin = loggedinwindow
         # if 'normal' == self.window.state():
         #     self.loggedin.withdraw()
-        self.serial = pacemakerSerial(self.UserID)
+        #self.serial = pacemakerSerial(self.UserID)
+        self.serial = Serial
         self.serial.get_echo()
         self.graph = animateGraph(self.serial, self.UserID, self.loggedin)
         self.graph.showPlot()
