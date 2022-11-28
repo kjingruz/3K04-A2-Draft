@@ -1,0 +1,47 @@
+    def get_echo_all(self):
+        # create signal to send
+        Signal_echo = self.Start + self.SYNC + self.Pacing_mode + self.LRL + self.URL + self.MSR + self.A_PA + self.V_PA + self.A_PW + self.V_PW + self.A_Sense + self.V_Sense + self.A_R + self.V_R + self.PVARP + self.Act_thres + self.React_time + self.Response_factor + self.Recovery_time
+
+        with serial.Serial(self.frdm_port, 115200) as pacemaker:
+            pacemaker.write(Signal_echo)
+            data = pacemaker.read(49)
+            Pacing_mode = data[0]
+            LRL = data[1]
+            URL = data[2]
+            MSR = data[3]
+            A_PA = struct.unpack("f", data[4:8])[0]
+            V_PA = struct.unpack("f", data[8:12])[0]
+            A_PW = data[12]
+            V_PW = data[13]
+            A_Sens = struct.unpack("f", data[14:18])[0]
+            V_Sens = struct.unpack("f", data[18:22])[0]
+            A_R = struct.unpack("H", data[22:24])[0]
+            V_R = struct.unpack("H", data[24:26])[0]
+            PVARP = struct.unpack("H", data[26:28])[0]
+            Act_thres = data[28]
+            React_time = data[29]
+            Response_factor = data[30]
+            Recovery_time = struct.unpack("H", data[31:33])[0]
+            Atr = struct.unpack("d", data[33:41])[0]
+            Vnt = struct.unpack("d", data[41:49])[0]
+
+            print("From the board:")
+            print("Pacing_mode = ", Pacing_mode)
+            print("LRL = ", LRL)
+            print("URL = ", URL)
+            print("MSR = ",  MSR)
+            print("A_V_PA = ",  A_PA)
+            print("A_V_PA = ", V_PA)
+            print("A_V_PW = ",  A_PW)
+            print("A_V_PW = ", V_PW)
+            print("A_V_Sens = ",  A_Sens)
+            print("A_V_Sens = ", V_Sens)
+            print("A_V_R = ",  A_R)
+            print("A_V_R = ", V_R)
+            print("PVARP = ",  PVARP)
+            print("Act_thres = ",  Act_thres)
+            print("React_time = ",  React_time)
+            print("Response_factor = ",  Response_factor)
+            print("Recovery_time = ",  Recovery_time)
+            print("Atrial graph value = ", Atr)
+            print("Ventrical graph value = ", Vnt)
