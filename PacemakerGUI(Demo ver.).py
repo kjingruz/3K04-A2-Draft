@@ -351,7 +351,14 @@ class animateGraph:
     # run this to open the plot
     def showPlot(self):
         ani = animation.FuncAnimation(self.fig, self.animate, interval=10)  # refresh every 10ms
+        self.fig.canvas.mpl_connect('close_event', self.on_close)
         plt.show()
+
+    def on_close(self, event):
+            print('Closed Figure!')
+
+            f = open("EGRAM_vals.txt","w")
+            f.write('0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n0,0\n')
 
 
 #stores the login creditals
