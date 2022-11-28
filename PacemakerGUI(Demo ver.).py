@@ -302,12 +302,12 @@ class animateGraph:
         self.fig = plt.figure()
         self.fig.canvas.mpl_connect('close_event', self.on_close)
         print(plt.get_fignums())
-        print(self.fig.number)
+        #print(self.fig.number)
         self.ax1 = self.fig.add_subplot(1, 1, 1)
 
 
     def on_close(self):
-        self.loggedin = LoggedInWindow()
+        #self.loggedin = LoggedInWindow()
         plt.close()
     def addToFile(self):
 
@@ -2415,7 +2415,7 @@ class GraphWindow:
         # print(self.result)
         # self.cmode = self.result[0][4]
         self.window = tkinter.Tk()
-        #self.window.wm_title("Egram Graphs")
+        self.window.wm_title("Egram Graphs")
         self.loggedin = loggedinwindow
         if 'normal' == self.window.state():
             self.loggedin.withdraw()
