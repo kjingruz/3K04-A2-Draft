@@ -143,9 +143,9 @@ class pacemakerSerial:
             self.URL = struct.pack("B", int(self.VOO_receive[0][2]))
             self.MSR = struct.pack("B", 1) #max sensor rate
             self.A_PA = struct.pack("f", 1.0)  # pulse amplitude
-            self.V_PA = struct.pack("f", float(self.AOO_receive[0][3]))  # pulse amplitude
+            self.V_PA = struct.pack("f", float(self.VOO_receive[0][3]))  # pulse amplitude
             self.A_PW = struct.pack("B", 1)  # pulse width
-            self.V_PW = struct.pack("B", int(self.AOO_receive[0][4]))  # pulse width
+            self.V_PW = struct.pack("B", int(self.VOO_receive[0][4]))  # pulse width
             self.A_Sense = struct.pack("f", 1.0)  # sensitivity
             self.V_Sense = struct.pack("f", 1.0)  # sensitivity
             self.A_R = struct.pack("H", 1)  # ARP
@@ -161,12 +161,12 @@ class pacemakerSerial:
             self.LRL = struct.pack("B", int(self.AAI_receive[0][1]))
             self.URL = struct.pack("B", int(self.AAI_receive[0][2]))
             self.MSR = struct.pack("B", 1) #max sensor rate
-            if self.AOO_receive[0][3] != 'Off':
-                self.A_PA = struct.pack("f", float(self.AOO_receive[0][3]))  # pulse amplitude
+            if self.AAI_receive[0][3] != 'Off':
+                self.A_PA = struct.pack("f", float(self.AAI_receive[0][3]))  # pulse amplitude
             else:
                 self.A_PA = struct.pack("f", 0)  # pulse amplitude
             self.V_PA = struct.pack("f", 1.0)  # pulse amplitude
-            self.A_PW = struct.pack("B", int(self.AOO_receive[0][4]))  # pulse width
+            self.A_PW = struct.pack("B", int(self.AAI_receive[0][4]))  # pulse width
             self.V_PW = struct.pack("B", 1)  # pulse width
             self.A_Sense = struct.pack("f", float(self.AAI_receive[0][5]))  # sensitivity
             self.V_Sense = struct.pack("f", 1.0)  # sensitivity
