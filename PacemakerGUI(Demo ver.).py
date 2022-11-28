@@ -7,8 +7,15 @@ import math
 import serial
 import serial.tools.list_ports
 import struct
+import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+
+matplotlib.use('TkAgg')
+
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk)
 
 #two variables that are subject to change based on the pacemaker.
 #warning is a boolean to show that there is another pacemaker nearby
@@ -2412,9 +2419,33 @@ class GraphWindow:
         bg_color = "blue"
         fg_color = "white"
         cha_color = "black"
+        # create a figure
+        figure = Figure(figsize=(6, 4), dpi=100)
+
+        # create FigureCanvasTkAgg object
+        figure_canvas = FigureCanvasTkAgg(figure, self)
+
+        # create the toolbar
+        NavigationToolbar2Tk(figure_canvas, self)
+
+        # create axes
+        axes = figure.add_subplot()
+
+        # create the barchart
+        #axes.bar(languages, popularity)
+        axes.set_title('Egram')
+        axes.set_ylabel('Pulse')
+        axes.set_xlabel('Time')
+
+        figure_canvas.get_tk_widget().grid(column=1, row=1, expand=1)
+
         self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
                                         text="Back",font=("times new roman", 15, "bold"), command=self.Back)
         self.BackButton.grid(pady=15, column=1, row=2)
+
+
+
+
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.window.mainloop()
 
