@@ -292,7 +292,7 @@ class pacemakerSerial:
 class animateGraph:
 
     # pass in pacemakerSerial object on  init, assumes you already have on instantiated
-    def __init__(self, pacemakerSerial, userID):
+    def __init__(self, pacemakerSerial, userID, loggedinwindow):
         # for serial com
         self.pacemaker = pacemakerSerial
         self.UserID = userID
@@ -300,7 +300,9 @@ class animateGraph:
         self.inc = 0
         self.time = 0
         self.fig = plt.figure()
-        self.fig.canvas.mpl_connect('close_event', self.on_close)
+        self.loggedin = loggedinwindow
+        self.loggedin.withdraw()
+        #self.fig.canvas.mpl_connect('close_event', self.on_close)
         print(plt.get_fignums())
         #print(self.fig.number)
         self.ax1 = self.fig.add_subplot(1, 1, 1)
@@ -2416,14 +2418,14 @@ class GraphWindow:
         # #the current mode
         # print(self.result)
         # self.cmode = self.result[0][4]
-        self.window = tkinter.Tk()
-        self.window.wm_title("Egram Graphs")
+        # self.window = tkinter.Tk()
+        # self.window.wm_title("Egram Graphs")
         self.loggedin = loggedinwindow
-        if 'normal' == self.window.state():
-            self.loggedin.withdraw()
+        # if 'normal' == self.window.state():
+        #     self.loggedin.withdraw()
         self.serial = pacemakerSerial(self.UserID)
         self.serial.get_echo()
-        self.graph = animateGraph(self.serial)
+        self.graph = animateGraph(self.serial, self.UserID, self.loggedin)
         self.graph.showPlot()
         bg_color = "blue"
         fg_color = "white"
