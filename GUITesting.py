@@ -7,8 +7,8 @@ import math
 import serial
 import serial.tools.list_ports
 import struct
-# import matplotlib.pyplot as plt
-# import matplotlib.animation as animation
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 #two variables that are subject to change based on the pacemaker.
 #warning is a boolean to show that there is another pacemaker nearby
@@ -299,73 +299,73 @@ connection = True
 
 
 
-# class animateGraph:
-#
-#     # pass in pacemakerSerial object on  init, assumes you already have on instantiated
-#     def __init__(self, pacemakerSerial, userID, loggedinwindow):
-#         # for serial com
-#         self.pacemaker = pacemakerSerial
-#         self.UserID = userID
-#         # for plot
-#         self.inc = 0
-#         self.time = 0
-#         self.fig = plt.figure()
-#         self.loggedin = loggedinwindow
-#         self.loggedin.withdraw()
-#         #self.fig.canvas.mpl_connect('close_event', self.on_close)
-#         print(plt.get_fignums())
-#         #print(self.fig.number)
-#         self.ax1 = self.fig.add_subplot(1, 1, 1)
-#
-#     def addToFile(self):
-#
-#         # saved as: time, Atr, Vnt
-#         f = open('sampleText.txt', 'r')
-#         self.time = f.readline().split(',')[0]  # pulls most recent time to increment
-#         self.inc += float(0.5)
-#         self.time += str(self.inc)
-#         f.close()
-#
-#         # pulls new Atr and Vnt values from pacemaker... loop this to get more values , but keep animate interval in mind
-#         self.pacemaker.get_echo()
-#
-#         f = open('EGRAM_vals.txt', 'a')
-#         writeVal = str(self.time) + ',' + str(self.pacemaker.getAtr()) + ',' + str(self.pacemaker.getVnt()) + '\n'
-#         f.write(writeVal)
-#         f.close()
-#
-#     def animate(self, i):
-#         self.addToFile()  # update vals
-#
-#         pullData = open("EGRAM_vals.txt", "r").read()  # must use txt file for input, else graph wont update
-#
-#         # saved as: time, Atr, Vnt
-#         dataArray = pullData.split('\n')
-#         tar = []
-#         aar = []
-#         var = []
-#         for eachLine in dataArray[-21:-1]: # pulls last 20 lines from txt file
-#             if len(eachLine) > 1:
-#                 t, a, v = eachLine.split(',')
-#                 tar.append(str(t))
-#                 aar.append(str(a))
-#                 var.append(str(v))
-#         self.ax1.clear()
-#         self.ax1.plot(tar, aar, label="Atrial")
-#         self.ax1.plot(tar, var, label="Ventrical")
-#         self.ax1.legend()
-#
-#     # run this to open the plot
-#     def showPlot(self):
-#         ani = animation.FuncAnimation(self.fig, self.animate, interval=10)  # refresh every 10ms
-#         self.fig.canvas.mpl_connect('close_event', self.on_close)
-#         plt.show()
-#
-#     def on_close(self, event):
-#         print('Closed Figure!')
-#         self.loggedin = LoggedInWindow(self.UserID)
-#         f = open("EGRAM_vals.txt","w")
-#         f.write('0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n')
+class animateGraph:
+
+    # pass in pacemakerSerial object on  init, assumes you already have on instantiated
+    def __init__(self, pacemakerSerial, userID, loggedinwindow):
+        # for serial com
+        self.pacemaker = pacemakerSerial
+        self.UserID = userID
+        # for plot
+        self.inc = 0
+        self.time = 0
+        self.fig = plt.figure()
+        self.loggedin = loggedinwindow
+        self.loggedin.withdraw()
+        #self.fig.canvas.mpl_connect('close_event', self.on_close)
+        print(plt.get_fignums())
+        #print(self.fig.number)
+        self.ax1 = self.fig.add_subplot(1, 1, 1)
+
+    def addToFile(self):
+
+        # saved as: time, Atr, Vnt
+        f = open('sampleText.txt', 'r')
+        self.time = f.readline().split(',')[0]  # pulls most recent time to increment
+        self.inc += float(0.5)
+        self.time += str(self.inc)
+        f.close()
+
+        # pulls new Atr and Vnt values from pacemaker... loop this to get more values , but keep animate interval in mind
+        self.pacemaker.get_echo()
+
+        f = open('EGRAM_vals.txt', 'a')
+        writeVal = str(self.time) + ',' + str(self.pacemaker.getAtr()) + ',' + str(self.pacemaker.getVnt()) + '\n'
+        f.write(writeVal)
+        f.close()
+
+    def animate(self, i):
+        self.addToFile()  # update vals
+
+        pullData = open("EGRAM_vals.txt", "r").read()  # must use txt file for input, else graph wont update
+
+        # saved as: time, Atr, Vnt
+        dataArray = pullData.split('\n')
+        tar = []
+        aar = []
+        var = []
+        for eachLine in dataArray[-21:-1]: # pulls last 20 lines from txt file
+            if len(eachLine) > 1:
+                t, a, v = eachLine.split(',')
+                tar.append(str(t))
+                aar.append(str(a))
+                var.append(str(v))
+        self.ax1.clear()
+        self.ax1.plot(tar, aar, label="Atrial")
+        self.ax1.plot(tar, var, label="Ventrical")
+        self.ax1.legend()
+
+    # run this to open the plot
+    def showPlot(self):
+        ani = animation.FuncAnimation(self.fig, self.animate, interval=10)  # refresh every 10ms
+        self.fig.canvas.mpl_connect('close_event', self.on_close)
+        plt.show()
+
+    def on_close(self, event):
+        print('Closed Figure!')
+        self.loggedin = LoggedInWindow(self.UserID)
+        f = open("EGRAM_vals.txt","w")
+        f.write('0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n')
 
 
 #stores the login creditals
@@ -540,7 +540,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", 1)  # activity threshold
             self.React_time = struct.pack("B", 1)  # reaction time
             self.Response_factor = struct.pack("B", 1)  # response factor
-            self.Recovery_time = struct.pack("B", 1)  # recovery time
+            self.Recovery_time = struct.pack("H", 1)  # recovery time
 
         elif self.currentmode == "VOO":
             self.VOO_receive = self.VOO.Search(self.userID)
@@ -563,7 +563,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", 1)  # activity threshold
             self.React_time = struct.pack("B", 1)  # reaction time
             self.Response_factor = struct.pack("B", 1)  # response factor
-            self.Recovery_time = struct.pack("B", 1)  # recovery time
+            self.Recovery_time = struct.pack("H", 1)  # recovery time
         elif self.currentmode == "AAI":
             self.AAI_receive = self.AAI.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
@@ -585,7 +585,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", 1)  # activity threshold
             self.React_time = struct.pack("B", 1)  # reaction time
             self.Response_factor = struct.pack("B", 1)  # response factor
-            self.Recovery_time = struct.pack("B", 1)  # recovery time
+            self.Recovery_time = struct.pack("H", 1)  # recovery time
         elif self.currentmode == "VVI":
             self.VVI_receive = self.VVI.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
@@ -607,7 +607,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", 1)  # activity threshold
             self.React_time = struct.pack("B", 1)  # reaction time
             self.Response_factor = struct.pack("B", 1)  # response factor
-            self.Recovery_time = struct.pack("B", 1)  # recovery time
+            self.Recovery_time = struct.pack("H", 1)  # recovery time
         elif self.currentmode == "AOOR":
             self.AOOR_receive = self.AOOR.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
@@ -629,7 +629,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", self.ActivityThresholdDict[self.AOOR_receive[0][6]])  # activity threshold
             self.React_time = struct.pack("B", int(self.AOOR_receive[0][7]))  # reaction time
             self.Response_factor = struct.pack("B", int(self.AOOR_receive[0][8]))  # response factor
-            self.Recovery_time = struct.pack("B", int(self.AOOR_receive[0][9]))  # recovery time
+            self.Recovery_time = struct.pack("H", int(self.AOOR_receive[0][9]))  # recovery time
         elif self.currentmode == "VOOR":
             self.VOOR_receive = self.VOOR.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
@@ -651,7 +651,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", self.ActivityThresholdDict[self.VOOR_receive[0][6]])  # activity threshold
             self.React_time = struct.pack("B", int(self.VOOR_receive[0][7]))  # reaction time
             self.Response_factor = struct.pack("B", int(self.VOOR_receive[0][8]))  # response factor
-            self.Recovery_time = struct.pack("B", int(self.VOOR_receive[0][9]))  # recovery time
+            self.Recovery_time = struct.pack("H", int(self.VOOR_receive[0][9]))  # recovery time
         elif self.currentmode == "AAIR":
             self.AAIR_receive = self.AAIR.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
@@ -673,7 +673,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", self.ActivityThresholdDict[self.AAIR_receive[0][9]])  # activity threshold
             self.React_time = struct.pack("B", int(self.AAIR_receive[0][10]))  # reaction time
             self.Response_factor = struct.pack("B", int(self.AAIR_receive[0][11]))  # response factor
-            self.Recovery_time = struct.pack("B", int(self.AAIR_receive[0][12]))  # recovery time
+            self.Recovery_time = struct.pack("H", int(self.AAIR_receive[0][12]))  # recovery time
         elif self.currentmode == "VVIR":
             self.VVIR_receive = self.VVIR.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
@@ -695,7 +695,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", self.ActivityThresholdDict[self.VVIR_receive[0][8]])  # activity threshold
             self.React_time = struct.pack("B", int(self.VVIR_receive[0][9]))  # reaction time
             self.Response_factor = struct.pack("B", int(self.VVIR_receive[0][10]))  # response factor
-            self.Recovery_time = struct.pack("B", int(self.VVIR_receive[0][11]))  # recovery time
+            self.Recovery_time = struct.pack("H", int(self.VVIR_receive[0][11]))  # recovery time
 
         print(4)
 
@@ -2773,42 +2773,42 @@ class ModeWindow:
         self.VVIRbutton.config(state="disabled")
 
 
-# class GraphWindow:
-#     def __init__(self, userID, loggedinwindow, Serial):
-#         self.UserID = userID
-#         self.login = LoginDatabase()
-#         # self.result = self.login.ReturnMode(self.UserID)
-#         # #the current mode
-#         # print(self.result)
-#         # self.cmode = self.result[0][4]
-#         # self.window = tkinter.Tk()
-#         # self.window.wm_title("Egram Graphs")
-#         self.loggedin = loggedinwindow
-#         # if 'normal' == self.window.state():
-#         #     self.loggedin.withdraw()
-#         #self.serial = pacemakerSerial(self.UserID)
-#         self.serial = Serial
-#         self.serial.get_echo()
-#         self.graph = animateGraph(self.serial, self.UserID, self.loggedin)
-#         self.graph.showPlot()
-#         bg_color = "blue"
-#         fg_color = "white"
-#         cha_color = "black"
-#         # create a figure
-#
-#         # self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
-#         #                                 text="Back",font=("times new roman", 15, "bold"), command=self.Back)
-#         # self.BackButton.grid(pady=15, column=1, row=2)
-#         #self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
-#         #self.window.mainloop()
-#
-#     # def on_closing(self):
-#     #     self.window.destroy()
-#     #     self.loggedin.deiconify()
-#
-#     # def Back(self):
-#     #     self.window.destroy()
-#     #     self.loggedin.deiconify()
+class GraphWindow:
+    def __init__(self, userID, loggedinwindow, Serial):
+        self.UserID = userID
+        self.login = LoginDatabase()
+        # self.result = self.login.ReturnMode(self.UserID)
+        # #the current mode
+        # print(self.result)
+        # self.cmode = self.result[0][4]
+        # self.window = tkinter.Tk()
+        # self.window.wm_title("Egram Graphs")
+        self.loggedin = loggedinwindow
+        # if 'normal' == self.window.state():
+        #     self.loggedin.withdraw()
+        #self.serial = pacemakerSerial(self.UserID)
+        self.serial = Serial
+        self.serial.get_echo()
+        self.graph = animateGraph(self.serial, self.UserID, self.loggedin)
+        self.graph.showPlot()
+        bg_color = "blue"
+        fg_color = "white"
+        cha_color = "black"
+        # create a figure
+
+        # self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+        #                                 text="Back",font=("times new roman", 15, "bold"), command=self.Back)
+        # self.BackButton.grid(pady=15, column=1, row=2)
+        #self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+        #self.window.mainloop()
+
+    # def on_closing(self):
+    #     self.window.destroy()
+    #     self.loggedin.deiconify()
+
+    # def Back(self):
+    #     self.window.destroy()
+    #     self.loggedin.deiconify()
 
 
 
