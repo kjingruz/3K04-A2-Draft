@@ -527,7 +527,7 @@ class pacemakerSerial:
             self.URL = struct.pack("B", int(self.AOO_receive[0][2]))
             self.MSR = struct.pack("B", 1) #max sensor rate
             if self.AOO_receive[0][3] != 'Off':
-                self.A_PA = struct.pack("f", float(self.AOO_receive[0][3]))  # pulse amplitude
+                self.A_PA = struct.pack("f", float(self.AOO_receive[0][3])*20)  # pulse amplitude
             else:
                 self.A_PA = struct.pack("f", float(0))
             self.V_PA = struct.pack("f", 1.0)  # pulse amplitude
@@ -551,7 +551,7 @@ class pacemakerSerial:
             self.MSR = struct.pack("B", 1) #max sensor rate
             self.A_PA = struct.pack("f", 1.0)  # pulse amplitude
             if self.VOO_receive[0][3] != 'Off':
-                self.V_PA = struct.pack("f", float(self.VOO_receive[0][3]))  # pulse amplitude
+                self.V_PA = struct.pack("f", float(self.VOO_receive[0][3])*20)  # pulse amplitude
             else:
                 self.V_PA = struct.pack("f", float(0))
             self.A_PW = struct.pack("B", 1)  # pulse width
@@ -572,13 +572,13 @@ class pacemakerSerial:
             self.URL = struct.pack("B", int(self.AAI_receive[0][2]))
             self.MSR = struct.pack("B", 1) #max sensor rate
             if self.AAI_receive[0][3] != 'Off':
-                self.A_PA = struct.pack("f", float(self.AAI_receive[0][3]))  # pulse amplitude
+                self.A_PA = struct.pack("f", float(self.AAI_receive[0][3])*20)  # pulse amplitude
             else:
                 self.A_PA = struct.pack("f", float(0))  # pulse amplitude
             self.V_PA = struct.pack("f", 1.0)  # pulse amplitude
             self.A_PW = struct.pack("B", int(self.AAI_receive[0][4]))  # pulse width
             self.V_PW = struct.pack("B", 1)  # pulse width
-            self.A_Sense = struct.pack("f", float(self.AAI_receive[0][5]))  # sensitivity
+            self.A_Sense = struct.pack("f", float(self.AAI_receive[0][5])*20)  # sensitivity
             self.V_Sense = struct.pack("f", 1.0)  # sensitivity
             self.A_R = struct.pack("H", int(self.AAI_receive[0][6]))  # ARP
             self.V_R = struct.pack("H", 1)  # VRP
@@ -595,13 +595,13 @@ class pacemakerSerial:
             self.MSR = struct.pack("B", 1) #max sensor rate
             self.A_PA = struct.pack("f", 1.0)  # pulse amplitude
             if self.VVI_receive[0][2] != 'Off':
-                self.V_PA = struct.pack("f", float(self.VVI_receive[0][3]))  # pulse amplitude
+                self.V_PA = struct.pack("f", float(self.VVI_receive[0][3])*20)  # pulse amplitude
             else:
                 self.V_PA = struct.pack("f", float(0))
             self.A_PW = struct.pack("B", 1)  # pulse width
             self.V_PW = struct.pack("B", int(self.VVI_receive[0][4]))  # pulse width
             self.A_Sense = struct.pack("f", 1.0)  # sensitivity
-            self.V_Sense = struct.pack("f", float(self.VVI_receive[0][5]))  # sensitivity
+            self.V_Sense = struct.pack("f", float(self.VVI_receive[0][5])*20)  # sensitivity
             self.A_R = struct.pack("H", 1)  # ARP
             self.V_R = struct.pack("H", int(self.VVI_receive[0][6]))  # VRP
             self.PVARP = struct.pack("H", 1)  # PVARP
@@ -616,7 +616,7 @@ class pacemakerSerial:
             self.URL = struct.pack("B", int(self.AOOR_receive[0][2]))
             self.MSR = struct.pack("B", int(self.AOOR_receive[0][5])) #max sensor rate
             if self.AOOR_receive[0][3] != 'Off':
-                self.A_PA = struct.pack("f", float(self.AOOR_receive[0][3]))  # pulse amplitude
+                self.A_PA = struct.pack("f", float(self.AOOR_receive[0][3])*20)  # pulse amplitude
             else:
                 self.A_PA = struct.pack("f", float(0))
             self.V_PA = struct.pack("f", 1.0)  # pulse amplitude
@@ -639,7 +639,7 @@ class pacemakerSerial:
             self.MSR = struct.pack("B", int(self.VOOR_receive[0][5])) #max sensor rate
             self.A_PA = struct.pack("f", 1.0)  # pulse amplitude
             if self.VOOR_receive[0][3] != 'Off':
-                self.V_PA = struct.pack("f", float(self.VOOR_receive[0][3]))  # pulse amplitude
+                self.V_PA = struct.pack("f", float(self.VOOR_receive[0][3])*20)  # pulse amplitude
             else:
                 self.V_PA = struct.pack("f", float(0))
             self.A_PW = struct.pack("B", 1)  # pulse width
@@ -660,13 +660,13 @@ class pacemakerSerial:
             self.URL = struct.pack("B", int(self.AAIR_receive[0][2]))
             self.MSR = struct.pack("B", int(self.AAIR_receive[0][5])) #max sensor rate
             if self.AAIR_receive[0][2] != 'Off':
-                self.A_PA = struct.pack("f", float(self.AAIR_receive[0][3]))  # pulse amplitude
+                self.A_PA = struct.pack("f", float(self.AAIR_receive[0][3])*20)  # pulse amplitude
             else:
                 self.A_PA = struct.pack("f", float(0))
             self.V_PA = struct.pack("f", 1.0)  # pulse amplitude
             self.A_PW = struct.pack("B", int(self.AAIR_receive[0][4]))  # pulse width
             self.V_PW = struct.pack("B", 1)  # pulse width
-            self.A_Sense = struct.pack("f", float(self.AAIR_receive[0][6]))  # sensitivity
+            self.A_Sense = struct.pack("f", float(self.AAIR_receive[0][6])*20)  # sensitivity
             self.V_Sense = struct.pack("f", 1.0)  # sensitivity
             self.A_R = struct.pack("H", int(self.AAIR_receive[0][7]))  # ARP
             self.V_R = struct.pack("H", 1)  # VRP
@@ -683,13 +683,13 @@ class pacemakerSerial:
             self.MSR = struct.pack("B", int(self.VVIR_receive[0][5])) #max sensor rate
             self.A_PA = struct.pack("f", 1.0)  # pulse amplitude
             if self.VVIR_receive[0][2] != 'Off':
-                self.V_PA = struct.pack("f", float(self.VVIR_receive[0][3]))  # pulse amplitude
+                self.V_PA = struct.pack("f", float(self.VVIR_receive[0][3])*20)  # pulse amplitude
             else:
                 self.V_PA = struct.pack("f", float(0))  # pulse amplitude
             self.A_PW = struct.pack("B", 1)  # pulse width
             self.V_PW = struct.pack("B", int(self.VVIR_receive[0][4]))  # pulse width
             self.A_Sense = struct.pack("f", 1.0)  # sensitivity
-            self.V_Sense = struct.pack("f", float(self.VVIR_receive[0][6]))  # sensitivity
+            self.V_Sense = struct.pack("f", float(self.VVIR_receive[0][6])*20)  # sensitivity
             self.A_R = struct.pack("H", 1)  # ARP
             self.V_R = struct.pack("H", int(self.VVIR_receive[0][7]))  # VRP
             self.PVARP = struct.pack("H", 0)  # PVARP
@@ -1600,12 +1600,10 @@ class LoggedInWindow:
                        font=("times new roman", 15, "bold"), command=self.Mode).grid(pady=15, column=1, row=4)
         tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Parameters",
                        font=("times new roman", 15, "bold"), command=self.Parameters).grid(pady=15, column=1, row=5)
-        tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Send",
-                       font=("times new roman", 15, "bold"), command=self.Send).grid(pady=15, column=1, row=6)
         tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Load Graph",
-                       font=("times new roman", 15, "bold"), command=self.Graph).grid(pady=15, column=1, row=7)
+                       font=("times new roman", 15, "bold"), command=self.Graph).grid(pady=15, column=1, row=6)
         tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Sign Out",
-                       font=("times new roman", 15, "bold"), command=self.Signout).grid(pady=15, column=1, row=8)
+                       font=("times new roman", 15, "bold"), command=self.Signout).grid(pady=15, column=1, row=7)
         #if another pacemaker is nearby, it will trigger an alert on the window
         if warning:
             tkinter.Label(self.window, relief=tkinter.GROOVE, fg=warning_color, bg=bg_color,
@@ -1624,10 +1622,6 @@ class LoggedInWindow:
     #directs to the mode window
     def Mode(self):
         self.modewindow = ModeWindow(self.UserID, self.window)
-
-    def Send(self):
-        self.serial.get_echo()
-        #print()
 
     #directs to the parameters window
     def Parameters(self):
