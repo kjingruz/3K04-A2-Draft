@@ -2493,38 +2493,12 @@ class GraphWindow:
     def __init__(self, userID, loggedinwindow, Serial):
         self.UserID = userID
         self.login = LoginDatabase()
-        # self.result = self.login.ReturnMode(self.UserID)
-        # #the current mode
-        # print(self.result)
-        # self.cmode = self.result[0][4]
-        # self.window = tkinter.Tk()
-        # self.window.wm_title("Egram Graphs")
         self.loggedin = loggedinwindow
-        # if 'normal' == self.window.state():
-        #     self.loggedin.withdraw()
-        #self.serial = pacemakerSerial(self.UserID)
         self.serial = Serial
         self.serial.get_echo()
         self.graph = animateGraph(self.serial, self.UserID, self.loggedin)
         self.graph.showPlot()
-        bg_color = "blue"
-        fg_color = "white"
-        cha_color = "black"
-        # create a figure
 
-        # self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
-        #                                 text="Back",font=("times new roman", 15, "bold"), command=self.Back)
-        # self.BackButton.grid(pady=15, column=1, row=2)
-        #self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
-        #self.window.mainloop()
-
-    # def on_closing(self):
-    #     self.window.destroy()
-    #     self.loggedin.deiconify()
-
-    # def Back(self):
-    #     self.window.destroy()
-    #     self.loggedin.deiconify()
 
 
 
