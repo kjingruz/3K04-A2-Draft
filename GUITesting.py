@@ -630,7 +630,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", self.ActivityThresholdDict[self.AOOR_receive[0][6]])  # activity threshold
             self.React_time = struct.pack("B", int(self.AOOR_receive[0][7]))  # reaction time
             self.Response_factor = struct.pack("B", int(self.AOOR_receive[0][8]))  # response factor
-            self.Recovery_time = struct.pack("H", int(self.AOOR_receive[0][9]))  # recovery time
+            self.Recovery_time = struct.pack("H", int(self.AOOR_receive[0][9])*60)  # recovery time
         elif self.currentmode == "VOOR":
             self.VOOR_receive = self.VOOR.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
@@ -652,7 +652,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", self.ActivityThresholdDict[self.VOOR_receive[0][6]])  # activity threshold
             self.React_time = struct.pack("B", int(self.VOOR_receive[0][7]))  # reaction time
             self.Response_factor = struct.pack("B", int(self.VOOR_receive[0][8]))  # response factor
-            self.Recovery_time = struct.pack("H", int(self.VOOR_receive[0][9]))  # recovery time
+            self.Recovery_time = struct.pack("H", int(self.VOOR_receive[0][9])*60)  # recovery time
         elif self.currentmode == "AAIR":
             self.AAIR_receive = self.AAIR.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
@@ -674,7 +674,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", self.ActivityThresholdDict[self.AAIR_receive[0][9]])  # activity threshold
             self.React_time = struct.pack("B", int(self.AAIR_receive[0][10]))  # reaction time
             self.Response_factor = struct.pack("B", int(self.AAIR_receive[0][11]))  # response factor
-            self.Recovery_time = struct.pack("H", int(self.AAIR_receive[0][12]))  # recovery time
+            self.Recovery_time = struct.pack("H", int(self.AAIR_receive[0][12])*60)  # recovery time
         elif self.currentmode == "VVIR":
             self.VVIR_receive = self.VVIR.Search(self.userID)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
@@ -696,7 +696,7 @@ class pacemakerSerial:
             self.Act_thres = struct.pack("B", self.ActivityThresholdDict[self.VVIR_receive[0][8]])  # activity threshold
             self.React_time = struct.pack("B", int(self.VVIR_receive[0][9]))  # reaction time
             self.Response_factor = struct.pack("B", int(self.VVIR_receive[0][10]))  # response factor
-            self.Recovery_time = struct.pack("H", int(self.VVIR_receive[0][11]))  # recovery time
+            self.Recovery_time = struct.pack("H", int(self.VVIR_receive[0][11])*60)  # recovery time
 
         print('\n\n\n\n\n')
 class LoginDatabase:
