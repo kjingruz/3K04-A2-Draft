@@ -9,6 +9,7 @@ import serial.tools.list_ports
 import struct
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import sys
 
 #two variables that are subject to change based on the pacemaker.
 #warning is a boolean to show that there is another pacemaker nearby
@@ -26,12 +27,15 @@ class animateGraph:
         self.UserID = userID
         # for plot
         self.inc = 0
-        self.incc = 10.0
+        self.incc = 100.0
         self.time = 0
         self.fig = plt.figure()
         self.loggedin = loggedinwindow
         self.loggedin.withdraw()
-        self.fig.canvas.mpl_connect('close_event', self.on_close)
+        #self.fig.canvas.mpl_connect('close_event', self.on_close)
+        #print(plt.get_fignums())
+        self.fig.canvas.mpl_connect('close_event', self.on_close)#from 366
+        #print(self.fig.number)
         self.ax1 = self.fig.add_subplot(1, 1, 1)
 
     def addToFile(self):
@@ -39,7 +43,7 @@ class animateGraph:
         # saved as: time, Atr, Vnt
         f = open('sampleText.txt', 'r')
         self.time = f.readline().split(',')[0]  # pulls most recent time to increment
-        self.inc += float(0.5)
+        self.inc += float(1)
         self.time += str(self.inc)
         f.close()
 
@@ -65,10 +69,10 @@ class animateGraph:
             if len(eachLine) > 1:
                 t, a, v = eachLine.split(',')
                 t = float(t)
-                t += self.incc #10ms increment
-                tar.append(str(t))
-                aar.append(str(a))
-                var.append(str(v))
+                t += self.incc #100ms increment
+                tar.append(float(t))
+                aar.append(float(a))
+                var.append(float(v))
         self.ax1.clear()
         self.ax1.set_xlabel('Time (ms)')
         self.ax1.set_ylabel('Voltage (V)')
@@ -78,15 +82,16 @@ class animateGraph:
 
     # run this to open the plot
     def showPlot(self):
-        ani = animation.FuncAnimation(self.fig, self.animate, interval=10)  # refresh every 10ms
+        ani = animation.FuncAnimation(self.fig, self.animate, interval=100)  # refresh every 10ms
         #self.fig.canvas.mpl_connect('close_event', self.on_close)
         plt.show()
 
     def on_close(self, event):
         print('Closed Figure!')
+        self.loggedin = LoggedInWindow(self.UserID)
         f = open("EGRAM_vals.txt","w")
         f.write('0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n0,0,0\n')
-        self.loggedin = LoggedInWindow(self.UserID)
+
 
 #stores the login creditals
 
@@ -2493,12 +2498,38 @@ class GraphWindow:
     def __init__(self, userID, loggedinwindow, Serial):
         self.UserID = userID
         self.login = LoginDatabase()
+        # self.result = self.login.ReturnMode(self.UserID)
+        # #the current mode
+        # print(self.result)
+        # self.cmode = self.result[0][4]
+        # self.window = tkinter.Tk()
+        # self.window.wm_title("Egram Graphs")
         self.loggedin = loggedinwindow
+        # if 'normal' == self.window.state():
+        #     self.loggedin.withdraw()
+        #self.serial = pacemakerSerial(self.UserID)
         self.serial = Serial
         self.serial.get_echo()
         self.graph = animateGraph(self.serial, self.UserID, self.loggedin)
         self.graph.showPlot()
+        bg_color = "blue"
+        fg_color = "white"
+        cha_color = "black"
+        # create a figure
 
+        # self.BackButton = tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color,
+        #                                 text="Back",font=("times new roman", 15, "bold"), command=self.Back)
+        # self.BackButton.grid(pady=15, column=1, row=2)
+        #self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+        #self.window.mainloop()
+
+    # def on_closing(self):
+    #     self.window.destroy()
+    #     self.loggedin.deiconify()
+
+    # def Back(self):
+    #     self.window.destroy()
+    #     self.loggedin.deiconify()
 
 
 
@@ -2527,7 +2558,7 @@ class HomePage:
         tkinter.Button(self.homePageWindow, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Display (demo only)",
                        font=("times new roman",15,"bold"), command=self.Display).grid(pady=15, column=1,row=4)
         tkinter.Button(self.homePageWindow, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Exit",
-                       font=("times new roman",15,"bold"), command=self.homePageWindow.destroy).grid(pady=15,column=1,row=5)
+                       font=("times new roman",15,"bold"), command=sys.exit).grid(pady=15, column=1, row=5)
         self.homePageWindow.mainloop()
     #checks for the current userID and if the user limit is not met, will be directed to the registration page
     def Register(self):
