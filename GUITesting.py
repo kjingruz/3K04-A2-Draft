@@ -521,6 +521,7 @@ class pacemakerSerial:
         print(self.currentmode)
         if self.currentmode == "AOO":
             self.AOO_receive = self.AOO.Search(self.userID)
+            print(self.AOO_receive)
             self.Pacing_mode = struct.pack("B", self.modeDict[self.currentmode])
             self.LRL = struct.pack("B", int(self.AOO_receive[0][1]))
             self.URL = struct.pack("B", int(self.AOO_receive[0][2]))
@@ -528,7 +529,7 @@ class pacemakerSerial:
             if self.AOO_receive[0][3] != 'Off':
                 self.A_PA = struct.pack("f", float(self.AOO_receive[0][3]))  # pulse amplitude
             else:
-                self.A_PA = struct.pack("f", 0)
+                self.A_PA = struct.pack("f", float(0))
             self.V_PA = struct.pack("f", 1.0)  # pulse amplitude
             self.A_PW = struct.pack("B", int(self.AOO_receive[0][4]))  # pulse width
             self.V_PW = struct.pack("B", 1)  # pulse width
@@ -552,7 +553,7 @@ class pacemakerSerial:
             if self.VOO_receive[0][3] != 'Off':
                 self.V_PA = struct.pack("f", float(self.VOO_receive[0][3]))  # pulse amplitude
             else:
-                self.V_PA = struct.pack("f", 0)
+                self.V_PA = struct.pack("f", float(0))
             self.A_PW = struct.pack("B", 1)  # pulse width
             self.V_PW = struct.pack("B", int(self.VOO_receive[0][4]))  # pulse width
             self.A_Sense = struct.pack("f", 1.0)  # sensitivity
@@ -573,7 +574,7 @@ class pacemakerSerial:
             if self.AAI_receive[0][3] != 'Off':
                 self.A_PA = struct.pack("f", float(self.AAI_receive[0][3]))  # pulse amplitude
             else:
-                self.A_PA = struct.pack("f", 0)  # pulse amplitude
+                self.A_PA = struct.pack("f", float(0))  # pulse amplitude
             self.V_PA = struct.pack("f", 1.0)  # pulse amplitude
             self.A_PW = struct.pack("B", int(self.AAI_receive[0][4]))  # pulse width
             self.V_PW = struct.pack("B", 1)  # pulse width
@@ -596,7 +597,7 @@ class pacemakerSerial:
             if self.VVI_receive[0][2] != 'Off':
                 self.V_PA = struct.pack("f", float(self.VVI_receive[0][3]))  # pulse amplitude
             else:
-                self.V_PA = struct.pack("f", 0)
+                self.V_PA = struct.pack("f", float(0))
             self.A_PW = struct.pack("B", 1)  # pulse width
             self.V_PW = struct.pack("B", int(self.VVI_receive[0][4]))  # pulse width
             self.A_Sense = struct.pack("f", 1.0)  # sensitivity
@@ -617,7 +618,7 @@ class pacemakerSerial:
             if self.AOOR_receive[0][3] != 'Off':
                 self.A_PA = struct.pack("f", float(self.AOOR_receive[0][3]))  # pulse amplitude
             else:
-                self.A_PA = struct.pack("f", 0)
+                self.A_PA = struct.pack("f", float(0))
             self.V_PA = struct.pack("f", 1.0)  # pulse amplitude
             self.A_PW = struct.pack("B", int(self.AOOR_receive[0][4]))  # pulse width
             self.V_PW = struct.pack("B", 1)  # pulse width
@@ -640,7 +641,7 @@ class pacemakerSerial:
             if self.VOOR_receive[0][3] != 'Off':
                 self.V_PA = struct.pack("f", float(self.VOOR_receive[0][3]))  # pulse amplitude
             else:
-                self.V_PA = struct.pack("f", 0)
+                self.V_PA = struct.pack("f", float(0))
             self.A_PW = struct.pack("B", 1)  # pulse width
             self.V_PW = struct.pack("B", int(self.VOOR_receive[0][4]))  # pulse width
             self.A_Sense = struct.pack("f", 1.0)  # sensitivity
@@ -661,7 +662,7 @@ class pacemakerSerial:
             if self.AAIR_receive[0][2] != 'Off':
                 self.A_PA = struct.pack("f", float(self.AAIR_receive[0][3]))  # pulse amplitude
             else:
-                self.A_PA = struct.pack("f", 0)
+                self.A_PA = struct.pack("f", float(0))
             self.V_PA = struct.pack("f", 1.0)  # pulse amplitude
             self.A_PW = struct.pack("B", int(self.AAIR_receive[0][4]))  # pulse width
             self.V_PW = struct.pack("B", 1)  # pulse width
@@ -684,7 +685,7 @@ class pacemakerSerial:
             if self.VVIR_receive[0][2] != 'Off':
                 self.V_PA = struct.pack("f", float(self.VVIR_receive[0][3]))  # pulse amplitude
             else:
-                self.V_PA = struct.pack("f", 0)  # pulse amplitude
+                self.V_PA = struct.pack("f", float(0))  # pulse amplitude
             self.A_PW = struct.pack("B", 1)  # pulse width
             self.V_PW = struct.pack("B", int(self.VVIR_receive[0][4]))  # pulse width
             self.A_Sense = struct.pack("f", 1.0)  # sensitivity
@@ -696,8 +697,6 @@ class pacemakerSerial:
             self.React_time = struct.pack("B", int(self.VVIR_receive[0][9]))  # reaction time
             self.Response_factor = struct.pack("B", int(self.VVIR_receive[0][10]))  # response factor
             self.Recovery_time = struct.pack("H", int(self.VVIR_receive[0][11]))  # recovery time
-
-        print(4)
 
         print('\n\n\n\n\n')
 class LoginDatabase:
@@ -1603,8 +1602,8 @@ class LoggedInWindow:
                        font=("times new roman", 15, "bold"), command=self.Parameters).grid(pady=15, column=1, row=5)
         tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Send",
                        font=("times new roman", 15, "bold"), command=self.Send).grid(pady=15, column=1, row=6)
-        # tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Load Graph",
-        #                font=("times new roman", 15, "bold"), command=self.Graph).grid(pady=15, column=1, row=7)
+        tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Load Graph",
+                       font=("times new roman", 15, "bold"), command=self.Graph).grid(pady=15, column=1, row=7)
         tkinter.Button(self.window, width=20, relief=tkinter.GROOVE, fg=cha_color, bg=bg_color, text="Sign Out",
                        font=("times new roman", 15, "bold"), command=self.Signout).grid(pady=15, column=1, row=8)
         #if another pacemaker is nearby, it will trigger an alert on the window
@@ -1617,8 +1616,8 @@ class LoggedInWindow:
                       text="Status update: Connection with DCM is " + "ON" if (connection == True)
                       else "Status update: Connection with DCM is " + "OFF",font=("times new roman", 10, "bold"),
                       width=50).grid(pady=20, column=1, row=2)
-    # def Graph(self):
-    #     self.graph = GraphWindow(self.UserID, self.window, self.serial)
+    def Graph(self):
+        self.graph = GraphWindow(self.UserID, self.window, self.serial)
     def Signout(self):
         self.window.destroy()
         self.homepage = HomePage()
@@ -1870,9 +1869,11 @@ class ParametersWindow:
                                                 self.PulseWidthBox.get(),self.SensitivityBox.get(),
                                                 self.ARPBox.get(),self.PVARPBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
+
+
+                    self.serial.update()
                     self.serial.send_param()
                     self.serial.get_echo()
-                    self.serial.update()
                     print("after upate")
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
@@ -1892,9 +1893,9 @@ class ParametersWindow:
                                                 self.PulseWidthBox.get(),self.SensitivityBox.get(), self.VRPBox.get(),
                                                 self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.serial.update()
                     self.serial.send_param()
                     self.serial.get_echo()
-                    self.serial.update()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
                 else:
@@ -1915,11 +1916,12 @@ class ParametersWindow:
                 tkinter.messagebox.showinfo("Saved", "Saved")
 
                 self.serial.update()
-                print("after change")
+                print("after update")
                 self.serial.send_param()
-                print("after send param")
+                print("after send")
                 self.serial.get_echo()
-                print("after get echo")
+                print("after echo")
+
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOO":
@@ -1934,9 +1936,9 @@ class ParametersWindow:
                     self.VOOdatabase.Update(self.LRLBox.get(), self.URLBox.get(), self.PulseAmplitudeBox.get(),
                                             self.PulseWidthBox.get(),self.UserID)
                 tkinter.messagebox.showinfo("Saved", "Saved")
+                self.serial.update()
                 self.serial.send_param()
                 self.serial.get_echo()
-                self.serial.update()
                 self.EditButton.config(state='active')
                 self.SaveButton.config(state='disabled')
             elif self.currentmode == "AOOR":
@@ -1964,9 +1966,9 @@ class ParametersWindow:
                                                 self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.serial.update()
                     self.serial.send_param()
                     self.serial.get_echo()
-                    self.serial.update()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VOOR":
@@ -1994,9 +1996,9 @@ class ParametersWindow:
                                                 self.PulseWidthBox.get(), self.MaxSensorRateBox.get(), self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.serial.update()
                     self.serial.send_param()
                     self.serial.get_echo()
-                    self.serial.update()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "AAIR":
@@ -2045,9 +2047,9 @@ class ParametersWindow:
                                                 self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.serial.update()
                     self.serial.send_param()
                     self.serial.get_echo()
-                    self.serial.update()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
             elif self.currentmode == "VVIR":
@@ -2083,9 +2085,9 @@ class ParametersWindow:
                                                 self.ActivityThresholdBox.get(), self.ReactionTimeBox.get(),
                                                 self.ResponseFactorBox.get(), self.RecoveryTimeBox.get(), self.UserID)
                     tkinter.messagebox.showinfo("Saved", "Saved")
+                    self.serial.update()
                     self.serial.send_param()
                     self.serial.get_echo()
-                    self.serial.update()
                     self.EditButton.config(state='active')
                     self.SaveButton.config(state='disabled')
 
